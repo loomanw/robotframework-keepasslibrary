@@ -13,8 +13,7 @@ See https://keepass.info for more information about KeePass in general
 ----
 ### Versions:
 
-0.0.1   Pre-Alpha
-
+0.1.0   Alpha
 ---
 
 ### Installation
