@@ -1,10 +1,6 @@
 from pykeepass import PyKeePass
 
-<<<<<<< HEAD
-__version__ = '0.1.0'
-=======
 __version__ = '0.2.0'
->>>>>>> develop
 
 class KeePassLibrary(object):
 
@@ -21,29 +17,14 @@ class KeePassLibrary(object):
     
     | = Attribute = | = Example = |
     | Title | ${entry.title} |
-<<<<<<< HEAD
-    | UserName | ${entry.usernam} |
-    | Password | ${entry.password} |
-    | url | ${entry.url} |
-    | tags | ${entry.tags} |
-    | iconid | ${entry.icondid} |
-=======
     | UserName | ${entry.username} |
     | Password | ${entry.password} |
     | url | ${entry.url} |
     | tags | ${entry.tags} |
-    | icon | ${entry.icon} |
->>>>>>> develop
-    | times | ${entry.times} |
-    | history | ${entry.history} |
-    
+    | icon | ${entry.icon} |  
     
     == Groups ==
     
-<<<<<<< HEAD
-    Group are not impemented yet.
-    
-=======
     A returned group may have one of the following attributes, attributes that contain no data are not accessible.
     | = Attribute = | = Example = |
     | Name | ${group.name} |
@@ -53,7 +34,6 @@ class KeePassLibrary(object):
     | Is Root Group | ${group.is_root_group} |    
     | path | ${group.path} |
 
->>>>>>> develop
     """   
     
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
@@ -75,7 +55,6 @@ class KeePassLibrary(object):
         
         The ``filename`` argument specifies the location of the KeePass database
         
-<<<<<<< HEAD
         Optional ``password`` is 
         Optional ``keyfile`` specifies the location of the keyfile
         Optional ``keyfile`` specifies the location of the keyfile
@@ -94,7 +73,7 @@ class KeePassLibrary(object):
             transformed_key=transformed_key
         )
 
-=======
+        """
         | =Parameter=        | =Description=                              |
         | ``filename``       | specifies the path of the KaaPass database |
         | ``keyfile``        | specifies the path of the keyfile          |
@@ -112,7 +91,6 @@ class KeePassLibrary(object):
                              keyfile=keyfile,
                              transformed_key=transformed_key)
         
->>>>>>> develop
     # TODO: Add more documentation
     def close_database(self):
         """Closes the currently open database.
@@ -231,19 +209,11 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             return self._kp.find_entries_by_username(username, 
-<<<<<<< HEAD
-                                                 regex, 
-                                                 flags, 
-                                                 group, 
-                                                 history, 
-                                                 first)
-=======
                                                      regex, 
                                                      flags, 
                                                      group, 
                                                      history, 
                                                      first)
->>>>>>> develop
          
     # TODO: Add documentation
     def get_entries_by_password(self, password, regex=False, flags=None,
@@ -255,20 +225,11 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             return self._kp.find_entries_by_password(password, 
-<<<<<<< HEAD
-                                                 regex, 
-                                                 flags, 
-                                                 group, 
-                                                 history, 
-                                                 first
-                                                 )
-=======
                                                      regex, 
                                                      flags, 
                                                      group, 
                                                      history, 
                                                      first)
->>>>>>> develop
  
     # TODO: Add documentation
     def get_entries_by_url(self, url, regex=False, flags=None,
@@ -280,19 +241,11 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             return self._kp.find_entries(url, 
-<<<<<<< HEAD
-                                     regex, 
-                                     flags, 
-                                     group, 
-                                     history, 
-                                     first)
-=======
                                          regex, 
                                          flags, 
                                          group, 
                                          history, 
                                          first)
->>>>>>> develop
 
     # TODO: Add documentation
     def get_entries_by_notes(self, notes, regex=False, flags=None,
@@ -304,20 +257,11 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             return self._kp.find_entries(notes,
-<<<<<<< HEAD
-                                     regex,
-                                     flags,
-                                     group,
-                                     history,
-                                     first
-        )
-=======
                                          regex,
                                          flags,
                                          group,
                                          history,
                                          first)
->>>>>>> develop
 
     # TODO: Add documentation
     def get_entries_by_path(self, path, regex=False, flags=None,
@@ -328,23 +272,12 @@ class KeePassLibrary(object):
         if self._kp is None:
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
-<<<<<<< HEAD
-            return self._kp.find_entries(
-                                     path,
-                                     regex,
-                                     flags,
-                                     group,
-                                     history,
-                                     first
-        )
-=======
             return self._kp.find_entries(path,
                                          regex,
                                          flags,
                                          group,
                                          history,
                                          first)
->>>>>>> develop
  
     # TODO: Add documentation
     def get_entries_by_uuid(self, uuid, regex=False, flags=None,
@@ -355,30 +288,17 @@ class KeePassLibrary(object):
         if self._kp is None:
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
-<<<<<<< HEAD
-            return self._kp.find_entries(
-                                    uuid,
-                                    regex,
-                                    flags,
-                                    group,
-                                    history,
-                                    first
-        )
-=======
             return self._kp.find_entries(uuid,
                                          regex,
                                          flags,
                                          group,
                                          history,
                                          first)
->>>>>>> develop
          
     # TODO: Add documentation
     def get_entries_by_string(self, string, regex=False, flags=None,
                               group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database
-<<<<<<< HEAD
-=======
            matching the given string  
         """  
         if self._kp is None:
@@ -409,27 +329,11 @@ class KeePassLibrary(object):
     def get_groups_by_name(self, group_name, regex=False, flags=None,
                             group=None, first=False):
         """Return a list of groups in the open KeePass database
->>>>>>> develop
            matching the given string
         """  
         if self._kp is None:
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
-<<<<<<< HEAD
-            return self._kp.find_entries(
-                                    string,
-                                    regex,
-                                    flags,
-                                    group,
-                                    history,
-                                    first
-        )
-          
-class KeepassLibraryError(Exception):
-    pass  
-    
-    
-=======
             return self.get_groups(name=group_name,
                                         regex=regex,
                                         flags=flags,
@@ -486,4 +390,3 @@ class KeepassLibraryError(Exception):
 class KeepassLibraryError(Exception):
     pass  
     
->>>>>>> develop
