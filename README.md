@@ -13,7 +13,12 @@ See https://keepass.info for more information about KeePass in general
 ----
 ### Versions:
 
+<<<<<<< HEAD
 0.1.0   Alpha
+=======
+0.2.0 Group Support
+0.1.0 Entry Support 
+>>>>>>> develop
 ---
 
 ### Installation
@@ -30,9 +35,15 @@ Install (or upgrade) the latest KeePassLibrary version:
 *** Settings ***
 Documentation     A test suite with a single test for retrieving a password.
 ...
+<<<<<<< HEAD
 ...               The test loads a KeePass database named example.kbx using 
 ...               the keyfile example.key. 
 ...               It then retrieves the first entry that matches the Username spam_user
+=======
+...               The test loads a KeePass database named Database.kdbx using 
+...               the keyfile Database.key. 
+...               It then retrieves the first entry that matches the Username "User Name"
+>>>>>>> develop
 ...               and logs the password from the returned KeePass database entry
 Import            KeePassLibrary
 
