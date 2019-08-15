@@ -1,6 +1,9 @@
+
 # KeePass Library
 
 This library enables Robot Framework to interact with KeePass databases.
+
+[![Build Status](https://travis-ci.org/loomanw/robotframework-keepasslibrary.svg?branch=master)](https://travis-ci.org/loomanw/robotframework-keepasslibrary) [![Version](https://img.shields.io/pypi/v/robotframework-keepasslibrary.svg?label=version)](https://github.com/loomanw/robotframework-keepasslibrary) ![PyPI - License](https://img.shields.io/pypi/l/robotframework-keepasslibrary) ![PyPI - Downloads](https://img.shields.io/pypi/dm/robotframework-keepasslibrary)
 
 Supported KeePass versions:
 - KDBX3
@@ -10,15 +13,11 @@ KeepassLibrary uses the [PyKeePass](https://pypi.org/project/pykeepass/) modules
     
 See https://keepass.info for more information about KeePass in general
 
-----
+---
 ### Versions:
+ - `0.2.0` Group Support
+ - `0.1.0` Entry Support
 
-<<<<<<< HEAD
-0.1.0   Alpha
-=======
-0.2.0 Group Support
-0.1.0 Entry Support 
->>>>>>> develop
 ---
 
 ### Installation
@@ -35,15 +34,9 @@ Install (or upgrade) the latest KeePassLibrary version:
 *** Settings ***
 Documentation     A test suite with a single test for retrieving a password.
 ...
-<<<<<<< HEAD
-...               The test loads a KeePass database named example.kbx using 
-...               the keyfile example.key. 
-...               It then retrieves the first entry that matches the Username spam_user
-=======
 ...               The test loads a KeePass database named Database.kdbx using 
 ...               the keyfile Database.key. 
 ...               It then retrieves the first entry that matches the Username "User Name"
->>>>>>> develop
 ...               and logs the password from the returned KeePass database entry
 Import            KeePassLibrary
 
