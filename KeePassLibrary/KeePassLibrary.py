@@ -2,7 +2,7 @@ from pykeepass import PyKeePass
 # from pykeepass import entry
 # from pykeepass import group
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 class KeePassLibrary(object):
 
