@@ -1,2 +1,2 @@
-pykeepass >= 3.0.2
+pykeepass >= 3.1.0
 robotframework >= 3.1.0

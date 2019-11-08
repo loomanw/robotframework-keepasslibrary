@@ -15,6 +15,7 @@ See https://keepass.info for more information about KeePass in general
 
 ---
 ### Versions:
+-  `0.2.1` KDBX v3 and v4 test cases
  - `0.2.0` Group Support
  - `0.1.0` Entry Support
 

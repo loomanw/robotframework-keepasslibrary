@@ -1,6 +1,8 @@
 from pykeepass import PyKeePass
+# from pykeepass import entry
+# from pykeepass import group
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 class KeePassLibrary(object):
 
@@ -16,9 +18,9 @@ class KeePassLibrary(object):
     A returned entry may have one of the following attributes, attributes that contain no data are not accessible.
     
     | = Attribute = | = Example = |
-    | Title | ${entry.title} |
-    | UserName | ${entry.username} |
-    | Password | ${entry.password} |
+    | title | ${entry.title} |
+    | username | ${entry.username} |
+    | password | ${entry.password} |
     | url | ${entry.url} |
     | tags | ${entry.tags} |
     | icon | ${entry.icon} |  
@@ -27,18 +29,18 @@ class KeePassLibrary(object):
     
     A returned group may have one of the following attributes, attributes that contain no data are not accessible.
     | = Attribute = | = Example = |
-    | Name | ${group.name} |
-    | Notes | ${group.notes} |
-    | Entries | ${group.entries} |
-    | SubGroups | ${group.subgroups} |
-    | Is Root Group | ${group.is_root_group} |    
+    | name | ${group.name} |
+    | notes | ${group.notes} |
+    | entries | ${group.entries} |
+    | subgroups | ${group.subgroups} |
+    | is_root_group | ${group.is_root_group} |    
     | path | ${group.path} |
 
     """   
     
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = __version__
-        
+    
     def __init__(self):
         self._kp = None
     
@@ -47,7 +49,7 @@ class KeePassLibrary(object):
 
     def __exit__(self, typ, value, tb):
         del self._kp
-    
+    #---------- Database ----------
     # TODO: Update documentation
     def load_database(self, filename, password=None, keyfile=None,
              transformed_key=None):
@@ -99,7 +101,16 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             self._kp = None
-            
+    
+    # TODO: Add more documentation
+    def save(self, filename=None, transformed_key=None):
+        """Save the content of the currently open database.
+        """
+        if self._kp is None:
+            raise KeepassLibraryError('No KeePass Database loaded.')
+        else:
+            self._kp.save(filename, transformed_key)        
+
     # TODO: Add more documentation
     def dump_xml(self, outfile):
         """Save the content of the database to a xml file.
@@ -109,8 +120,7 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             self._kp.dump_xml(outfile)
-            
-    #---------- Getters -------
+    
     # TODO: Add more documentation
     def get_version(self):
         """Returns the version of the KeePass database loaded with `Load Database`
@@ -119,6 +129,15 @@ class KeePassLibrary(object):
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             return self._kp.version
+    
+    # TODO: Add more documentation
+    def get_encryption_algorithm(self):
+        """Returns the encryption algorithm used. 
+        """
+        if self._kp is None:
+            raise KeepassLibraryError('No KeePass Database loaded.')
+        else:
+            return self._kp.encryption_algorithm
     
     # TODO: Add more documentation
     def get_kdf_algorithm(self):
@@ -182,7 +201,6 @@ class KeePassLibrary(object):
         else:
             return self._kp.find_entries_by_title('.*', regex=True)
     
-
     # TODO: Add documentation
     def get_entries_by_title(self, title, regex=False, flags=None,
                               group=None, history=False, first=False):
@@ -311,20 +329,26 @@ class KeePassLibrary(object):
                                          history,
                                          first)
             
-    #---------- Groups ----------
-    
+    #---------- Groups ---------- 
     # TODO: Add more documentation
     def get_groups(self, recursive=True, path=None, group=None, **kwargs):
-  
         """Return a list of groups in the open KeePass database
            matching the given string
         """ 
-
         if self._kp is None:
             raise KeepassLibraryError('No KeePass Database loaded.')
         else:
             return self._kp.find_groups(recursive, path, group, **kwargs)
     
+    # TODO: Add more documentation
+    def get_groups_all(self):
+        """Return a list of all groups in the open KeePass database.
+        """ 
+        if self._kp is None:
+            raise KeepassLibraryError('No KeePass Database loaded.')
+        else:
+            return self._kp.find_groups_by_name('.*', regex=True)
+        
     # TODO: Add more documentation
     def get_groups_by_name(self, group_name, regex=False, flags=None,
                             group=None, first=False):

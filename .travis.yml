@@ -3,5 +3,13 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
+  - "3.8"
+# PyPy versions #Disabled due to: legacy 64 byte hex keyfile test | FAIL | OSError: Could not read keyfile
+#  - "pypy3"  # currently Python 3.6.1,  PyPy 7.1.1-beta0
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install .
+# command to run tests
 script:
-- python setup.py -q install
+- robot tests
