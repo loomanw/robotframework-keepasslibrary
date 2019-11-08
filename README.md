@@ -3,7 +3,7 @@
 
 This library enables Robot Framework to interact with KeePass databases.
 
-[![Build Status](https://travis-ci.org/loomanw/robotframework-keepasslibrary.svg?branch=master)](https://travis-ci.org/loomanw/robotframework-keepasslibrary) [![Version](https://img.shields.io/pypi/v/robotframework-keepasslibrary.svg?label=version)](https://github.com/loomanw/robotframework-keepasslibrary) ![PyPI - License](https://img.shields.io/pypi/l/robotframework-keepasslibrary) ![PyPI - Downloads](https://img.shields.io/pypi/dm/robotframework-keepasslibrary)
+[![Build Status](https://travis-ci.org/loomanw/robotframework-keepasslibrary.svg?branch=master)](https://travis-ci.org/loomanw/robotframework-keepasslibrary) [![Version](https://img.shields.io/pypi/v/robotframework-keepasslibrary.svg?label=version)](https://github.com/loomanw/robotframework-keepasslibrary) ![PyPI - License](https://img.shields.io/pypi/l/robotframework-keepasslibrary) ![PyPI - Downloads](https://img.shields.io/pypi/dm/robotframework-keepasslibrary)[![Updates](https://pyup.io/repos/github/loomanw/robotframework-keepasslibrary/shield.svg)](https://pyup.io/repos/github/loomanw/robotframework-keepasslibrary/)
 
 Supported KeePass versions:
 - KDBX3
