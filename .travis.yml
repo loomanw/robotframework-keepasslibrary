@@ -53,7 +53,7 @@ deploy:
     on:
        repo: loomanw/robotframework-keepasslibrary
        python: "3.7"
-	   tags: true
+       tags: true
   - provider: pypi
     user: "__token__"
     password:
