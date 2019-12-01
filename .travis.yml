@@ -52,7 +52,9 @@ deploy:
     skip_cleanup: true
     on:
        repo: loomanw/robotframework-keepasslibrary
+       branch: master
        python: "3.7"
+       tags: true
   - provider: pypi
     user: "__token__"
     password:
@@ -63,5 +65,6 @@ deploy:
     skip_cleanup: true
     on:
        repo: loomanw/testtravis
+       branch: master
        python: "3.7"
        tags: true
