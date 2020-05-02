@@ -1,2 +1,2 @@
-pykeepass==3.1.2
+pykeepass==3.2.0
 robotframework==3.1.2
