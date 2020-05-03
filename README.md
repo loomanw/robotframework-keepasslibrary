@@ -15,6 +15,7 @@ See https://keepass.info for more information about KeePass in general
 
 ---
 ### Versions:
+ - `0.2.4` Update dependencies
  - `0.2.3` Update dependencies, new travis builds
  - `0.2.2` Update dependencies
  - `0.2.1` KDBX v3 and v4 test cases
