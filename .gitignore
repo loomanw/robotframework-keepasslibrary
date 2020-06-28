@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# Robot Framework results
+log.html
+output.xml
+report.html
+
 # Distribution / packaging
 .Python
 build/

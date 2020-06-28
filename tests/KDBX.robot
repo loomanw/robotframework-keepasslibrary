@@ -4,7 +4,7 @@ library    String
 Test Template    Opening database with with valid credentials should succeed   
  
 *** Variables ***
-${KP_DB_BASE}=    ${CURDIR}${/}
+${KP_DB_BASE}=    ${CURDIR}${/}data${/}
 
 *** Test Cases ***                    DATABASE               PASSWORD    TRANSFORMED_KEY    KEY_FILE         ENCRYPTION_ALGORITHM    KDF_ALGORITHM    VERSION     
 KDBX v3                               test3.kdbx             password    ${NONE}            test3.key        aes256                  aeskdf           (3, 1)

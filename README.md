@@ -3,7 +3,11 @@
 
 This library enables Robot Framework to interact with KeePass databases.
 
-[![Build Status](https://travis-ci.org/loomanw/robotframework-keepasslibrary.svg?branch=master)](https://travis-ci.org/loomanw/robotframework-keepasslibrary) [![Version](https://img.shields.io/pypi/v/robotframework-keepasslibrary.svg?label=version)](https://github.com/loomanw/robotframework-keepasslibrary) ![PyPI - License](https://img.shields.io/pypi/l/robotframework-keepasslibrary) ![PyPI - Downloads](https://img.shields.io/pypi/dm/robotframework-keepasslibrary)[![Updates](https://pyup.io/repos/github/loomanw/robotframework-keepasslibrary/shield.svg)](https://pyup.io/repos/github/loomanw/robotframework-keepasslibrary/)
+[![Build Status](https://travis-ci.org/loomanw/robotframework-keepasslibrary.svg?branch=master)](https://travis-ci.org/loomanw/robotframework-keepasslibrary)
+[![Version](https://img.shields.io/pypi/v/robotframework-keepasslibrary.svg?label=version)](https://github.com/loomanw/robotframework-keepasslibrary) 
+![PyPI - License](https://img.shields.io/pypi/l/robotframework-keepasslibrary) 
+![PyPI - Downloads](https://img.shields.io/pypi/dm/robotframework-keepasslibrary)
+[![Updates](https://pyup.io/repos/github/loomanw/robotframework-keepasslibrary/shield.svg)](https://pyup.io/repos/github/loomanw/robotframework-keepasslibrary)
 
 Supported KeePass versions:
 - KDBX3
@@ -15,6 +19,7 @@ See https://keepass.info for more information about KeePass in general
 
 ---
 ### Versions:
+ - `0.2.5` Fix manifest, additional test cases
  - `0.2.4` Update dependencies
  - `0.2.3` Update dependencies, new travis builds
  - `0.2.2` Update dependencies
@@ -47,7 +52,7 @@ Import            KeePassLibrary
 *** Test Cases ***
 Get KeePass Database Entry
     Get KeePass Database       Database.kdbx    keyfile=Database.key        
-    ${entry}=	Get Entries By Username    User Name    first=True	
-	Log 	Password for spam_user is ${entry.password}
+    ${entry}=   Get Entries By Username    User Name    first=True  
+    Log     Password for spam_user is ${entry.password}
 ```
 

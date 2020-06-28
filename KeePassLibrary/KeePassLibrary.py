@@ -2,7 +2,7 @@ from pykeepass import PyKeePass
 # from pykeepass import entry
 # from pykeepass import group
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 class KeePassLibrary(object):
 
@@ -57,35 +57,23 @@ class KeePassLibrary(object):
         
         The ``filename`` argument specifies the location of the KeePass database
         
-        Optional ``password`` is 
-        Optional ``keyfile`` specifies the location of the keyfile
-        Optional ``keyfile`` specifies the location of the keyfile
-        
-        Examples:
-        | Load Database | ``filename`` | password= ``password``                       |
-        | Load Database | ``filename`` | keyfile= ``keyfile``                         |
-        | Load Database | ``filename`` | password= ``password``  keyfile= ``keyfile`` |
-        """
-
-        # TODO: capture failed to load
-        self._kp = PyKeePass(
-            filename,
-            password=password,
-            keyfile=keyfile,
-            transformed_key=transformed_key
-        )
-
-        """
         | =Parameter=        | =Description=                              |
         | ``filename``       | specifies the path of the KaaPass database |
         | ``keyfile``        | specifies the path of the keyfile          |
-        | ``tranformed_key`` |                                            |
+        | ``tranformed_key`` | specifies the location of the keyfile      |
         
         Examples:
         | `Load Database` | pathtokeepassdatabase | password= mypassword  |                       |
         | `Load Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |
         | `Load Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |
         """
+
+        # TODO: capture failed to load
+        self._kp = PyKeePass(filename,
+                             password=password,
+                             keyfile=keyfile,
+                             transformed_key=transformed_key
+        )
 
         # TODO: capture failed to load
         self._kp = PyKeePass(filename,
@@ -176,6 +164,9 @@ class KeePassLibrary(object):
             return self._kp.root_group
 
     #---------- Entries ----------
+    # todo: add get entry attribute
+    
+    
     # TODO: Add documentation
     def get_entries(self, history=False, first=False, recursive=True,
                      path=None, group=None, **kwargs):
