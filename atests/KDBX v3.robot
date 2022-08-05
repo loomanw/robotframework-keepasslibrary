@@ -3,7 +3,7 @@ Library          KeePassLibrary
 library          String        
 Force Tags       Database    KDBX v3
 Test Template    Opening database with valid credentials should succeed
-Documentation    Requires Robot Framework Version 3.1 Check KDBX 3 related keywords
+Documentation    Check KDBX 3 related keywords
 
 *** Variables ***
 ${KP_DB_BASE}=    ${CURDIR}${/}Data${/}

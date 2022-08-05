@@ -1,6 +1,6 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, UUID
-from KeePassLibrary.errors import DatabaseNotLoaded
+from KeePassLibrary.errors import DatabaseNotOpened
 from robot.utils import is_truthy
 
 class KeePassEntries(LibraryComponent):
@@ -38,7 +38,7 @@ class KeePassEntries(LibraryComponent):
            | ${entries}= | Get Entries By Username | foobar   | group=${group} | first=True |     
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             if 'regex' in kwargs:
                 kwargs['regex'] = is_truthy(kwargs['regex']) 
@@ -59,7 +59,7 @@ class KeePassEntries(LibraryComponent):
            | ${entries} = | `Get Entries All` | 
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_title('.*', 
                                                        regex=True)
@@ -79,7 +79,7 @@ class KeePassEntries(LibraryComponent):
            => first entry with title: root_entry
         """        
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_title(title, 
                                                        regex,
@@ -99,7 +99,7 @@ class KeePassEntries(LibraryComponent):
            | @{entries} = | `Get Entries By Username` | foobar_user |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_username(username, 
                                                           regex, 
@@ -119,7 +119,7 @@ class KeePassEntries(LibraryComponent):
            | @{entries} = | `Get Entries By Password` | passw0rd |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_password(password, 
                                                           regex, 
@@ -139,7 +139,7 @@ class KeePassEntries(LibraryComponent):
            | @{entries} = | `Get Entries By Url` | http://example.com |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_url(url, 
                                                      regex, 
@@ -159,7 +159,7 @@ class KeePassEntries(LibraryComponent):
            | @{entries} = | `Get Entries By Notes` | root entry notes |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_notes(notes,
                                          regex,
@@ -182,7 +182,7 @@ class KeePassEntries(LibraryComponent):
            | ${entry} = | Get Entries By Path | foobar_group/group_entry |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_path(path,
                                          regex,
@@ -202,7 +202,7 @@ class KeePassEntries(LibraryComponent):
            | ${entries} = | Get Entries By Uuid | 12345678-1234-5678-1234-567812345678 |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             uuid = UUID('urn:uuid:'+ uuid)
             return self.database.find_entries_by_uuid(uuid,
@@ -234,7 +234,7 @@ class KeePassEntries(LibraryComponent):
            | History |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_entries_by_string(string,
                                          regex,

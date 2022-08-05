@@ -2,7 +2,7 @@
 Library          KeePassLibrary
 Library          Collections    
 Force Tags       Group
-Documentation    Requires Robot Framework Version 3.1 Check if Group related keywords
+Documentation    Check Group related keywords
 Test Setup       Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown    Close Keepass Database    
 
