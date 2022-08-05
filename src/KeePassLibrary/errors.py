@@ -1,7 +1,7 @@
 class KeepassLibraryException(Exception):
     ROBOT_SUPPRESS_NAME = True
  
-class DatabaseNotLoaded(KeepassLibraryException):
+class DatabaseNotOpened(KeepassLibraryException):
     pass
  
 class DatabaseNotFound(KeepassLibraryException):

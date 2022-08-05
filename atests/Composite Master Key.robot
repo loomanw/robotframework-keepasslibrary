@@ -1,7 +1,7 @@
 *** Settings ***
 Library          KeePassLibrary
 library          String      
-Documentation    Requires Robot Framework Version 3.1 Check if valid composed key combinations work 
+Documentation    Check valid composed key combinations
 Test Template    Loading Database With Valid Credentials Should Succeed 
 
 *** Variable ***

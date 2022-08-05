@@ -1,6 +1,6 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, UUID
-from KeePassLibrary.errors import DatabaseNotLoaded
+from KeePassLibrary.errors import DatabaseNotOpened
 from robot.utils import is_truthy
 
 class KeePassGroups(LibraryComponent):
@@ -32,7 +32,7 @@ class KeePassGroups(LibraryComponent):
            | @{groups}= |  `Get Groups`         | subgroup2 | group=${group} |             
         """ 
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             if 'regex' in kwargs:
                 kwargs['regex'] = is_truthy(kwargs['regex'])
@@ -50,7 +50,7 @@ class KeePassGroups(LibraryComponent):
            | ${groups} = | Get Groups All | 
         """ 
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_groups_by_name('.*', 
                                                      regex=True)
@@ -68,7 +68,7 @@ class KeePassGroups(LibraryComponent):
            | ${groups} = | Get Groups By Name | .* | regex=True |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_groups_by_name(group_name=group_name,
                                                      regex=regex,
@@ -88,7 +88,7 @@ class KeePassGroups(LibraryComponent):
            | ${groups} = | Get Groups By Path | foobar_group/subgroup |
         """  
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_groups_by_path(group_path_str=group_path_str,
                                                      regex=regex,
@@ -108,7 +108,7 @@ class KeePassGroups(LibraryComponent):
            | ${groups} = | Get Groups By Uuid | 12345678-1234-5678-1234-567812345678 |
         """ 
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             uuid = UUID('urn:uuid:'+ uuid)
             return self.database.find_groups_by_uuid(uuid=uuid,
@@ -130,7 +130,7 @@ class KeePassGroups(LibraryComponent):
            | ${groups} = | Get Groups By Notes | group notes |
         """ 
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.find_groups_by_notes(notes=notes,
                                                       regex=regex,

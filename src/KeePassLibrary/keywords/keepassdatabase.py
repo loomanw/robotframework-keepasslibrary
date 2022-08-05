@@ -1,6 +1,6 @@
 """Library components."""
 from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent
-from KeePassLibrary.errors import DatabaseNotLoaded
+from KeePassLibrary.errors import DatabaseNotOpened
 
 class KeePassDatabase(LibraryComponent):
     
@@ -56,7 +56,7 @@ class KeePassDatabase(LibraryComponent):
         """*DEPRECATED in KeePassLibrary 0.3.0*, Use `Close Keepass Database` instead.
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             self.database = None  
     
@@ -65,7 +65,7 @@ class KeePassDatabase(LibraryComponent):
         """Closes the currently open KeePass database.
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             self.database = None
 
@@ -76,7 +76,7 @@ class KeePassDatabase(LibraryComponent):
         """*DEPRECATED in KeePassLibrary 0.3.0*, Use `Save Keepass Database` instead.
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             self.database.save(filename, transformed_key)        
 
@@ -89,7 +89,7 @@ class KeePassDatabase(LibraryComponent):
         | ``tranformed_key`` | specifies the location of the keyfile      |
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             self.database.save(filename, transformed_key)        
 
@@ -102,19 +102,19 @@ class KeePassDatabase(LibraryComponent):
         | ``outfile`` | specifies the path of the dumped xml |
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             self.database.dump_xml(outfile)
     
     @keyword 
     def get_version(self):
-        """Returns the version of the KeePass database loaded with `Load Database`
+        """Returns the version of the KeePass database loaded with `Open Keepass Database`
         | =Return=   | =Description= |
         | ``(3, 1)`` | KDBX v3       |
         | ``(4, 0)`` | KDBX v4       |
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.version
     
@@ -124,7 +124,7 @@ class KeePassDatabase(LibraryComponent):
         """Returns the encryption algorithm used. 
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.encryption_algorithm
     
@@ -134,7 +134,7 @@ class KeePassDatabase(LibraryComponent):
         """Returns the key transformation algorithm used. 
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.kdf_algorithm
     
@@ -144,7 +144,7 @@ class KeePassDatabase(LibraryComponent):
         """Returns the transformed key.
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.transformed_key
 
@@ -153,7 +153,7 @@ class KeePassDatabase(LibraryComponent):
         """Returns the full xml tree.
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.tree
 
@@ -163,6 +163,6 @@ class KeePassDatabase(LibraryComponent):
         """Returns the root group.
         """
         if self.database is None:
-            raise DatabaseNotLoaded('No KeePass Database loaded.')
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return self.database.root_group

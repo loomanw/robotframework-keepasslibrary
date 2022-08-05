@@ -3,7 +3,7 @@
 
 This library enables Robot Framework to interact with KeePass databases.
 
-[![Build Status](https://travis-ci.org/loomanw/robotframework-keepasslibrary.svg?branch=master)](https://travis-ci.org/loomanw/robotframework-keepasslibrary)
+[![Python package](https://github.com/loomanw/robotframework-keepasslibrary/actions/workflows/python-package.yml/badge.svg)](https://github.com/loomanw/robotframework-keepasslibrary/actions/workflows/python-package.yml) 
 [![Version](https://img.shields.io/pypi/v/robotframework-keepasslibrary.svg?label=version)](https://github.com/loomanw/robotframework-keepasslibrary) 
 ![PyPI - License](https://img.shields.io/pypi/l/robotframework-keepasslibrary) 
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/robotframework-keepasslibrary) 
@@ -19,6 +19,7 @@ See https://keepass.info for more information about KeePass in general
 
 ---
 ### Versions:
+ - `0.3.1` Update dependencies, tests moved to github actions 
  - `0.3.0` New keywords for accessing entry and group data, rebuild of code using [Python Library Core](https://github.com/robotframework/PythonLibCore).
  - `0.2.5` Fix manifest, additional test cases
  - `0.2.4` Update dependencies
@@ -43,7 +44,7 @@ Install (or upgrade) the latest KeePassLibrary version:
 *** Settings ***
 Documentation     A test suite with a single test for retrieving a password.
 ...
-...               The test loads a KeePass database named Database.kdbx using 
+...               The test opens a KeePass database named Database.kdbx using 
 ...               the keyfile Database.key. 
 ...               It then retrieves the first entry that matches the Username "User Name"
 ...               and logs the password from the returned KeePass database entry
@@ -51,7 +52,7 @@ Library           KeePassLibrary
 
 *** Test Cases ***
 Get KeePass Database Entry
-    Load KeePass Database       Database.kdbx    keyfile=Database.key        
+    Open KeePass Database       Database.kdbx    keyfile=Database.key        
     ${entry}=    Get Entries By Username    User Name    first=True
     ${value}=    Get Entry Password    ${entry}  
     Log     Password for User Name is ${value}
