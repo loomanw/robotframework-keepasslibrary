@@ -18,18 +18,10 @@ KeepassLibrary uses the [PyKeePass](https://pypi.org/project/pykeepass/) modules
 See https://keepass.info for more information about KeePass in general
 
 ---
-### Versions:
- - `0.3.1` Update dependencies, tests moved to github actions 
- - `0.3.0` New keywords for accessing entry and group data, rebuild of code using [Python Library Core](https://github.com/robotframework/PythonLibCore).
- - `0.2.5` Fix manifest, additional test cases
- - `0.2.4` Update dependencies
- - `0.2.3` Update dependencies, new travis builds
- - `0.2.2` Update dependencies
- - `0.2.1` KDBX v3 and v4 test cases
- - `0.2.0` Group Support
- - `0.1.0` Entry Support
----
+### Keyword Documentation
+See [keyword documentation](https://loomanw.github.io/robotframework-keepasslibrary/KeePassLibrary.html) for available keywords and more information about the library in general.
 
+---
 ### Installation
 The recommended approach to install KeePassLibrary, regardless the version, is using  [pip](http://pip-installer.org/).
 
@@ -58,3 +50,15 @@ Get KeePass Database Entry
     Log     Password for User Name is ${value}
 ```
 
+---
+### Versions:
+ - `0.4.0` Update dependencies, rework for pykeepas 4.x with keyfile v2 support, additional test cases 
+ - `0.3.1` Update dependencies, tests moved to github actions 
+ - `0.3.0` New keywords for accessing entry and group data, rebuild of code using [Python Library Core](https://github.com/robotframework/PythonLibCore).
+ - `0.2.5` Fix manifest, additional test cases
+ - `0.2.4` Update dependencies
+ - `0.2.3` Update dependencies, new travis builds
+ - `0.2.2` Update dependencies
+ - `0.2.1` KDBX v3 and v4 test cases
+ - `0.2.0` Group Support
+ - `0.1.0` Entry Support

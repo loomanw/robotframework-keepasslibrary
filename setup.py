@@ -9,7 +9,7 @@ CURDIR = dirname(abspath(__file__))
 # Declare the classifiers
 CLASSIFIERS = '''
 Development Status :: 3 - Alpha
-License :: OSI Approved :: MIT License  
+License :: OSI Approved :: MIT License
 Operating System :: OS Independent
 Programming Language :: Python
 Programming Language :: Python :: 3
@@ -18,8 +18,9 @@ Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
 Programming Language :: Python :: 3.10
+Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3 :: Only
-Topic :: Security :: Cryptography  
+Topic :: Security :: Cryptography
 Topic :: Software Development :: Quality Assurance
 Topic :: Software Development :: Testing
 Framework :: Robot Framework

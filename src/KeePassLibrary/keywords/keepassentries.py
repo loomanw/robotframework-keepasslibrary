@@ -170,7 +170,7 @@ class KeePassEntries(LibraryComponent):
 
     # FIXME: Return more then 1 match even when first is set to false
     @keyword
-    def get_entries_by_path(self, path, regex=False, flags=None,
+    def get_entries_by_path(self, entry_path_str, regex=False, flags=None,
                              group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``path``.\n
 
@@ -184,7 +184,8 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_path(path,
+            entry_path_list = entry_path_str.split('/')
+            return self.database.find_entries_by_path(entry_path_list,
                                          regex,
                                          flags,
                                          group,
