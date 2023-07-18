@@ -3,24 +3,7 @@ from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent
 from KeePassLibrary.errors import DatabaseNotOpened
 
 class KeePassDatabase(LibraryComponent):
-    
-    @keyword 
-    def load_database(self, filename, password=None, keyfile=None,
-             transformed_key=None):
-        """*DEPRECATED in KeePassLibrary 0.3.0*, Use `Open Keepass Database` instead.
-        """
-        self.database = PyKeePass(filename,
-                                  password=password,
-                                  keyfile=keyfile,
-                                  transformed_key=transformed_key
-        )
-
-        # capture failed to load
-        self.database.read(filename, 
-                           password, 
-                           keyfile, 
-                           transformed_key) 
-    
+        
     @keyword
     def open_keepass_database(self, filename, password=None, keyfile=None,
              transformed_key=None):
@@ -50,15 +33,6 @@ class KeePassDatabase(LibraryComponent):
                            password, 
                            keyfile, 
                            transformed_key)
-
-    @keyword 
-    def close_database(self):
-        """*DEPRECATED in KeePassLibrary 0.3.0*, Use `Close Keepass Database` instead.
-        """
-        if self.database is None:
-            raise DatabaseNotOpened('No KeePass Database Opened.')
-        else:
-            self.database = None  
     
     @keyword    
     def close_keepass_database(self):
@@ -68,17 +42,6 @@ class KeePassDatabase(LibraryComponent):
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             self.database = None
-
-
-    
-    @keyword 
-    def save(self, filename=None, transformed_key=None):
-        """*DEPRECATED in KeePassLibrary 0.3.0*, Use `Save Keepass Database` instead.
-        """
-        if self.database is None:
-            raise DatabaseNotOpened('No KeePass Database Opened.')
-        else:
-            self.database.save(filename, transformed_key)        
 
     @keyword 
     def save_keepass_database(self, filename=None, transformed_key=None):
@@ -94,12 +57,21 @@ class KeePassDatabase(LibraryComponent):
             self.database.save(filename, transformed_key)        
 
     @keyword 
-    def dump_xml(self, outfile):
-        """Dump the content of the database to a xml file.
-           NOTE: The resulting file is unencrypted!
+    def save_xml(self, path):
+        """Save the content of the database to a the specified file.
+           NOTE: The resulting file is unencrypted!!!
 
         | =Parameter= | =Description=                        |
-        | ``outfile`` | specifies the path of the dumped xml |
+        | ``outfile`` | specifies the path of the XML file   |
+        """
+        if self.database is None:
+            raise DatabaseNotOpened('No KeePass Database Opened.')
+        else:
+            self.database.dump_xml(path)
+
+    @keyword 
+    def dump_xml(self, outfile):
+        """*DEPRECATED in KeePassLibrary 0.4.0*, Use `Save Xml` instead.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')

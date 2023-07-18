@@ -90,7 +90,8 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_groups_by_path(group_path_str=group_path_str,
+            group_path_list = group_path_str.split('/')
+            return self.database.find_groups_by_path(group_path_str=group_path_list,
                                                      regex=regex,
                                                      flags=flags,
                                                      group=group,

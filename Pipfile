@@ -7,7 +7,7 @@ verify_ssl = true
 robotframework-keepasslibrary
 
 [packages]
-pykeepass = "==3.2.1"
+pykeepass = "==4.0.5"
 robotframework = ">=3.2.2"
 robotframework-pythonlibcore>=3.0.0
 

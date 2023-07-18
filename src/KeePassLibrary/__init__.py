@@ -8,7 +8,7 @@ from KeePassLibrary.keywords import (
     KeePassGroups
 )
 
-__version__ = '0.3.1'
+__version__ = '0.4.0'
 
 class KeePassLibrary(DynamicCore):
     """KeePassLibrary is a library for Robot Framework.

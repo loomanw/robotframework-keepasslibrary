@@ -55,12 +55,13 @@ Selected By Password Are Found
     END
     Lists Should Be Equal    ${values_expected}    ${values} 
 
-Selected By Path Are Found    
+Selected By Path Are Found 
     [Documentation]    Retrieved entries by path should match uuid list
     ...    Note, only 1 entry can be selected by path
-    ${value_expected}=    Set Variable        cc5f7ecd-2a00-48ca-9621-c222a347b0bb
-    @{values}=    Create List              
-    ${entry} =    Get Entries By Path    foobar_group/group_entry         
+    ${value_expected}=    Set Variable        1e73786c-7495-8c4c-9b3d-ff273aad5b54    #subentry
+    @{values}=    Create List  
+    ${path}=    Set Variable    foobar_group/subgroup/subentry  
+    ${entry} =    Get Entries By Path    ${path} 
     ${uuid}=      Get Entry Uuid    ${entry}
     Should Be Equal As Strings    ${value_expected}    ${uuid}   
 

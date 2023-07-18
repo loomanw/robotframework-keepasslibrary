@@ -94,8 +94,8 @@ Get Parent Group
 Get Path
     [Tags]    Get
     [Documentation]    Selected group contains expected path
-    ${group_name}=        Set Variable    foobar_group
-    ${value_expected}=    Set Variable    foobar_group/
+    ${group_name}=        Set Variable    subgroup
+    ${value_expected}=    Set Variable    foobar_group/subgroup
     ${group}=    Get Groups By Name    ${group_name}    first=True     
     ${value}=    Get Group Path    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}  

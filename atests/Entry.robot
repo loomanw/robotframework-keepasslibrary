@@ -226,6 +226,7 @@ Set URL
     Should Be Equal As Strings    ${value_expected}    ${value} 
     
 Set Username
+    [Tags]    Set
     [Documentation]    Selected entry username can be set with a string
     ${entry_title}=       Set Variable    root_entry
     ${value_expected}=    Set Variable    set_foobar_user

@@ -369,6 +369,7 @@ class KeePassGroup(LibraryComponent):
 
     @keyword
     def get_group_path(self, group:Group):
+        
         """Return the path value of the supplied KeePass ``group``
 
            Example: 
@@ -378,7 +379,7 @@ class KeePassGroup(LibraryComponent):
            New in KeePassLibrary 0.3 
         """
         if isinstance(group, Group):
-            return group.path
+            return "/".join(group.path)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
     

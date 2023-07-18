@@ -8,13 +8,13 @@ Documentation    Check KDBX 3 related keywords
 *** Variables ***
 ${KP_DB_BASE}=    ${CURDIR}${/}Data${/}
 
-*** Test Cases ***                    DATABASE               PASSWORD    TRANSFORMED_KEY    KEY_FILE         ENCRYPTION_ALGORITHM    KDF_ALGORITHM    VERSION     
-KDBX v4                               test4.kdbx             password    ${NONE}            test4.key        chacha20                argon2           (4, 0)
-KDBX v4 AES                           test4_aes.kdbx         password    ${NONE}            test4.key        aes256                  argon2           (4, 0)
-KDBX v4 ChaCha                        test4_chacha20.kdbx    password    ${NONE}            test4.key        chacha20                argon2           (4, 0)
-KDBX v4 Twofish                       test4_twofish.kdbx     password    ${NONE}            test4.key        twofish                 argon2           (4, 0)
-KDBX v4 Legacy 64 byte hex keyfile    test4_hex.kdbx         password    ${NONE}            test4_hex.key    chacha20                argon2           (4, 0)
-KDBX v4 Transformed key               test4_hex.kdbx         ${NONE}     ${NONE}            ${NONE}          chacha20                argon2           (4, 0)
+*** Test Cases ***                    DATABASE               PASSWORD    TRANSFORMED_KEY    KEY_FILE             ENCRYPTION_ALGORITHM    KDF_ALGORITHM    VERSION     
+KDBX v4                               test4.kdbx             password    ${NONE}            test4.key            chacha20                argon2           (4, 0)
+KDBX v4 AES                           test4_aes.kdbx         password    ${NONE}            test4.key            aes256                  argon2           (4, 0)
+KDBX v4 ChaCha                        test4_chacha20.kdbx    password    ${NONE}            test4.key            chacha20                argon2           (4, 0)
+KDBX v4 Twofish                       test4_twofish.kdbx     password    ${NONE}            test4.key            twofish                 argon2           (4, 0)
+KDBX v4 Legacy 64 byte hex keyfile    test4_hex.kdbx         password    ${NONE}            test4_hex.key        chacha20                argon2           (4, 0)
+KDBX v4 Transformed key               test4_hex.kdbx         ${NONE}     ${NONE}            ${NONE}              chacha20                argon2           (4, 0)
 
 *** Keywords ***
 Opening database with valid credentials should succeed    
