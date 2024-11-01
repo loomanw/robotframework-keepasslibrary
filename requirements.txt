@@ -1,3 +1,3 @@
-pykeepass==4.0.5
+pykeepass==4.0.7.post1
 robotframework>=3.2.2
 robotframework-pythonlibcore>=3.0.0
