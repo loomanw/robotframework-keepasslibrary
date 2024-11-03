@@ -52,6 +52,8 @@ Get KeePass Database Entry
 
 ---
 ### Versions:
+ - `0.5.0` Update dependencies, rework for pykeepas 4.1, dropped python 3.6 support
+ - `0.4.1` Update dependencies
  - `0.4.0` Update dependencies, rework for pykeepas 4.x with keyfile v2 support, additional test cases 
  - `0.3.1` Update dependencies, tests moved to github actions 
  - `0.3.0` New keywords for accessing entry and group data, rebuild of code using [Python Library Core](https://github.com/robotframework/PythonLibCore).
