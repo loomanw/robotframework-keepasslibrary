@@ -81,7 +81,7 @@ Get Tags
     [Tags]    Get
     [Documentation]    Selected entry contains expected tags
     ${entry_title}=       Set Variable    root_entry
-    ${value_expected}=    Set Variable    ${NONE}
+    ${value_expected}=    Create List     
     ${entry}=    Get Entries By Title    ${entry_title}    first=True     
     ${value}=    Get Entry Tags    ${entry} 
     Should Be Equal As Strings    ${value_expected}    ${value} 
