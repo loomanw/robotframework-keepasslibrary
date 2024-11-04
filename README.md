@@ -52,7 +52,8 @@ Get KeePass Database Entry
 
 ---
 ### Versions:
- - `0.6.0` Update dependencies, Drop Robot Framework 3.2.2 support
+ - `0.7.0` Update dependencies, dropped python 3.7 support
+ - `0.6.0` Update dependencies, dropped Robot Framework 3.2.2 support
  - `0.5.0` Update dependencies, rework for pykeepas 4.1, dropped python 3.6 support
  - `0.4.1` Update dependencies
  - `0.4.0` Update dependencies, rework for pykeepas 4.x with keyfile v2 support, additional test cases 
