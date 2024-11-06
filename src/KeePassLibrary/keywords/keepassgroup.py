@@ -6,7 +6,6 @@ from KeePassLibrary.errors import GroupInvalid
 class KeePassGroup(LibraryComponent):
 
     # ---------- Base Element ----------
-    # TODO: Implented
     # @keyword
     # def _get_group_accessed_time(self, group:Group):
     #     """*DEPRECATED*
@@ -16,7 +15,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _set_group_accessed_time(self, group:Group, value):
     #     """*DEPRECATED*
@@ -26,7 +24,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _get_group_created_time(self, group:Group):
     #     """*DEPRECATED*
@@ -36,7 +33,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _set_group_created_time(self, group:Group, value):
     #     """*DEPRECATED*
@@ -46,7 +42,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _group_delete(self, group:Group):
     #     """Not Implemented
@@ -65,7 +60,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _set_group_expiry_time(self, group:Group, value):
     #     """*DEPRECATED*
@@ -105,7 +99,6 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _get_group_modified_time(self, group:Group):
     #     """*DEPRECATED*
@@ -115,7 +108,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _set_group_modified_time(self, group:Group, value):
     #     """*DEPRECATED*
@@ -155,7 +147,6 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: Implented
     # @keyword
     # def _set_group_uuid(self, group:Group, value):
     #     """*DEPRECATED*
@@ -231,7 +222,6 @@ class KeePassGroup(LibraryComponent):
     #         raise GroupInvalid('Invalid KeePass Group.')
 
     # ---------- Group ----------
-    # TODO: Implented
     # @keyword
     # def _group_append_entry(self, group:Group):
     #     """*DEPRECATED*

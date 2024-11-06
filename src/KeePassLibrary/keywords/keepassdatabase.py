@@ -90,7 +90,6 @@ class KeePassDatabase(LibraryComponent):
         else:
             return self.database.version
 
-    # TODO: Add more documentation
     @keyword
     def get_encryption_algorithm(self):
         """Returns the encryption algorithm used.
@@ -100,7 +99,6 @@ class KeePassDatabase(LibraryComponent):
         else:
             return self.database.encryption_algorithm
 
-    # TODO: Add more documentation
     @keyword
     def get_kdf_algorithm(self):
         """Returns the key transformation algorithm used.
@@ -110,7 +108,6 @@ class KeePassDatabase(LibraryComponent):
         else:
             return self.database.kdf_algorithm
 
-    # TODO: Add more documentation
     @keyword
     def get_transformed_key(self):
         """Returns the transformed key.
@@ -129,7 +126,6 @@ class KeePassDatabase(LibraryComponent):
         else:
             return self.database.tree
 
-    # TODO: Add more documentation
     @keyword
     def get_root_group(self):
         """Returns the root group.

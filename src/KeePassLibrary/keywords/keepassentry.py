@@ -226,7 +226,6 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- History (not fully implemented) ----------
-    # FIXME: not implented
     # @property
     # def history(self):
     #     if self._element.find('History') is not None:
@@ -234,7 +233,6 @@ class KeePassEntry(LibraryComponent):
     #     else:
     #         return []
 
-    # FIXME: not implented
     # @history.setter
     # def history(self, value):
     #     raise NotImplementedError()
@@ -519,14 +517,12 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Expired Time ----------
-    # FIXME: not implented
     # @keyword
     # def get_entry_expiry_time(self, entry:Entry):
     #     """*DEPRECATED*
     #     """
     #     raise NotImplementedYet('this keyword is not implemented.')
 
-    # FIXME: not implented
     # @keyword
     # def set_entry_expiry_time(self, entry:Entry, value):
     #     """*DEPRECATED*
@@ -534,14 +530,12 @@ class KeePassEntry(LibraryComponent):
     #     raise NotImplementedYet('this keyword is not implemented.')
 
     # ---------- Created Time ----------
-    # FIXME: not implented
     # @keyword
     # def get_entry_created_time(self, entry:Entry):
     #     """*DEPRECATED*
     #     """
     #     raise NotImplementedYet('this keyword is not implemented.')
 
-    # FIXME: not implented
     # @keyword
     # def set_entry_created_time(self, entry:Entry, value):
     #     """*DEPRECATED*
@@ -549,14 +543,12 @@ class KeePassEntry(LibraryComponent):
     #     raise NotImplementedYet('this keyword is not implemented.')
 
     # ---------- Last Access Time ----------
-    # FIXME: not implented
     # @keyword
     # def get_entry_last_access_time(self, entry:Entry):
     #     """*DEPRECATED*
     #     """
     #     raise NotImplementedYet('this keyword is not implemented.')
 
-    # FIXME: not implented
     # @keyword
     # def set_entry_last_access_time(self, entry:Entry, value):
     #     """*DEPRECATED*
@@ -564,14 +556,12 @@ class KeePassEntry(LibraryComponent):
     #     raise NotImplementedYet('this keyword is not implemented.')
 
     # ---------- Modified Time ----------
-    # FIXME: not implented
     # @keyword
     # def get_entry_modified_time(self, entry:Entry):
     #     """*DEPRECATED*
     #     """
     #     raise NotImplementedYet('this keyword is not implemented.')
 
-    # FIXME: not implented
     # @keyword
     # def set_entry_modified_time(self, entry:Entry, value):
     #     """*DEPRECATED*
@@ -589,7 +579,6 @@ class KeePassEntry(LibraryComponent):
     #         raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Attachements (not implemented) ----------
-    # TODO: Implented
     # @keyword
     # def get_entry_attachments(self, entry:Entry):
     #     """*DEPRECATED*
@@ -604,7 +593,6 @@ class KeePassEntry(LibraryComponent):
     #         recursive=False
     #     )
 
-    # TODO: Implented
     # @keyword
     # def add_entry_attachment(self, entry:Entry, ide):
     #     """*DEPRECATED*
@@ -619,7 +607,6 @@ class KeePassEntry(LibraryComponent):
     #     self._element.append(element)
     #     return pykeepass.attachment.Attachment(element=element, kp=self._kp)
 
-    # TODO: Implented
     # @keyword
     # def remove_entry_attachment(self, entry:Entry, ide):
     #     """*DEPRECATED*

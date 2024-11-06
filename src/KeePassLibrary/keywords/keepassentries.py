@@ -214,7 +214,6 @@ class KeePassEntries(LibraryComponent):
                                                       history,
                                                       first)
 
-    # TODO: Add documentation
     @keyword
     def get_entries_by_string(self, string, regex=False, flags=None,
                               group=None, history=False, first=False):
