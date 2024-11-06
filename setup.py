@@ -38,21 +38,22 @@ with open(join(CURDIR, 'README.md')) as f:
 with open(join(CURDIR, 'requirements.txt')) as f:
     REQUIREMENTS = f.read().splitlines()
 
+
 setup(
-    name                            = "robotframework-keepasslibrary",
-    version                         = VERSION,
-    author                          = "William Looman",
-    author_email                    = "wlooman@gmail.com",
-    description                     = "Robot Framework library for working with KeePass Database",
-    long_description                = DESCRIPTION,
-    long_description_content_type   = "text/markdown",
-    url                             = "https://github.com/loomanw/robotframework-keepasslibrary",
-    classifiers                     = CLASSIFIERS,
-    python_requires                 = '>=3.8, <4',
-    install_requires                = REQUIREMENTS,
-    package_dir                     = {'': 'src'},
-    packages                        = find_packages('src'),
-    package_data                    = {
+    name                            = "robotframework-keepasslibrary",  # noqa: E251, E221
+    version                         = VERSION,  # noqa: E251, E221
+    author                          = "William Looman",  # noqa: E251, E221
+    author_email                    = "wlooman@gmail.com",  # noqa: E251, E221
+    description                     = "Robot Framework library for working with KeePass Database",  # noqa: E251, E221
+    long_description                = DESCRIPTION,  # noqa: E251, E221
+    long_description_content_type   = "text/markdown",  # noqa: E251, E221
+    url                             = "https://github.com/loomanw/robotframework-keepasslibrary",  # noqa: E251, E221
+    classifiers                     = CLASSIFIERS,  # noqa: E251, E221
+    python_requires                 = '>=3.8, <4',  # noqa: E251, E221
+    install_requires                = REQUIREMENTS,  # noqa: E251, E221
+    package_dir                     = {'': 'src'},  # noqa: E251, E221
+    packages                        = find_packages('src'),  # noqa: E251, E221
+    package_data                    = {  # noqa: E251, E221
         'KeePassLibrary':
             ['*.pyi']
     }

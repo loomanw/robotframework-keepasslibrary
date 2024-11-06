@@ -1,5 +1,6 @@
 from pykeepass import PyKeePass
 
+
 class ContextAware:
     def __init__(self, ctx):
         """Base class exposing attributes from the common context.
