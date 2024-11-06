@@ -48,7 +48,7 @@ setup(
     long_description_content_type   = "text/markdown",
     url                             = "https://github.com/loomanw/robotframework-keepasslibrary",
     classifiers                     = CLASSIFIERS,
-    python_requires                 = '>=3.7, <4',
+    python_requires                 = '>=3.8, <4',
     install_requires                = REQUIREMENTS,
     package_dir                     = {'': 'src'},
     packages                        = find_packages('src'),
