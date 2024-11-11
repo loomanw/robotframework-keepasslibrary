@@ -70,15 +70,6 @@ class KeePassDatabase(LibraryComponent):
             self.database.dump_xml(path)
 
     @keyword
-    def dump_xml(self, outfile):
-        """*DEPRECATED in KeePassLibrary 0.4.0*, Use `Save Xml` instead.
-        """
-        if self.database is None:
-            raise DatabaseNotOpened('No KeePass Database Opened.')
-        else:
-            self.database.dump_xml(outfile)
-
-    @keyword
     def get_version(self):
         """Returns the version of the KeePass database loaded with `Open Keepass Database`
         | =Return=   | =Description= |
