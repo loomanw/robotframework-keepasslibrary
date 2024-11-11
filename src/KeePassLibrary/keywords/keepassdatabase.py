@@ -61,8 +61,8 @@ class KeePassDatabase(LibraryComponent):
         """Save the content of the database to a the specified file.
            NOTE: The resulting file is unencrypted!!!
 
-        | =Parameter= | =Description=                        |
-        | ``outfile`` | specifies the path of the XML file   |
+        | =Parameter= | =Description=                      |
+        | ``outfile`` | specifies the path of the XML file |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')

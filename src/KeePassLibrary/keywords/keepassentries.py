@@ -12,31 +12,31 @@ class KeePassEntries(LibraryComponent):
                     path=None, group=None, **kwargs):
         """Return a list of entries in the open KeePass database matching the given arguments.\n
 
-           The ``history`` argument can be set to ``True`` to include history entries in the search, default value is False.\n
-           The ``first`` argument can be set ``True`` this has the effect that only the first match will be returned, default value is False.\n
-           The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is False.\n
-           The ``path`` argument sets the path which the entries should match, default value is None.\n
-           The ``group`` argument has to match an existing Group is supplied only entries which are a direct child will be searched, default value is None. See ``Get Groups`` for information about selecting a group \n
-           See the `Entries and Groups` section for more information about Entries and Groups.\n
+        The ``history`` argument can be set to ``True`` to include history entries in the search, default value is False.\n
+        The ``first`` argument can be set ``True`` this has the effect that only the first match will be returned, default value is False.\n
+        The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is False.\n
+        The ``path`` argument sets the path which the entries should match, default value is None.\n
+        The ``group`` argument has to match an existing Group is supplied only entries which are a direct child will be searched, default value is None. See ``Get Groups`` for information about selecting a group \n
+        See the `Entries and Groups` section for more information about Entries and Groups.\n
 
-           *Additional arguments:*
-           - The ``regex`` argument can be set to ``True`` this enables regular expression searching, default value is False.
-           - The ``flags`` argument can be set to modify the regular expression search, default value is None. See the `Regular expression` section for more information about about the ``regex`` and ``flags`` syntax.
-           - The ``title`` argument can be given to search matching titles, default value is None.
-           - The ``username`` argument sets the username which the entries should match, default value is None.
-           - The ``password`` argument sets the password which the entries should match, default value is None.
-           - The ``url`` argument sets the url which the entries should match, default value is None.
-           - The ``notes`` argument sets the notes which the entries should match, default value is None.
-           - The ``uuid`` argument sets the uuid which the entries should match, default value is None.
+        *Additional arguments:*
+        - The ``regex`` argument can be set to ``True`` this enables regular expression searching, default value is False.
+        - The ``flags`` argument can be set to modify the regular expression search, default value is None. See the `Regular expression` section for more information about about the ``regex`` and ``flags`` syntax.
+        - The ``title`` argument can be given to search matching titles, default value is None.
+        - The ``username`` argument sets the username which the entries should match, default value is None.
+        - The ``password`` argument sets the password which the entries should match, default value is None.
+        - The ``url`` argument sets the url which the entries should match, default value is None.
+        - The ``notes`` argument sets the notes which the entries should match, default value is None.
+        - The ``uuid`` argument sets the uuid which the entries should match, default value is None.
 
-           Examples:
-           | @{entries}= | `Get Entries` | title=.*entry | regex=True |
-           | ${entry}=   | `Get Entries` | title=.*entry | regex=True | first=True |
-           | @{entries}= | `Get Entries` | title=.*entry | username=.*user     | regex=True |
-           | @{entries}= | `Get Entries` | title=.*entry | notes=.*entry notes | regex=True |
+        Examples:
+        | @{entries}= | `Get Entries` | title=.*entry | regex=True |
+        | ${entry}=   | `Get Entries` | title=.*entry | regex=True | first=True |
+        | @{entries}= | `Get Entries` | title=.*entry | username=.*user     | regex=True |
+        | @{entries}= | `Get Entries` | title=.*entry | notes=.*entry notes | regex=True |
 
-           | ${group}=   | Get Groups By Name      | subgroup | first=True |
-           | ${entries}= | Get Entries By Username | foobar   | group=${group} | first=True |
+        | ${group}=   | Get Groups By Name      | subgroup | first=True |
+        | ${entries}= | Get Entries By Username | foobar   | group=${group} | first=True |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -54,10 +54,10 @@ class KeePassEntries(LibraryComponent):
     def get_entries_all(self):
         """Return a list of all entries in the open KeePass database.\n
 
-           See the `Entries and Groups` section for more information about Entries and Groups.\n
+        See the `Entries and Groups` section for more information about Entries and Groups.\n
 
-           Example:
-           | ${entries} = | `Get Entries All` |
+        Example:
+        | ${entries} = | `Get Entries All` |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -70,14 +70,14 @@ class KeePassEntries(LibraryComponent):
                              group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``title``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | @{entries} = | `Get Entries By Title` | root_entry |
-           => all entries with title: root_entry
+        Example:
+        | @{entries} = | `Get Entries By Title` | root_entry |
+        => all entries with title: root_entry
 
-           | ${entry} =   | `Get Entries By Title` | root_entry | first=True |
-           => first entry with title: root_entry
+        | ${entry} =   | `Get Entries By Title` | root_entry | first=True |
+        => first entry with title: root_entry
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -94,10 +94,10 @@ class KeePassEntries(LibraryComponent):
                                 group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``username``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | @{entries} = | `Get Entries By Username` | foobar_user |
+        Example:
+        | @{entries} = | `Get Entries By Username` | foobar_user |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -114,10 +114,10 @@ class KeePassEntries(LibraryComponent):
                                 group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``password``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | @{entries} = | `Get Entries By Password` | passw0rd |
+        Example:
+        | @{entries} = | `Get Entries By Password` | passw0rd |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -134,10 +134,10 @@ class KeePassEntries(LibraryComponent):
                            group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``url``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | @{entries} = | `Get Entries By Url` | http://example.com |
+        Example:
+        | @{entries} = | `Get Entries By Url` | http://example.com |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -154,10 +154,10 @@ class KeePassEntries(LibraryComponent):
                              group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``notes``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | @{entries} = | `Get Entries By Notes` | root entry notes |
+        Example:
+        | @{entries} = | `Get Entries By Notes` | root entry notes |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -175,12 +175,12 @@ class KeePassEntries(LibraryComponent):
                             group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``path``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Note, only 1 entry can be selected by path
+        Note, only 1 entry can be selected by path
 
-           Example:
-           | ${entry} = | Get Entries By Path | foobar_group/group_entry |
+        Example:
+        | ${entry} = | Get Entries By Path | foobar_group/group_entry |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -198,10 +198,10 @@ class KeePassEntries(LibraryComponent):
                             group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``uuid``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | ${entries} = | Get Entries By Uuid | 12345678-1234-5678-1234-567812345678 |
+        Example:
+        | ${entries} = | Get Entries By Uuid | 12345678-1234-5678-1234-567812345678 |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -219,20 +219,20 @@ class KeePassEntries(LibraryComponent):
                               group=None, history=False, first=False):
         """Return a list of entries in the open KeePass database matching the given ``string``.\n
 
-           See `Get Entries` for more details about optional arguments.
+        See `Get Entries` for more details about optional arguments.
 
-           Example:
-           | &{string}= | Create Dictionary | UserName=foobar_user | Title=group_entry |
+        Example:
+        | &{string}= | Create Dictionary | UserName=foobar_user | Title=group_entry |
 
-           Valid dictonary keys:
-           | Title |
-           | UserName |
-           | Password |
-           | URL |
-           | Notes |
-           | IconID |
-           | Tags |
-           | History |
+        Valid dictonary keys:
+        | Title |
+        | UserName |
+        | Password |
+        | URL |
+        | Notes |
+        | IconID |
+        | Tags |
+        | History |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')

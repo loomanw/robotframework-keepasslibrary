@@ -3,6 +3,7 @@ Documentation       Check Group related keywords
 
 Library             KeePassLibrary
 Library             Collections
+Library             DateTime
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database
@@ -18,6 +19,36 @@ ${KEEPASS_PASSWORD}     password
 
 
 *** Test Cases ***
+Get Created Time
+    [Documentation]    Selected group contains expected created time properties.
+    [Tags]    get
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${mtime}=    Get Group Created Time    ${group}
+    Should Be Equal As Integers    ${mtime.year}           2017
+    Should Be Equal As Integers    ${mtime.month}          3
+    Should Be Equal As Integers    ${mtime.day}            13
+    Should Be Equal As Integers    ${mtime.hour}           1
+    Should Be Equal As Integers    ${mtime.minute}         8
+    Should Be Equal As Integers    ${mtime.second}         13
+    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Strings     ${mtime.tzinfo}         UTC
+
+Get Expiry Time
+    [Documentation]    Selected group contains expected expiry time properties.
+    [Tags]    get
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${mtime}=    Get Group Expiry Time    ${group}
+    Should Be Equal As Integers    ${mtime.year}           2017
+    Should Be Equal As Integers    ${mtime.month}          3
+    Should Be Equal As Integers    ${mtime.day}            13
+    Should Be Equal As Integers    ${mtime.hour}           1
+    Should Be Equal As Integers    ${mtime.minute}         8
+    Should Be Equal As Integers    ${mtime.second}         13
+    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Strings     ${mtime.tzinfo}         UTC
+
 Get Expires
     [Documentation]    Selected group contains expected expires
     [Tags]    set
@@ -67,6 +98,36 @@ Get Is Root Group
     ${group}=    Get Groups By Name    ${group_name}    first=True
     ${value}=    Get Group Is Root Group    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
+
+Get Last Accessed Time
+    [Documentation]    Selected entry contains expected last accessed time properties.
+    [Tags]    get
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True  
+    ${mtime}=    Get Group Accessed Time    ${group}
+    Should Be Equal As Integers    ${mtime.year}           2020
+    Should Be Equal As Integers    ${mtime.month}          10
+    Should Be Equal As Integers    ${mtime.day}            24
+    Should Be Equal As Integers    ${mtime.hour}           14
+    Should Be Equal As Integers    ${mtime.minute}         16
+    Should Be Equal As Integers    ${mtime.second}         38
+    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Strings     ${mtime.tzinfo}         UTC
+
+Get Modified Time
+    [Documentation]    Selected entry contains expected modified time properties.
+    [Tags]    get
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True 
+    ${mtime}=    Get Group Modified Time    ${group}
+    Should Be Equal As Integers    ${mtime.year}           2017
+    Should Be Equal As Integers    ${mtime.month}          3
+    Should Be Equal As Integers    ${mtime.day}            13
+    Should Be Equal As Integers    ${mtime.hour}           1
+    Should Be Equal As Integers    ${mtime.minute}         8
+    Should Be Equal As Integers    ${mtime.second}         43
+    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Name
     [Documentation]    Selected group contains expected rname
@@ -128,6 +189,44 @@ Get Uuid
     ${value}=    Get Group Uuid    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
+Group Should Be Expired
+    [Documentation]    Selected group should be expired.
+    [Tags]    should be
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    Set Group Expires    ${group}     ${TRUE} 
+    Group Should Be Expired    ${group}
+
+Group Should Not Be Expired
+    [Documentation]    Selected entry should not be expired.
+    [Tags]    should not be
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    Set Group Expires    ${group}     ${FALSE} 
+    Group Should Not Be Expired    ${group}
+
+Set Accessed Time
+    [Documentation]    Selected group accessed time property can be set with a datetime object.
+    [Tags]    set
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${mtime1}=    Get Group Accessed Time    ${group}    UTC
+    ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Group Accessed Time    ${group}    ${value}    local
+    ${mtime2}=    Get Group Accessed Time    ${group}
+    Should Not Be Equal    ${mtime1}    ${mtime2}    
+
+Set Created Time
+    [Documentation]    Selected group created time property can be set with a datetime object.
+    [Tags]    set
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${mtime1}=    Get Group Created Time    ${group}    UTC
+    ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Group Created Time    ${group}    ${datetime}    local    
+    ${mtime2}=    Get Group Created Time    ${group}
+    Should Not Be Equal    ${mtime1}    ${mtime2} 
+
 Set Expires
     [Documentation]    Selected group expires can be set
     [Tags]    set
@@ -137,6 +236,17 @@ Set Expires
     Set Group Expires    ${group}    ${value_expected}
     ${value}=    Get Group Expires    ${group}
     Should Be Equal    ${value_expected}    ${value}
+
+Set Expiry Time
+    [Documentation]    Selected entry expiry time property can be set with a datetime object.
+    [Tags]    set
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${mtime1}=    Get Group Expiry Time    ${group}    UTC
+    ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Group Expiry Time    ${group}    ${datetime}    local
+    ${mtime2}=    Get Group Expiry Time    ${group}
+    Should Not Be Equal    ${mtime1}    ${mtime2} 
 
 Set Icon
     [Documentation]    Selected group notes can be set
@@ -167,3 +277,46 @@ Set Notes
     Set Group Notes    ${group}    ${value_expected}
     ${value}=    Get Group Notes    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
+
+Set Modified Time
+    [Documentation]    Selected entry modified time property can be set with a datetime object.
+    [Tags]    set
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${mtime1}=    Get Group Modified Time    ${group}    UTC
+    ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Group Modified Time    ${group}    ${datetime}    local
+    ${mtime2}=    Get Group Modified Time    ${group}
+    Should Not Be Equal    ${mtime1}    ${mtime2}
+
+Touch Modify False
+    [Documentation]    Selected group is touched and not modified
+    [Tags]    touch
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${atime1}=    Get Group Accessed Time   ${group}
+    ${mtime1}=    Get Group Modified Time    ${group}
+    ${ctime1}=    Get Group Created Time    ${group}
+    Touch Group    ${group}    False
+    ${atime2}=    Get Group Accessed Time    ${group}
+    ${mtime2}=    Get Group Modified Time    ${group}
+    ${ctime2}=    Get Group Created Time    ${group}
+    Should Not Be Equal    ${atime1}    ${atime2}         
+    Should Be Equal    ${mtime1}    ${mtime2}         
+    Should Be Equal    ${ctime1}    ${ctime2}         
+
+Touch Modify True
+    [Documentation]    Selected group is touched and modified
+    [Tags]    touch
+    ${group_name}=    Set Variable    foobar_group
+    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${atime1}=    Get Group Accessed Time   ${group}
+    ${mtime1}=    Get Group Modified Time    ${group}
+    ${ctime1}=    Get Group Created Time    ${group}
+    Touch Group    ${group}    True
+    ${atime2}=    Get Group Accessed Time    ${group}
+    ${mtime2}=    Get Group Modified Time    ${group}
+    ${ctime2}=    Get Group Created Time    ${group}
+    Should Not Be Equal    ${atime1}    ${atime2}         
+    Should Not Be Equal    ${mtime1}    ${mtime2}         
+    Should Be Equal    ${ctime1}    ${ctime2} 

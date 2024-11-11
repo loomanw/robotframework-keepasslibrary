@@ -3,6 +3,7 @@ Documentation       Check Entry related keywords
 
 Library             KeePassLibrary
 Library             Collections
+Library             DateTime
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database
@@ -18,6 +19,37 @@ ${KEEPASS_PASSWORD}     password
 
 
 *** Test Cases ***
+Entry Should Be Expired
+    [Documentation]    Selected entry should be expired.
+    [Tags]    should be
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    Set Entry Expires    ${entry}     ${TRUE} 
+    Entry Should Be Expired    ${entry}
+
+Entry Should Not Be Expired
+    [Documentation]    Selected entry should not be expired.
+    [Tags]    should not be
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    Set Entry Expires    ${entry}     ${FALSE} 
+    Entry Should Not Be Expired    ${entry}
+    
+Get Created Time
+    [Documentation]    Selected entry contains expected created time properties.
+    [Tags]    get
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime}=    Get Entry Created Time    ${entry}
+    Should Be Equal As Integers    ${mtime.year}            2017
+    Should Be Equal As Integers    ${mtime.month}           3
+    Should Be Equal As Integers    ${mtime.day}             13
+    Should Be Equal As Integers    ${mtime.hour}            1
+    Should Be Equal As Integers    ${mtime.minute}          8
+    Should Be Equal As Integers    ${mtime.second}          46
+    Should Be Equal As Integers    ${mtime.microsecond}     0 
+    Should Be Equal As Strings     ${mtime.tzinfo}          UTC
+
 Get Custom Properties
     [Documentation]    Selected entry contains expected custom properties.
     [Tags]    get
@@ -54,6 +86,51 @@ Get Expires
     ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${value}=    Get Entry Expires    ${entry}
     Should Be Equal As Strings    ${value_expected}    ${value}
+
+Get Expiry Time
+    [Documentation]    Selected entry contains expected expiry time properties.
+    [Tags]    get
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime}=    Get Entry Expiry Time    ${entry}
+    Should Be Equal As Integers    ${mtime.year}           2017
+    Should Be Equal As Integers    ${mtime.month}          3
+    Should Be Equal As Integers    ${mtime.day}            13
+    Should Be Equal As Integers    ${mtime.hour}           1
+    Should Be Equal As Integers    ${mtime.minute}         8
+    Should Be Equal As Integers    ${mtime.second}         46
+    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Strings     ${mtime.tzinfo}         UTC
+
+Get Last Access Time
+    [Documentation]    Selected entry contains expected last access time properties.
+    [Tags]    get
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime}=    Get Entry Accessed Time    ${entry}
+    Should Be Equal As Integers    ${mtime.year}           2020
+    Should Be Equal As Integers    ${mtime.month}          10
+    Should Be Equal As Integers    ${mtime.day}            24
+    Should Be Equal As Integers    ${mtime.hour}           13
+    Should Be Equal As Integers    ${mtime.minute}         2
+    Should Be Equal As Integers    ${mtime.second}         6
+    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Strings     ${mtime.tzinfo}         UTC
+
+Get Modified Time
+    [Documentation]    Selected entry contains expected modified time properties.
+    [Tags]    get
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime}=    Get Entry Modified Time    ${entry}
+    Should Be Equal As Integers    ${mtime.year}            2020
+    Should Be Equal As Integers    ${mtime.month}           10
+    Should Be Equal As Integers    ${mtime.day}             24
+    Should Be Equal As Integers    ${mtime.hour}            12
+    Should Be Equal As Integers    ${mtime.minute}          15
+    Should Be Equal As Integers    ${mtime.second}          54
+    Should Be Equal As Integers    ${mtime.microsecond}     0 
+    Should Be Equal As Strings     ${mtime.tzinfo}          UTC
 
 Get Icon
     [Documentation]    Selected entry contains expected icon
@@ -127,6 +204,17 @@ Get Uuid
     ${value}=    Get Entry Uuid    ${entry}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
+Set Accessed Time
+    [Documentation]    Selected entry accessed time property can be set with a datetime object.
+    [Tags]    set
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime1}=    Get Entry Accessed Time    ${entry}    UTC
+    ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Entry Accessed Time    ${entry}    ${value}    local
+    ${mtime2}=    Get Entry Accessed Time    ${entry}
+    Should Not Be Equal    ${mtime1}    ${mtime2}    
+
 Set Custom Property Existing
     [Documentation]    Selected entry custom porperty (existing) can be set with a string
     [Tags]    set
@@ -149,6 +237,17 @@ Set Custom Property New
     ${value}=    Get Entry Custom Property    ${entry}    ${custom_property_key}
     Should Be Equal    ${value_expected}    ${value}
 
+Set Created Time
+    [Documentation]    Selected entry created time property can be set with a datetime object.
+    [Tags]    set
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime1}=    Get Entry Created Time    ${entry}    UTC
+    ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Entry Created Time    ${entry}    ${value}    local
+    ${mtime2}=    Get Entry Created Time    ${entry}
+    Should Not Be Equal    ${mtime1}    ${mtime2} 
+
 Set Expires
     [Documentation]    Selected entry expires can be set with a boolean
     [Tags]    set
@@ -159,6 +258,17 @@ Set Expires
     ${value}=    Get Entry Expires    ${entry}
     Should Be Equal    ${value_expected}    ${value}
 
+Set Expiry Time
+    [Documentation]    Selected entry expiry time property can be set with a datetime object.
+    [Tags]    set
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime1}=    Get Entry Expiry Time    ${entry}    UTC
+    ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Entry Expiry Time    ${entry}    ${value}    local
+    ${mtime2}=    Get Entry Expiry Time    ${entry}
+    Should Not Be Equal    ${mtime1}    ${mtime2} 
+
 Set Icon
     [Documentation]    Selected entry icon can be set with a integer
     [Tags]    set
@@ -168,6 +278,17 @@ Set Icon
     Set Entry Icon    ${entry}    ${value_expected}
     ${value}=    Get Entry Icon    ${entry}
     Should Be Equal As Integers    ${value_expected}    ${value}
+
+Set Modified Time
+    [Documentation]    Selected entry modified time property can be set with a datetime object.
+    [Tags]    set
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${mtime1}=    Get Entry Modified Time    ${entry}    UTC
+    ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
+    Set Entry Modified Time    ${entry}    ${value}    local
+    ${mtime2}=    Get Entry Modified Time    ${entry}
+    Should Not Be Equal    ${mtime1}    ${mtime2}    
 
 Set Notes
     [Documentation]    Selected entry notes can be set with a string
@@ -239,3 +360,35 @@ Set Username
     Set Entry Username    ${entry}    ${value_expected}
     ${value}=    Get Entry Username    ${entry}
     Should Be Equal As Strings    ${value_expected}    ${value}
+
+Touch Modify False
+    [Documentation]    Selected entry is touched and not modified
+    [Tags]    touch
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=     Get Entries By Title    ${entry_title}    first=True   
+    ${atime1}=    Get Entry Accessed Time    ${entry}
+    ${mtime1}=    Get Entry Modified Time    ${entry}
+    ${ctime1}=    Get Entry Created Time    ${entry}
+    Touch Entry   ${entry}    False
+    ${atime2}=    Get Entry Accessed Time    ${entry}
+    ${mtime2}=    Get Entry Modified Time    ${entry}
+    ${ctime2}=    Get Entry Created Time    ${entry}
+    Should Not Be Equal    ${atime1}    ${atime2}         
+    Should Be Equal    ${mtime1}    ${mtime2}         
+    Should Be Equal    ${ctime1}    ${ctime2}         
+
+Touch Modify True
+    [Documentation]    Selected entry is touched and modified
+    [Tags]    touch
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=     Get Entries By Title    ${entry_title}    first=True   
+    ${atime1}=    Get Entry Accessed Time    ${entry}
+    ${mtime1}=    Get Entry Modified Time    ${entry}
+    ${ctime1}=    Get Entry Created Time    ${entry}
+    Touch Entry    ${entry}    True
+    ${atime2}=    Get Entry Accessed Time    ${entry}
+    ${mtime2}=    Get Entry Modified Time    ${entry}
+    ${ctime2}=    Get Entry Created Time    ${entry}
+    Should Not Be Equal    ${atime1}    ${atime2}         
+    Should Not Be Equal    ${mtime1}    ${mtime2}         
+    Should Be Equal    ${ctime1}    ${ctime2}

@@ -24,3 +24,11 @@ class NotImplementedYet(KeepassLibraryException):
 
 class DeprecatedKeyword(KeepassLibraryException):
     pass
+
+
+class DateTimeInvalid(KeepassLibraryException):
+    pass
+
+
+class TimeZoneInvalid(KeepassLibraryException):
+    pass

@@ -1,6 +1,7 @@
 """Library components."""
-from KeePassLibrary.base import keyword, LibraryComponent, Entry
+from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
 from KeePassLibrary.errors import EntryInvalid
+from KeePassLibrary.timezone import prepare_set_timezone, convert_datetime_timezone
 
 
 class KeePassEntry(LibraryComponent):
@@ -10,13 +11,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- Title ----------
     @keyword
     def get_entry_title(self, entry: Entry):
-        """Return the title value of the supplied KeePass ``entry``
+        """Return the title value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Title`      | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Title`      | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.title
@@ -25,13 +26,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_title(self, entry: Entry, value):
-        """Set the title value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the title value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Title` | New Title                                        |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Title` | New Title                                        |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.title = value
@@ -41,13 +42,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- Username ----------
     @keyword
     def get_entry_username(self, entry: Entry):
-        """Return the username value of the supplied KeePass ``entry``
+        """Return the username value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Username`   | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Username`   | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.username
@@ -56,13 +57,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_username(self, entry: Entry, value):
-        """Set the username value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the username value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Username` | New Username                                     |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Username` | New Username                                     |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.username = value
@@ -72,13 +73,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- Password ----------
     @keyword
     def get_entry_password(self, entry: Entry):
-        """Return the password value of the supplied KeePass ``entry``
+        """Return the password value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Password`   | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Password`   | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.password
@@ -87,13 +88,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_password(self, entry: Entry, value):
-        """Set the Password value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the Password value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Password` | N3w Passw0rd                                     |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Password` | N3w Passw0rd                                     |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.password = value
@@ -103,13 +104,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- URL ----------
     @keyword
     def get_entry_url(self, entry: Entry):
-        """Return the URL value of the supplied KeePass ``entry``
+        """Return the URL value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Url`        | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Url`        | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.url
@@ -118,13 +119,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_url(self, entry: Entry, value):
-        """Set the URL value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the URL value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =      | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Url` | https://keepass.info/                            |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =      | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Url` | https://keepass.info/                            |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.url = value
@@ -134,13 +135,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- Notes ----------
     @keyword
     def get_entry_notes(self, entry: Entry):
-        """Return the notes value of the supplied KeePass ``entry``
+        """Return the notes value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Notes`      | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Notes`      | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.notes
@@ -149,13 +150,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_notes(self, entry: Entry, value):
-        """Set the notes value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the notes value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Notes` | New\\nnotes                                      |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Notes` | New\\nnotes                                      |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.notes = value
@@ -165,13 +166,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- Icon ----------
     @keyword
     def get_entry_icon(self, entry: Entry):
-        """Return the icon  valueof the supplied KeePass ``entry``
+        """Return the icon  valueof the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Icon`       | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Icon`       | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.icon
@@ -180,13 +181,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_icon(self, entry: Entry, value):
-        """Set the icon value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the icon value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Icon`  | 20                                  | #Gear icon |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Icon`  | 20                                  | #Gear icon |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.icon = value
@@ -196,13 +197,13 @@ class KeePassEntry(LibraryComponent):
     # ---------- Tags (not implemented) ----------
     @keyword
     def get_entry_tags(self, entry: Entry):
-        """Return a list with tags of the supplied KeePass ``entry``
+        """Return a list with tags of the supplied KeePass ``entry``.
 
-            Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True |
-           | ${value} = | `Get Entry Tags`       | ${entry}                |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Tags`       | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.tags
@@ -211,14 +212,14 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def set_entry_tags(self, entry: Entry, value):
-        """Set the tags value of the supplied KeePass ``entry`` to the given ``value``
+        """Set the tags value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | @{tags}=       | Create List | tag1     | tag2 |
-           | Set Entry Tags | ${entry}   | ${tags}   | |
-           | Set Entry Tags | ${entry}   | tag1;tag2 | |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | @{tags}=       | Create List | tag1     | tag2 |
+        | Set Entry Tags | ${entry}   | ${tags}   | |
+        | Set Entry Tags | ${entry}   | tag1;tag2 | |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.tags = value
@@ -259,7 +260,6 @@ class KeePassEntry(LibraryComponent):
     #        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
     #        | `Entry Should Be History Entry`     | ${entry}                |
     #
-    #        New in KeePassLibrary 0.3
     #     """
     #     if isinstance(entry, Entry):
     #         if not entry.is_a_history_entry:
@@ -275,7 +275,6 @@ class KeePassEntry(LibraryComponent):
     #        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
     #        | `Entry Should Not Be History Entry` | ${entry}                |
     #
-    #        New in KeePassLibrary 0.3
     #     """
     #     if isinstance(entry, Entry):
     #         if entry.is_a_history_entry:
@@ -333,11 +332,11 @@ class KeePassEntry(LibraryComponent):
     def set_entry_custom_property(self, entry: Entry, key, value):
         """Sets property ``key`` of the supplied ``entry`` to ``value``.
 
-           Example:
-           | ${entry} =                  | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Custom Property` | new_field_name         | new_field_value         |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =                  | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Custom Property` | new_field_name         | new_field_value         |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.set_custom_property(key, value)
@@ -346,13 +345,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def get_entry_custom_property(self, entry: Entry, key):
-        """Return the value from a custom property matching the given ``key`` of the supplied ``entry``
+        """Return the value from a custom property matching the given ``key`` of the supplied ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title`      | root_entry | first=True       |
-           | ${value} = | `Get Entry Custom Property` | ${entry}   | foobar_attribute |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title`      | root_entry | first=True       |
+        | ${value} = | `Get Entry Custom Property` | ${entry}   | foobar_attribute |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.get_custom_property(key)
@@ -361,13 +360,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def remove_entry_custom_property(self, entry: Entry, key):
-        """Removes a custom property matching the given key of the supplied KeePass ``entry``
+        """Removes a custom property matching the given key of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} =                     | `Get Entries By Title`      | root_entry | first=True       |
-           | `Remove Entry Custom Property` | ${entry}                    | foobar_attribute              |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =                     | `Get Entries By Title` | root_entry | first=True |
+        | `Remove Entry Custom Property` | ${entry}               | foobar_attribute        |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.delete_custom_property(key)
@@ -376,13 +375,13 @@ class KeePassEntry(LibraryComponent):
 
     @keyword
     def get_entry_custom_properties(self, entry: Entry):
-        """Return a dictonary with all custom properties of the supplied KeePass ``entry``
+        """Return a dictonary with all custom properties of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title`        | root_entry | first=True       |
-           | ${value} = | `Get Entry Custom Properties` | ${entry}                      |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title`        | root_entry | first=True |
+        | ${value} = | `Get Entry Custom Properties` | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.custom_properties
@@ -404,28 +403,19 @@ class KeePassEntry(LibraryComponent):
     #         'uuid': 'I',
     #     }
     #     return '{{REF:{}@I:{}}}'.format(attribute_to_field[attribute], self.uuid.hex.upper())
-    # ---------- (parent)Group ----------
 
-    # ---------- Dump XML (not implemented) ----------
-    # @keyword
-    # def get_entry_xml(self, entry:Entry, pretty_print=False):
-    #     """Return the XML of the supplied KeePass ``entry``
-    #     """
-    #     if isinstance(entry, Entry):
-    #         entry.dump_xml(pretty_print)
-    #     else:
-    #         raise EntryInvalid('Invalid KeePass Entry.')
+    # ---------- (parent)Group ----------
 
     # ---------- UUID ----------
     @keyword
     def get_entry_uuid(self, entry: Entry):
-        """Return the UUID value of the supplied KeePass ``entry``
+        """Return the UUID value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True       |
-           | ${value} = | `Get Entry Uuid`       | ${entry}                      |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Uuid`       | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return str(entry.uuid)
@@ -444,57 +434,65 @@ class KeePassEntry(LibraryComponent):
     # ---------- Expired ----------
     @keyword
     def get_entry_expired(self, entry: Entry):
-        """Return expired value of the supplied KeePass ``entry``
+        """Return expired value of the supplied KeePass ``entry``.
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True       |
-           | ${value} = | `Get Entry Expired`    | ${entry}                      |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Expired`    | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.expired
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
-    # @keyword
-    # def entry_should_be_expired(self, entry:Entry, message=None):
-    #     """Fails if the specified entry is not expired.
-    #
-    #        Example:
-    #        | ${entry} = | `Get Entries By Title` | root_entry | first=True       |
-    #        | ${value} = | `Get Entry Expired`    | ${entry}                      |
-    #
-    #        New in KeePassLibrary 0.3
-    #     """
-    #     if isinstance(entry, Entry):
-    #         if is_noney(message):
-    #             message = f"The element '{entrylocator}' should be visible, but it is not."
-    #         raise AssertionError(message)
-    #     else:
-    #         raise EntryInvalid('Invalid KeePass Entry.')
+    @keyword
+    def entry_should_be_expired(self, entry: Entry, msg=None):
+        """Fails if the specified entry is not expired.
 
-    # @keyword
-    # def entry_should_not_be_expired(self, entry:Entry):
-    #     """Verifies that the specified entry is not expired.
-    #
-    #        New in KeePassLibrary 0.3
-    #     """
-    #     if isinstance(entry, Entry):
-    #         return not entry.expired
-    #     else:
-    #         raise EntryInvalid('Invalid KeePass Entry.')
+        Example:
+        | ${entry} =              | `Get Entries By Title` | root_entry | first=True |
+        | Set Entry Expires       | ${entry}               | ${TRUE}                 |
+        | Entry Should Be Expired | ${entry}                                         |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            if not entry.expired:
+                message = "The entry should be expired, but it is not."
+                raise AssertionError(msg or message)
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def entry_should_not_be_expired(self, entry: Entry, msg=None):
+        """Fails if the specified entry is expired.
+
+        Example:
+        | ${entry} =                  | `Get Entries By Title` | root_entry | first=True |
+        | Set Entry Expires           | ${entry}               | ${TRUE}                 |
+        | Entry Should Not Be Expired | ${entry}                                         |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            if entry.expired:
+                message = "The entry should not be expired, but it is."
+                raise AssertionError(msg or message)
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Expires ----------
     @keyword
     def set_entry_expires(self, entry: Entry, value: bool):
         """Sets expires value of the supplied KeePass ``entry`` to the given ``value``.
 
-           Example:
-           | ${entry} =          | `Get Entries By Title` | root_entry | first=True |
-           | `Set Entry Expires` | ${entry}               | True                    |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} =          | `Get Entries By Title` | root_entry | first=True |
+        | `Set Entry Expires` | ${entry}               | True                    |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             entry.expires = value
@@ -505,11 +503,11 @@ class KeePassEntry(LibraryComponent):
     def get_entry_expires(self, entry: Entry):
         """Return expires value of the supplied KeePass ``entry``
 
-           Example:
-           | ${entry} = | `Get Entries By Title` | root_entry | first=True       |
-           | ${value} = | `Get Entry Expires`    | ${entry}                      |
-
-           New in KeePassLibrary 0.3
+        Example:
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True |
+        | ${value} = | `Get Entry Expires`    | ${entry}                |
+        
+        New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
             return entry.expires
@@ -517,66 +515,219 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Expired Time ----------
-    # @keyword
-    # def get_entry_expiry_time(self, entry:Entry):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+    @keyword
+    def get_entry_expiry_time(self, entry: Entry, timezone='UTC'):
+        """Return expiry time as python
+        [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
+        object of the supplied KeePass ``entry``.
 
-    # @keyword
-    # def set_entry_expiry_time(self, entry:Entry, value):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} = | `Get Entries By Title`  | root_entry | first=True   |
+        | ${value} = | `Get Entry Expiry Time` | ${entry}   | timezone=UTC |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = convert_datetime_timezone(entry.expiry_time, timezone)
+            return value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def set_entry_expiry_time(self, entry: Entry, value, timezone='UTC'):
+        """Sets expiry time of the supplied KeePass ``entry`` to the given ``value``.
+
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``value``    | A valid DateTime object                  |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} =              | `Get Entries By Title` | root_entry              | first=True |
+        | ${value} =	          | Convert Date	       | 2014-06-11 10:07:42.123 | datetime   |
+        | `Set Entry Expiry Time` | ${entry}               | ${value}                | local      |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = prepare_set_timezone(value, timezone)
+            entry.expiry_time = value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Created Time ----------
-    # @keyword
-    # def get_entry_created_time(self, entry:Entry):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+    @keyword
+    def get_entry_created_time(self, entry: Entry, timezone='UTC'):
+        """Return created time as python
+        [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
+        object of the supplied KeePass ``entry``.
 
-    # @keyword
-    # def set_entry_created_time(self, entry:Entry, value):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} = | `Get Entries By Title`   | root_entry | first=True |
+        | ${value} = | `Get Entry Created Time` | ${entry}                |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = convert_datetime_timezone(entry.ctime, timezone)
+            return value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def set_entry_created_time(self, entry: Entry, value, timezone='UTC'):
+        """Sets created time of the supplied KeePass ``entry`` to the given ``value``.
+
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``value``    | A valid DateTime object                  |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        Example:
+        | ${entry} =               | `Get Entries By Title` | root_entry              | first=True |
+        | ${value} =	           | Convert Date           | 2014-06-11 10:07:42.123 | datetime   |
+        | `Set Entry Created Time` | ${entry}               | ${value}                | local      |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = prepare_set_timezone(value, timezone)
+            entry.ctime = value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Last Access Time ----------
-    # @keyword
-    # def get_entry_last_access_time(self, entry:Entry):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+    @keyword
+    def get_entry_accessed_time(self, entry: Entry, timezone='UTC'):
+        """Return accessed time as python
+        [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
+        object of the supplied KeePass ``entry``.
 
-    # @keyword
-    # def set_entry_last_access_time(self, entry:Entry, value):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} = | `Get Entries By Title`    | root_entry | first=True   |
+        | ${value} = | `Get Entry Accessed Time` | ${entry}   | timezone=UTC |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = convert_datetime_timezone(entry.atime, timezone)
+            return value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def set_entry_accessed_time(self, entry: Entry, value, timezone='UTC'):
+        """Sets accessed time of the supplied KeePass ``entry`` to the given ``value``.
+
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``value``    | A valid DateTime object                  |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} =                | `Get Entries By Title` | root_entry              | first=True |
+        | ${value} =	            | Convert Date	         | 2014-06-11 10:07:42.123 | datetime   |
+        | `Set Entry Accessed Time` | ${entry}               | ${value}                | local      |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = prepare_set_timezone(value, timezone)
+            entry.atime = value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Modified Time ----------
-    # @keyword
-    # def get_entry_modified_time(self, entry:Entry):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+    @keyword
+    def get_entry_modified_time(self, entry: Entry, timezone='UTC'):
+        """Return modified time as python
+        [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
+        object of the supplied KeePass ``entry``.
 
-    # @keyword
-    # def set_entry_modified_time(self, entry:Entry, value):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} = | `Get Entries By Title`    | root_entry | first=True   |
+        | ${value} = | `Get Entry Modified Time` | ${entry}   | timezone=UTC |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = convert_datetime_timezone(entry.mtime, timezone)
+            return value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def set_entry_modified_time(self, entry: Entry, value: datetime, timezone='UTC'):
+        """Sets modified time of the supplied KeePass ``entry`` to the given ``value``.
+
+        See the `Date and Time` section for more information about Date en Time.\n
+
+        | =Parameter=  | =Description=                            |
+        | ``entry``    | A valid KeePass entry                    |
+        | ``value``    | A valid DateTime object                  |
+        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+
+        Example:
+        | ${entry} =                | `Get Entries By Title` | root_entry              | first=True |
+        | ${value} =	            | Convert Date	         | 2014-06-11 10:07:42.123 | datetime   |
+        | `Set Entry Modified Time` | ${entry}               | ${value}                | local      |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            value = prepare_set_timezone(value, timezone)
+            entry.mtime = value
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Touch ----------
-    # @keyword
-    # def entry_touch(self, entry:Entry, modify=False):
-    #     """Update last access time of an entry
-    #     """
-    #     if isinstance(entry, Entry):
-    #         return entry.touch(modify)
-    #     else:
-    #         raise EntryInvalid('Invalid KeePass Entry.')
+    @keyword
+    def touch_entry(self, entry: Entry, modify=False):
+        """Touch the supplied KeePass ``entry``.
+
+        | =Parameter= | =Description=         |
+        | ``entry``   | A valid KeePass entry |
+        | ``modify``  | Update modified time  |
+
+        Example:
+        | ${entry} =    | `Get Entries By Title` | root_entry | first=True |
+        | `Touch Entry` | ${entry}               | False                   |
+
+        New in KeePassLibrary 0.8
+        """
+        if isinstance(entry, Entry):
+            return entry.touch(modify)
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Attachements (not implemented) ----------
     # @keyword
