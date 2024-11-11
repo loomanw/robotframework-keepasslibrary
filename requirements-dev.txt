@@ -1,6 +1,9 @@
 # Requirements needed for KeePassLibrary development but not by end users.
 flake8 >= 7.1.1 
 
+# Requirement needed for robtoframework
+robotframework-tidy >= 4.14.0
+
 # Requirements needed when generating releases. 
 twine >= 5.1.1
 wheel >= 0.44.0

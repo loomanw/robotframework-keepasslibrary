@@ -1,3 +1,3 @@
 *** Variables ***
-${RESOURCEDIR}    ${CURDIR}${/}Resources${/}
-${DATADIR}        ${CURDIR}${/}Data${/}
+${RESOURCEDIR}      ${CURDIR}${/}Resources${/}
+${DATADIR}          ${CURDIR}${/}Data${/}
