@@ -1,12 +1,12 @@
-*** Setting ***
+*** Settings ***
 Library          KeePassLibrary
 Library          Collections    
-Force Tags       Entries
+Test Tags        Entries
 Documentation    Check Entries selecion keywords
 Test Setup       Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown    Close Keepass Database    
 
-*** Variable ***
+*** Variables ***
 ${DATADIR}             ${CURDIR}${/}Data${/}
 ${KEEPASS_DATABASE}    ${DATADIR}test4.kdbx
 ${KEEPASS_KEYFILE}     ${DATADIR}test4.key 

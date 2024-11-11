@@ -1,7 +1,7 @@
 *** Settings ***
 Library          KeePassLibrary
 library          String        
-Force Tags       Database    KDBX v3
+Test Tags        Database    KDBX v3
 Test Template    Opening database with valid credentials should succeed
 Documentation    Check KDBX 3 related keywords
 

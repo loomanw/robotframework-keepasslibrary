@@ -4,7 +4,7 @@ library          String
 Documentation    Check valid composed key combinations
 Test Template    Loading Database With Valid Credentials Should Succeed 
 
-*** Variable ***
+*** Variables ***
 ${KP_DB_BASE}=        ${CURDIR}${/}Data${/}
 
 *** Test Cases ***                 DATABASE                              PASSWORD    KEY_FILE           
