@@ -1,7 +1,10 @@
 # Requirements needed for KeePassLibrary development but not by end users.
 flake8 >= 7.1.1 
+pytest
+invoke
+rellu
 
-# Requirement needed for robtoframework
+# Requirement needed for robotframework
 robotframework-tidy >= 4.14.0
 
 # Requirements needed when generating releases. 

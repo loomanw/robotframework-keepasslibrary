@@ -1,7 +1,7 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
 from KeePassLibrary.errors import EntryInvalid
-from KeePassLibrary.timezone import prepare_set_timezone, convert_datetime_timezone
+from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
 
 
 class KeePassEntry(LibraryComponent):

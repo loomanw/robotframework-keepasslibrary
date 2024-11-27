@@ -5,4 +5,4 @@ from pykeepass.entry import Entry
 from pykeepass.group import Group
 from .context import ContextAware
 from .librarycomponent import LibraryComponent
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta

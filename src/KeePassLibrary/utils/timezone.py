@@ -1,4 +1,3 @@
-# from datetime import datetime, timezone
 from KeePassLibrary.base import datetime, timezone
 from KeePassLibrary.errors import DateTimeInvalid, TimeZoneInvalid
 

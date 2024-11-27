@@ -15,3 +15,10 @@ transform = [
 configure = [
     "SplitTooLongLine:split_on_every_arg=False"
 ]
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
+filterwarnings = [
+    'ignore::SyntaxWarning'
+]
