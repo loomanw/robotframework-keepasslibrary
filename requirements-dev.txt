@@ -1,7 +1,7 @@
 # Requirements needed for KeePassLibrary development but not by end users.
 flake8 >= 7.1.1 
 pytest
-invoke
+invoke==2.2.0
 rellu
 
 # Requirement needed for robotframework
