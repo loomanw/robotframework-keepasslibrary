@@ -264,7 +264,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Parent`   | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -279,7 +279,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Uuid`     | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -303,7 +303,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Expires`  | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -318,7 +318,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} =         | `Get Groups By Name` | foobar_group | first=True |
         | `Set Group Parent` | ${group}             | True                      |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -333,7 +333,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Expired`  | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -394,7 +394,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Entries`  | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -410,7 +410,6 @@ class KeePassGroup(LibraryComponent):
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Name`     | ${group}                  |
 
-        
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -425,7 +424,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} =         | `Get Groups By Name` | foobar_group | first=True |
         | `Set Group Parent` | ${group}             | new_group_name            |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -440,7 +439,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Notes`    | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -455,7 +454,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Notes`    | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -470,7 +469,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name`  | foobar_group | first=True |
         | ${value} = | `Get Group Subgroups` | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -485,7 +484,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name`      | foobar_group | first=True |
         | ${value} = | `Get Group Is Root Group` | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
@@ -520,7 +519,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} = | `Get Groups By Name` | foobar_group | first=True |
         | ${value} = | `Get Group Path`     | ${group}                  |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):

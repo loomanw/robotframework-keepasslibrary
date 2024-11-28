@@ -16,7 +16,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Title`      | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -31,7 +31,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Title` | New Title                                        |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -47,7 +47,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Username`   | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -62,7 +62,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Username` | New Username                                     |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -78,7 +78,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Password`   | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -93,7 +93,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Password` | N3w Passw0rd                                     |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -109,7 +109,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Url`        | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -124,7 +124,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =      | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Url` | https://keepass.info/                            |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -140,7 +140,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Notes`      | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -155,7 +155,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Notes` | New\\nnotes                                      |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -171,7 +171,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Icon`       | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -186,7 +186,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =        | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Icon`  | 20                                  | #Gear icon |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -202,7 +202,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Tags`       | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -218,7 +218,7 @@ class KeePassEntry(LibraryComponent):
         | @{tags}=       | Create List | tag1     | tag2 |
         | Set Entry Tags | ${entry}   | ${tags}   | |
         | Set Entry Tags | ${entry}   | tag1;tag2 | |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -335,7 +335,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =                  | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Custom Property` | new_field_name         | new_field_value         |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -350,7 +350,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title`      | root_entry | first=True       |
         | ${value} = | `Get Entry Custom Property` | ${entry}   | foobar_attribute |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -365,7 +365,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =                     | `Get Entries By Title` | root_entry | first=True |
         | `Remove Entry Custom Property` | ${entry}               | foobar_attribute        |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -380,7 +380,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title`        | root_entry | first=True |
         | ${value} = | `Get Entry Custom Properties` | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -414,7 +414,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Uuid`       | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -439,7 +439,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Expired`    | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -491,7 +491,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} =          | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Expires` | ${entry}               | True                    |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
@@ -506,7 +506,7 @@ class KeePassEntry(LibraryComponent):
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Expires`    | ${entry}                |
-        
+
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):

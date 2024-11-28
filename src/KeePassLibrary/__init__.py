@@ -122,7 +122,7 @@ class KeePassLibrary(DynamicCore):
     | Should Be Equal As Integers | ${datetime.microsecond}  | 0                        |
     | Should Be Equal As Strings  |	${datetime.tzinfo}       | W. Europe Standard Time  |
 
-    - local timezone W. Europe Daylight Time:    
+    - local timezone W. Europe Daylight Time:
     | ${entry} =                  | `Get Entries By Title`   | root_entry              | first=True |
     | ${value} =	              | Convert Date	         | 2014-06-11 10:07:42.123 | datetime   |
     | Set Entry Created Time      | ${entry}                 | ${value}                | local      |

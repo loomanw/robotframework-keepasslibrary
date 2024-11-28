@@ -1,4 +1,4 @@
-from KeePassLibrary.base import datetime, timezone, timedelta
+from KeePassLibrary.base import datetime, timezone
 from KeePassLibrary.utils import TimeZoneInvalid, DateTimeInvalid
 from KeePassLibrary.utils import prepare_set_timezone
 
