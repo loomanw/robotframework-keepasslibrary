@@ -2,7 +2,7 @@
 flake8 >= 7.1.1 
 pytest
 invoke
-rellu
+rellu==0.7
 
 # Requirement needed for robotframework
 robotframework-tidy >= 4.14.0
