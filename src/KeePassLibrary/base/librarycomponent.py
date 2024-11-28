@@ -3,6 +3,7 @@ from robot.api import logger
 from robot.libraries.BuiltIn import BuiltIn, RobotNotRunningError
 from .context import ContextAware
 
+
 class LibraryComponent(ContextAware):
     def info(self, msg: str, html: bool = False):
         logger.info(msg, html)

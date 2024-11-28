@@ -1,0 +1,24 @@
+[tool.robotidy]
+overwrite = true
+diff = true
+spacecount = 4
+continuation-indent = 4
+startline = 10
+endline = 20
+transform = [
+   "DiscardEmptySections:allow_only_comments=True",
+   "SplitTooLongLine",
+   "AlignTestCasesSection:enabled=True",
+   "AlignTemplatedTestCases:enabled=True",
+   "AlignKeywordsSection:enabled=True"
+]
+configure = [
+    "SplitTooLongLine:split_on_every_arg=False"
+]
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
+filterwarnings = [
+    'ignore::SyntaxWarning'
+]
