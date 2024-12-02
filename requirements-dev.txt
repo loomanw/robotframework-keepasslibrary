@@ -1,11 +1,11 @@
 # Requirements needed for KeePassLibrary development but not by end users.
 flake8 >= 7.1.1 
-pytest
-invoke
-rellu
+pytest >= 8.3.3
+invoke >= 2.2.0
 
 # Requirement needed for robotframework
 robotframework-tidy >= 4.14.0
+rellu >= 0.7
 
 # Requirements needed when generating releases. 
 twine >= 5.1.1
