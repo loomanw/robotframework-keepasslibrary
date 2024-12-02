@@ -52,6 +52,7 @@ Get KeePass Database Entry
 
 ---
 ### Versions:
+ - `0.9.0` Update dependencies
  - `0.8.0` New keywords for accessing entry and group time attributes
  - `0.7.0` Update dependencies, dropped python 3.7 support
  - `0.6.0` Update dependencies, dropped Robot Framework 3.2.2 support
