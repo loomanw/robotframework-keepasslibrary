@@ -1,6 +1,6 @@
 # Requirements needed for KeePassLibrary development but not by end users.
 flake8 >= 7.1.1 
-pytest
+pytest==8.3.4
 invoke
 rellu
 
