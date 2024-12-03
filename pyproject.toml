@@ -71,5 +71,6 @@ pythonpath = [
   "src"
 ]
 filterwarnings = [
-    'ignore::SyntaxWarning'
+    "ignore::SyntaxWarning",
+    "ignore::DeprecationWarning"
 ]
