@@ -8,7 +8,7 @@ from KeePassLibrary.keywords import (
     KeePassGroups
 )
 
-__version__ = '0.9.0'
+__version__ = '0.9.0-pre-1'
 
 
 class KeePassLibrary(DynamicCore):

@@ -11,6 +11,8 @@ rellu >= 0.7
 twine >= 5.1.1
 wheel >= 0.44.0
 setuptools >= 75.3.0
+build >=  1.2.2.post1
+check-wheel-contents >= 0.6.1
 
 # Include normal dependencies from requirements.txt. Makes it possible to use
 # requirements-dev.txt as a single requirement file in PyCharm and other IDEs.

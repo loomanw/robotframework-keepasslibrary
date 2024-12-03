@@ -42,7 +42,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements-dev.txt
         python -m pip install robotframework>=${{ matrix.robotframework-version }} --force-reinstall
-        python -m pip install .
+        # python -m pip install .
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -52,6 +52,14 @@ jobs:
     - name: Utest with pytest
       run: |
         pytest ./utests
+    - name: Build Package & Install
+      run: |
+        python -m build --sdist --wheel
+        check-wheel-contents dist/*.whl
+        python -m twine check dist/*
+    - name: Install Robotframework-KeePassLibrary
+      run: |
+        python -m pip install --no-index -f ./dist Robotframework-KeePassLibrary
     - name: ATest with Robot Framework ${{ matrix.robotframework-version }}
       run: |
         robot atests
