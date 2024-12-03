@@ -6,7 +6,6 @@ from rellu import Version
 from rellu.tasks import clean  # noqa
 from robot.libdoc import libdoc
 
-
 assert Path.cwd() == Path(__file__).parent
 
 VERSION_PATTERN = '__version__ = "(.*)"'
@@ -78,3 +77,8 @@ def utest(ctx):
 @task
 def atest(ctx):
     ctx.run("robot -d .results atests")
+
+
+@task(pre=[clean])
+def build(ctx):
+    ctx.run("python -m build --sdist --wheel")
