@@ -15,7 +15,7 @@ class KeePassDatabase(LibraryComponent):
         | =Parameter=        | =Description=                              |
         | ``filename``       | specifies the path of the KeePass database |
         | ``keyfile``        | specifies the path of the keyfile          |
-        | ``tranformed_key`` | specifies the location of the keyfile      |
+        | ``tranformed_key`` | specifies the transformed key              |
 
         Examples:
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
