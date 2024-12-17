@@ -1,3 +1,8 @@
+import importlib
+import pkgutil
+from pathlib import Path
+from typing import Optional, Union
+
 from robotlibcore import DynamicCore
 
 from KeePassLibrary.keywords import (
@@ -150,7 +155,11 @@ class KeePassLibrary(DynamicCore):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = __version__
 
-    def __init__(self):
+    def __init__(self, language: Optional[str] = None):
+        """KeePassLibrary can be imported with optional arguments.
+        - ``language``:
+          Defines language which is used to translate keyword names and documentation.
+        """
         self._database = None
         libraries = [
             KeePassDatabase(self),
@@ -159,7 +168,8 @@ class KeePassLibrary(DynamicCore):
             KeePassGroup(self),
             KeePassGroups(self)
         ]
-        DynamicCore.__init__(self, libraries)
+        translation_file = self._get_translation(language)
+        DynamicCore.__init__(self, libraries, translation_file)
 
     def __enter__(self):
         return self
@@ -179,3 +189,23 @@ class KeePassLibrary(DynamicCore):
 
     def get_keyword_documentation(self, name: str) -> str:
         return DynamicCore.get_keyword_documentation(self, name)
+
+    @staticmethod
+    def _get_translation(language: Union[str, None]) -> Union[Path, None]:
+        if not language:
+            return None
+        discovered_plugins = {
+            name: importlib.import_module(name)
+            for _, name, _ in pkgutil.iter_modules()
+            if name.startswith("robotframework_keepasslibrary_translation")
+        }
+        for plugin in discovered_plugins.values():
+            try:
+                data = plugin.get_language()
+            except AttributeError:
+                continue
+            if data.get("language", "").lower() == language.lower() and data.get(
+                "path"
+            ):
+                return Path(data.get("path")).absolute()
+        return None
