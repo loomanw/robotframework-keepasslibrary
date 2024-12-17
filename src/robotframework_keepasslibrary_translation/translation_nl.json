@@ -1,0 +1,51 @@
+{
+    "get_entry_icon": {
+        "name": "ophalen_entry_icoon",
+        "doc": ""
+    },
+
+    "open_keepass_database":{
+        "name": "open_keepass_database",
+        "doc": "Opent de opgegeven KeePass database ``filename`` met de opgegeven sleutels.\n\nHet ``filename`` argument specificeerd de locatie van de KeePass database\n\n| =Parameter=        | =Omschrijving=                         |\n| ``filename``       | Het pad naar de KeePass database       |\n| ``keyfile``        | Het pad naar het sleutelbestand        |\n| ``tranformed_key`` | Specifeerd de getransformeerde sleutel |\n\nVoorbeelden:\n| `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |\n| `Open Keepass Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |\n| `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |\n"
+    },
+
+    "close_keepass_database":{
+        "name": "close_keepass_database"
+    },
+
+    "save_keepass_database":{
+        "name": "save_keepass_database"
+    },
+
+    "save_xml":{
+        "name": "save_xml"
+    },
+
+    "get_version":{
+        "name": "get_version"
+    },
+
+    "get_encryption_algorithm":{
+        "name": "get_encryption_algorithm"
+    },
+
+    "get_kdf_algorithm":{"name": "get_kdf_algorithm"},
+
+    "get_transformed_key":{"name": "get_transformed_key"},
+
+    "get_tree":{"name": "get_tree"},
+
+    "get_root_group":{"name": "get_root_group"},
+
+
+    "__init__": {
+        "name": "__init__",
+        "doc": "KeePassLibrary can be imported with several optional arguments.\n- ``language``:\n  Defines language which is used to translate keyword names and documentation.",
+        "sha256": "affae82a074496d7c43327c8d44b332fbe455428f28b672c44e323e44d076f19"
+    },
+    "__intro__": {
+        "name": "__intro__",
+        "doc": "KeePassLibrary is a library for Robot Framework.",
+        "sha256": "1f433be14145c7db77afbfb62ab2fa90e8ff9bbae428dc5a7d78424f652bad4d"
+    }
+}
