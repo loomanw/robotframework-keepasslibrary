@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
         python-version: ["3.11","3.12","3.13"]
-        robotframework-version: ["7.1.x"]
+        robotframework-version: ["7.1.1"]
         include:
         - os: ubuntu-latest
           python-version: "3.12"
