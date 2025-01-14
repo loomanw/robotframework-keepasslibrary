@@ -166,7 +166,7 @@ class KeePassEntry(LibraryComponent):
     # ---------- Icon ----------
     @keyword
     def get_entry_icon(self, entry: Entry):
-        """Return the icon  valueof the supplied KeePass ``entry``.
+        """Return the icon value of the supplied KeePass ``entry``.
 
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |

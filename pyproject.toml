@@ -1,3 +1,55 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robotframework-keepasslibrary"
+version = "0.9.0"
+authors = [
+  { name="William Looman", email="wlooman@gmail.com" },
+]
+description = "Robot Framework library for working with KeePass Database"
+readme = "README.md"
+requires-python = ">=3.8, <3.14"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+    "Framework :: Robot Framework",
+    "Framework :: Robot Framework :: Library"
+    ]
+
+dependencies = [
+    "pykeepass==4.1.0.post1",
+    "robotframework>=5.0.1",
+    "robotframework-pythonlibcore>=4.4.1"
+    ]
+
+[project.urls]
+Homepage = "https://github.com/loomanw/robotframework-keepasslibrary"
+Issues = "https://github.com/loomanw/robotframework-keepasslibrary/issues"
+
+[tool.setuptools]
+include-package-data = true
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["KeePassLibrary*"]  # alternatively: `exclude = ["additional*"]`
+namespaces = false
+
 [tool.robotidy]
 overwrite = true
 diff = true
@@ -20,5 +72,6 @@ pythonpath = [
   "src"
 ]
 filterwarnings = [
-    'ignore::SyntaxWarning'
+    "ignore::SyntaxWarning",
+    "ignore::DeprecationWarning"
 ]
