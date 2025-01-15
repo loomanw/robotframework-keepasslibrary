@@ -9,7 +9,7 @@ from robot.libdoc import libdoc
 assert Path.cwd() == Path(__file__).parent
 
 VERSION_PATTERN_INIT = '__version__ = "(.*)"'
-VERSION_PATH_INIT = Path("src/KeePassLibrary/__init__.py")
+VERSION_PATH_INIT = Path("src/KeePassLibrary/version.py")
 VERSION_PATTERN_TOML = 'version = "(.*)"'
 VERSION_PATH_TOML = Path("pyproject.toml")
 

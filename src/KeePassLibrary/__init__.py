@@ -13,7 +13,9 @@ from KeePassLibrary.keywords import (
     KeePassGroups
 )
 
-__version__ = "0.10.0"
+from .version import __version__ as VERSION
+
+__version__ = VERSION
 
 
 class KeePassLibrary(DynamicCore):
