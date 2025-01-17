@@ -41,6 +41,9 @@ dependencies = [
 Homepage = "https://github.com/loomanw/robotframework-keepasslibrary"
 Issues = "https://github.com/loomanw/robotframework-keepasslibrary/issues"
 
+[project.scripts]
+rfkeepasslibrary = "KeePassLibrary.entry.__main__:cli"
+
 [tool.setuptools]
 include-package-data = true
 package-dir = {"" = "src"}
