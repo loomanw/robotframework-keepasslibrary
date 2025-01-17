@@ -20,27 +20,12 @@ import subprocess
 import sys
 from pathlib import Path
 from .translation import compare_translation, get_library_translation
-# from typing import TYPE_CHECKING, Optional
-
 import click
+
 ROOT_FOLDER = Path(__file__).resolve().parent.parent
-
-
-# if TYPE_CHECKING:
-#     # from ..browser import Browser
-#     from KeePassLibrary import KeePassLibrary
-
 is_terminal = sys.stdout.isatty()
-try:
-    import pty
-
-    has_pty = True
-except ImportError:
-    has_pty = False
-
-
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
-ANSI_ESCAPE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])", flags=re.IGNORECASE)
+# ANSI_ESCAPE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])", flags=re.IGNORECASE)
 logger = logging.getLogger(__name__)
 
 
@@ -115,9 +100,7 @@ def print_version(ctx, param, value):
 )
 @click.pass_context
 def cli(ctx, silent):
-    """Robot Framework Browser library command line tool.
-
-    When commands are run, output is also saved to: <install_dir>/Browser/rfbrowser.log file.
+    """Robot Framework KeePassLibrary command line tool.
 
     \b
     Possible commands are:
@@ -125,19 +108,7 @@ def cli(ctx, silent):
 
     \b
     1) pip install robotframework-browser
-    2) rfbrowser init.
-
-    clean-node command is used to delete node side dependencies and installed browser binaries from the library
-    default installation location. When upgrading browser library, it is recommended to clean old node side
-    binaries after upgrading the Python side. Example:
-
-    \b
-    1) pip install -U robotframework-browser
-    2) rfbrowser clean-node
-    3) rfbrowser init.
-
-    Run rfbrowser clean-node command also before uninstalling the library with pip. This makes sure that playwright
-    browser binaries are not left in the disk after the pip uninstall command.
+    2) rfbrowser translation
 
     translation will generate default translation json file from library keywords.
 

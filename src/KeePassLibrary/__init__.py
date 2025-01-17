@@ -5,7 +5,7 @@ from typing import Optional, Union
 
 from robotlibcore import DynamicCore
 
-from KeePassLibrary.keywords import (
+from .keywords import (
     KeePassDatabase,
     KeePassEntry,
     KeePassEntries,
