@@ -32,7 +32,7 @@ classifiers = [
     ]
 
 dependencies = [
-    "pykeepass==4.1.0.post1",
+    "pykeepass==4.1.1.post1",
     "robotframework>=5.0.1",
     "robotframework-pythonlibcore>=4.4.1"
     ]

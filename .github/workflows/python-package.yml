@@ -15,12 +15,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
-        python-version: ["3.8","3.9","3.10","3.11","3.12","3.13"]
-        robotframework-version: ["7.1"]
+        python-version: ["3.11","3.12","3.13"]
+        robotframework-version: ["7.2"]
         include:
         - os: ubuntu-latest
           python-version: "3.12"
-          robotframework-version: "6.1"   
+          robotframework-version: "6.1.1"
         - os: ubuntu-latest
           python-version: "3.11"                
           robotframework-version: "5.0"                            
@@ -37,9 +37,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r requirements-dev.txt
-    - name: Install Robot Framework ${{ matrix.robotframework-version }}
-      run: |
-        python -m pip install robotframework~=${{ matrix.robotframework-version }}
+        python -m pip install robotframework>=${{ matrix.robotframework-version }} --force-reinstall
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -49,6 +47,14 @@ jobs:
     - name: Utest with pytest
       run: |
         pytest ./utests
+    - name: Build Package & Install
+      run: |
+        python -m build --sdist --wheel
+        check-wheel-contents dist/*.whl
+        python -m twine check dist/*
+    - name: Install Robotframework-KeePassLibrary
+      run: |
+        python -m pip install --no-index -f ./dist Robotframework-KeePassLibrary
     - name: Build Package & Install
       run: |
         python -m build --sdist --wheel
