@@ -1,11 +1,8 @@
 from KeePassLibrary.base import datetime, timezone
-from KeePassLibrary.errors import DateTimeInvalid, TimeZoneInvalid
+from KeePassLibrary.errors import TimeZoneInvalid
 
 
-def prepare_set_timezone(value: datetime, timez='UTC'):
-    if not isinstance(value, datetime):
-        raise DateTimeInvalid('Invalid DateTime object.')
-
+def prepare_set_timezone(value: datetime, timez: str = 'UTC') -> datetime:
     if not (timez == 'UTC') ^ (timez == 'local'):
         raise TimeZoneInvalid('Invalid timezone, expected UTC or local.')
 
@@ -17,7 +14,7 @@ def prepare_set_timezone(value: datetime, timez='UTC'):
     return value
 
 
-def add_datetime_timezone(value: datetime, timez='UTC'):
+def add_datetime_timezone(value: datetime, timez: str = 'UTC') -> datetime:
     if not (timez == 'UTC') ^ (timez == 'local'):
         raise TimeZoneInvalid('Invalid timezone, expected UTC or local.')
 
@@ -30,14 +27,13 @@ def add_datetime_timezone(value: datetime, timez='UTC'):
     return value
 
 
-def convert_datetime_timezone(value: datetime, timez='UTC'):
+def convert_datetime_timezone(value: datetime, timez: str = 'UTC') -> datetime:
     if not (timez == 'UTC') ^ (timez == 'local'):
         raise TimeZoneInvalid('Invalid timezone, expected UTC or local.')
 
-    if value.tzname != timez:
-        if timez == 'UTC':
-            value = value.astimezone(timezone.utc)
-        if timez == 'local':
-            value = value.astimezone(datetime.now().tzinfo)
+    if timez == 'UTC':
+        value = value.astimezone(timezone.utc)
+    if timez == 'local':
+        value = value.astimezone(datetime.now().tzinfo)
 
     return value
