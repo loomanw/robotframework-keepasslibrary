@@ -4,6 +4,7 @@ Documentation       Check Entry related keywords
 Library             KeePassLibrary
 Library             Collections
 Library             DateTime
+Library             String
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database
@@ -392,3 +393,115 @@ Touch Modify True
     Should Not Be Equal    ${atime1}    ${atime2}         
     Should Not Be Equal    ${mtime1}    ${mtime2}         
     Should Be Equal    ${ctime1}    ${ctime2}
+
+List Attachments
+    [Documentation]    Listing existing attachment succeeds
+    [Tags]    attachment
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    ${attachment_spam}    Encode String To Bytes    spam spam    UTF-8
+    ${attachment_eggs}    Encode String To Bytes    egg egg    UTF-8
+    Set Entry Attachment    ${entry}    spam.txt    ${attachment_spam}
+    Set Entry Attachment    ${entry}    eggs.txt    ${attachment_eggs}
+    ${attachments}=    Get Entry Attachments    ${entry}
+    Length Should Be    ${attachments}    2
+    List Should Contain Value    ${attachments}    spam.txt
+    List Should Contain Value    ${attachments}    eggs.txt
+
+Add New Attachment
+    [Documentation]    Adding a new attachment succeeds
+    [Tags]    set    attachment
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    ${string_set}=       Set Variable    spam spam
+    ${attachment_set}    Encode String To Bytes    ${string_set}    UTF-8
+    Set Entry Attachment    ${entry}    spam.txt    ${attachment_set}
+    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    Should Be Equal    ${attachment_get}    ${attachment_set}
+    ${string_get}    Decode Bytes To String    ${attachment_get}    UTF-8
+    Should Be Equal As Strings    ${string_get}    ${string_set}
+
+Get Existing Attachment
+    [Documentation]    Get existing attachment succeeds
+    [Tags]    get    attachment
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    ${string_set}=     Set Variable    spam spam
+    ${attachment_set}    Encode String To Bytes    ${string_set}      UTF-8
+    Set Entry Attachment    ${entry}    spam.txt    ${attachment_set}
+    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    Should Be Equal    ${attachment_get}    ${attachment_set}
+    ${string_get}    Decode Bytes To String    ${attachment_get}    UTF-8
+    Should Be Equal As Strings    ${string_get}    ${string_set}
+
+Replace Existing Attachment
+    [Documentation]    Replace existing attachment succeeds
+    [Tags]    set    attachment
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    ${string_set}=     Set Variable    spam spam
+    ${string_set2}=    Set Variable    spam spam spam
+    ${attachment_set}    Encode String To Bytes    ${string_set}      UTF-8
+    ${attachment_set2}    Encode String To Bytes    ${string_set2}    UTF-8
+    Set Entry Attachment    ${entry}    spam.txt    ${attachment_set}
+    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    Should Be Equal    ${attachment_get}    ${attachment_set}
+    Set Entry Attachment    ${entry}    spam.txt    ${attachment_set2}
+    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    Should Be Equal    ${attachment_get}    ${attachment_set2}
+    ${string_get}    Decode Bytes To String    ${attachment_get}    UTF-8
+    Should Be Equal As Strings    ${string_get}    ${string_set2}
+
+Remove Existing Attachment Succes
+    [Documentation]    Removing entry attachment succeeds
+    [Tags]    remove    attachment
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    ${string_set}=     Set Variable    spam spam
+    ${binary_set}=    Encode String To Bytes    ${string_set}      UTF-8
+    Set Entry Attachment    ${entry}    spam.txt    ${binary_set}
+    ${attachments}=    Get Entry Attachments    ${entry}
+    Length Should Be    ${attachments}    1
+    Remove Entry Attachment    ${entry}    spam.txt
+    ${attachments}=    Get Entry Attachments    ${entry}
+    Length Should Be    ${attachments}    0
+
+Remove Existing Attachment Fail
+    [Documentation]    Removing entry attachment succeeds
+    [Tags]    remove    attachment
+    ${entry_title}=    Set Variable    root_entry
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    ${error_msg}=                  Set Variable     No attachment with provided filename 'spam.txt'.
+    Run Keyword And Expect Error   ${error_msg}     Remove Entry Attachment    ${entry}    spam.txt
+
+Attachment Should Be Present Succes
+    [Documentation]    Selected entry should contain attachment succeeds
+    [Tags]    should be    attachment
+    ${entry} =                         Get Entries By Title    root_entry    first=True
+    ${string_set}=                     Set Variable    Attachment contents
+    ${binary_set} =                    Encode String To Bytes    ${string_set}    UTF-8
+    Set Entry Attachment               ${entry}    spam.txt      ${binary_set}
+    Entry Should Contain Attachment    ${entry}    spam.txt
+
+Attachment Should Be Present Fail
+    [Documentation]    Selected entry should contain attachment fails
+    [Tags]    should be    attachment
+    ${entry} =                     Get Entries By Title    root_entry    first=True
+    ${error_msg}=                  Set Variable     The entry should contain attachment 'spam.txt', but it does not.
+    Run Keyword And Expect Error   ${error_msg}     Entry Should Contain Attachment    ${entry}    spam.txt
+
+Attachment Should Not Be Present Succes
+    [Documentation]    Selected entry should not contain attachment succeeds
+    [Tags]    should not be    attachment
+    ${entry} =                         Get Entries By Title    root_entry    first=True
+    Entry Should Not Contain Attachment    ${entry}    spam.txt
+
+Attachment Should Not Be Present Fail
+    [Documentation]    Selected entry should contain attachment fails
+    [Tags]    should not be    attachment
+    ${entry} =                     Get Entries By Title    root_entry    first=True
+    ${string_set}=                 Set Variable    Attachment contents
+    ${binary_set} =                Encode String To Bytes    ${string_set}    UTF-8
+    Set Entry Attachment               ${entry}    spam.txt      ${binary_set}
+    ${error_msg}=                  Set Variable     The entry should not contain attachment 'spam.txt', but it does.
+    Run Keyword And Expect Error   ${error_msg}     Entry Should Not Contain Attachment    ${entry}    spam.txt

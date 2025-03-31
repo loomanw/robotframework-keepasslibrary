@@ -1,6 +1,6 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
-from KeePassLibrary.errors import EntryInvalid
+from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
 
 
@@ -730,39 +730,165 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Attachements (not implemented) ----------
-    # @keyword
-    # def get_entry_attachments(self, entry:Entry):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+    @keyword
+    def get_entry_attachments(self, entry: Entry):
+        """Returns a list with filenames attached to the supplied KeePass ``entry``.
 
-    # def attachments(self):
-    #     return self._kp.find_attachments(
-    #         element=self,
-    #         filename='.*',
-    #         regex=True,
-    #         recursive=False
-    #     )
+        | =Parameter= | =Description=         |
+        | ``entry``   | A valid KeePass entry |
 
-    # @keyword
-    # def add_entry_attachment(self, entry:Entry, ide):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+        Example:
+        | ${entry} =     | `Get Entries By Title`  | root_entry | first=True |
+        | @{filenames} = | `Get Entry Attachments` | ${entry}                |
 
-    # def add_attachment(self, id, filename):
-    #     element = E.Binary(
-    #         E.Key(filename),
-    #         E.Value(Ref=str(id))
-    #     )
-    #     self._element.append(element)
-    #     return pykeepass.attachment.Attachment(element=element, kp=self._kp)
+        New in KeePassLibrary 0.10
+        """
 
-    # @keyword
-    # def remove_entry_attachment(self, entry:Entry, ide):
-    #     """*DEPRECATED*
-    #     """
-    #     raise NotImplementedYet('this keyword is not implemented.')
+        if isinstance(entry, Entry):
+            listofattachments = []
+            for attachment in entry.attachments:
+                listofattachments.append(attachment.filename)
+            return listofattachments
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
 
-    # def delete_attachment(self, attachment):
-    #     attachment.delete()
+    @keyword
+    def get_entry_attachment(self, entry: Entry, filename):
+        """Returns the attachment matching the supplied ``filename`` attached to the supplied KeePass ``entry`` as binary.
+
+        | =Parameter=  | =Description=                          |
+        | ``entry``    | A valid KeePass entry                  |
+        | ``filename`` | A valid attachment filename            |
+
+        Example:
+        | ${entry} =                 | `Get Entries By Title`   | root_entry    | first=True       |
+        | ${string_set}=             | Set Variable             | Attachment encode decode         |
+        | ${binary_set} =            | `Encode String To Bytes` | ${string_set} | UTF-8            |
+        | `Set Entry Attachment`     | ${entry}                 | keepass.txt   | ${binary_set}    |
+        | ${binary_get} =            | `Get Entry Attachment`   | ${entry}      | keepass.txt      |
+        | Should Be Equal            | ${binary_set}            | ${binary_get}                    |
+        | ${decoded_get} =           | `Decode Bytes To String` | ${binary_get} | UTF-8            |
+        | Should Be Equal As Strings | ${decoded_get}           | ${string_set}                    |
+
+        New in KeePassLibrary 0.10
+        """
+        if isinstance(entry, Entry):
+            for attachment in entry.attachments:
+                if attachment.filename == filename:
+                    return attachment.binary
+            raise AttachmentInvalid('No attachment with requested filename.')
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def set_entry_attachment(self, entry: Entry, filename, data):
+        """Adds the attachment ``filename`` and binary ``data`` to the supplied KeePass ``entry``.
+        Existing ``entry`` attachment with equal ``filename`` will be replaced.
+
+        | =Parameter=  | =Description=                                   |
+        | ``entry``    | A valid KeePass entry                           |
+        | ``filename`` | A valid attachment filename                     |
+        | ``data``     | A valid binary representation of the attachment |
+
+        Example:
+        | ${entry} =                 | `Get Entries By Title`   | root_entry    | first=True       |
+        | ${string_set}=             | Set Variable             | Attachment encode decode         |
+        | ${binary_set} =            | `Encode String To Bytes` | ${string_set} | UTF-8            |
+        | `Set Entry Attachment`     | ${entry}                 | keepass.txt   | ${binary_set}    |
+        | ${binary_get} =            | `Get Entry Attachment`   | ${entry}      | keepass.txt      |
+        | Should Be Equal            | ${binary_set}            | ${binary_get}                    |
+        | ${decoded_get} =           | `Decode Bytes To String` | ${binary_get} | UTF-8            |
+        | Should Be Equal As Strings | ${decoded_get}           | ${string_set}                    |
+
+        New in KeePassLibrary 0.10
+        """
+        if isinstance(entry, Entry):
+            for attachment in entry.attachments:
+                if attachment.filename == filename:
+                    self.database.delete_binary(attachment.id)
+            attachment_id = self.database.add_binary(data)
+            entry.add_attachment(attachment_id, filename)
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def remove_entry_attachment(self, entry: Entry, filename):
+        """Removes attachment matching the supplied ``filename`` from to the supplied KeePass ``entry``
+
+        | =Parameter=  | =Description=                          |
+        | ``entry``    | A valid KeePass entry                  |
+        | ``filename`` | A valid attachment filename            |
+
+        Example:
+        | ${entry_title}=         | Set Variable           | root_entry                     |
+        | ${entry}=               | Get Entries By Title   | ${entry_title} | first=True    |
+        | ${string_set}=          | Set Variable           | spam spam                      |
+        | ${binary_set}=          | Encode String To Bytes | ${string_set}  | UTF-8         |
+        | Set Entry Attachment    | ${entry}               | spam.txt       | ${binary_set} |
+        | ${attachments}=         | Get Entry Attachments  | ${entry}                       |
+        | Length Should Be        | ${attachments}         | 1                              |
+        | Remove Entry Attachment | ${entry}               | spam.txt                       |
+        | ${attachments}=         | Get Entry Attachments  | ${entry}                       |
+        | Length Should Be        | ${attachments}         | 0                              |
+
+        New in KeePassLibrary 0.10
+        """
+        if isinstance(entry, Entry):
+            for attachment in entry.attachments:
+                if attachment.filename == filename:
+                    self.database.delete_binary(attachment.id)
+                    return
+            raise AttachmentInvalid("No attachment with provided filename '" + filename + "'.")
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def entry_should_contain_attachment(self, entry: Entry, filename, msg=None):
+        """Fails if the given ``filename`` is not present as ``entry`` attachment.
+
+        | =Parameter=  | =Description=        |
+        | ``filename`` | Attachment filename  |
+        | ``msg``      | Custom error message |
+
+        Example:
+        | ${entry} =                        | `Get Entries By Title`   | root_entry    | first=True       |
+        | ${string_set}=                    | Set Variable             | Attachment encode decode         |
+        | ${binary_set} =                   | `Encode String To Bytes` | ${string_set} | UTF-8            |
+        | `Set Entry Attachment`            | ${entry}                 | spam.txt      | ${binary_set}    |
+        | `Entry Should Contain Attachment` | ${entry}                 | spam.txt                         |
+
+        New in KeePassLibrary 0.10
+        """
+
+        if isinstance(entry, Entry):
+            for attachment in entry.attachments:
+                if attachment.filename == filename:
+                    return
+            message = "The entry should contain attachment '" + filename + "', but it does not."
+            raise AssertionError(msg or message)
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')
+
+    @keyword
+    def entry_should_not_contain_attachment(self, entry: Entry, filename, msg=None):
+        """Fails if the given ``filename`` is present as ``entry`` attachment.
+
+        | =Parameter=  | =Description=        |
+        | ``filename`` | Attachment filename  |
+        | ``msg``      | Custom error message |
+
+        Example:
+        | ${entry_title}=                       | Set Variable           | root_entry                  |
+        | ${entry}=                             | Get Entries By Title   | ${entry_title} | first=True |
+        | `Entry Should Not Contain Attachment` | ${entry}               | spam.txt                    |
+
+        New in KeePassLibrary 0.10
+        """
+
+        if isinstance(entry, Entry):
+            for attachment in entry.attachments:
+                if attachment.filename == filename:
+                    message = "The entry should not contain attachment '" + filename + "', but it does."
+                    raise AssertionError(msg or message)
+        else:
+            raise EntryInvalid('Invalid KeePass Entry.')

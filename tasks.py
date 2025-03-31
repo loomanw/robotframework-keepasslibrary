@@ -15,7 +15,7 @@ VERSION_PATH_TOML = Path("pyproject.toml")
 
 
 @task
-def kw_docs(ctx, version=None):
+def kwdocs(ctx, version=None):
     """Generates the library keyword documentation.
     Args:
         version:  Appends version to the end of the filename.
@@ -77,7 +77,7 @@ def set_version_toml(ctx, version):
 
 
 @task
-def set_version(ctx, version):
+def setversion(ctx, version):
     """Set project version in `pyproject.toml` and `src/KeePassLibrary/__init__.py` file.
 
     Args:

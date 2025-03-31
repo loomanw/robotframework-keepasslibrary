@@ -14,6 +14,10 @@ class EntryInvalid(KeepassLibraryException):
     pass
 
 
+class AttachmentInvalid(KeepassLibraryException):
+    pass
+
+
 class GroupInvalid(KeepassLibraryException):
     pass
 
