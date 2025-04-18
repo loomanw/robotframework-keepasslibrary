@@ -12,10 +12,10 @@ class KeePassDatabase(LibraryComponent):
 
         The ``filename`` argument specifies the location of the KeePass database
 
-        | =Parameter=        | =Description=                              |
-        | ``filename``       | specifies the path of the KeePass database |
-        | ``keyfile``        | specifies the path of the keyfile          |
-        | ``tranformed_key`` | specifies the transformed key              |
+        | =Parameter=         | =Description=                              |
+        | ``filename``        | specifies the path of the KeePass database |
+        | ``keyfile``         | specifies the path of the keyfile          |
+        | ``transformed_key`` | specifies the transformed key              |
 
         Examples:
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
@@ -47,9 +47,9 @@ class KeePassDatabase(LibraryComponent):
     def save_keepass_database(self, filename=None, transformed_key=None):
         """Save the content of the currently open KeePass database.
 
-        | =Parameter=        | =Description=                              |
-        | ``filename``       | specifies the path of the KeePass database |
-        | ``tranformed_key`` | specifies the location of the keyfile      |
+        | =Parameter=         | =Description=                              |
+        | ``filename``        | specifies the path of the KeePass database |
+        | ``transformed_key`` | specifies the location of the keyfile      |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
@@ -58,7 +58,7 @@ class KeePassDatabase(LibraryComponent):
 
     @keyword
     def save_xml(self, path):
-        """Save the content of the database to a the specified file.
+        """Save the content of the database to a specified file.
            NOTE: The resulting file is unencrypted!!!
 
         | =Parameter= | =Description=                      |

@@ -321,7 +321,7 @@ class KeePassEntry(LibraryComponent):
     #     p = self.parentgroup
     #     ppath = ''
     #     while p is not None and not p.is_root_group:
-    #         if p.name is not None:  # dont make the root group appear
+    #         if p.name is not None:  # don't make the root group appear
     #             ppath = '{}/{}'.format(p.name, ppath)
     #         p = p.parentgroup
     #     return '{}{}'.format(ppath, self.title)
@@ -729,7 +729,7 @@ class KeePassEntry(LibraryComponent):
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
-    # ---------- Attachements (not implemented) ----------
+    # ---------- Attachments (not implemented) ----------
     @keyword
     def get_entry_attachments(self, entry: Entry):
         """Returns a list with filenames attached to the supplied KeePass ``entry``.
@@ -745,10 +745,10 @@ class KeePassEntry(LibraryComponent):
         """
 
         if isinstance(entry, Entry):
-            listofattachments = []
+            attachment_list = []
             for attachment in entry.attachments:
-                listofattachments.append(attachment.filename)
-            return listofattachments
+                attachment_list.append(attachment.filename)
+            return attachment_list
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
