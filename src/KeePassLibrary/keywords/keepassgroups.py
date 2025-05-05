@@ -41,6 +41,7 @@ class KeePassGroups(LibraryComponent):
                 kwargs['first'] = is_truthy(kwargs['first'])
             return self.database.find_groups(recursive, path, group, **kwargs)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_groups_all(self):
         """Return a list of all groups in the open KeePass database.
@@ -56,6 +57,7 @@ class KeePassGroups(LibraryComponent):
             return self.database.find_groups_by_name('.*',
                                                      regex=True)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_groups_by_name(self, group_name, regex=False, flags=None,
                            group=None, first=False):
@@ -77,6 +79,7 @@ class KeePassGroups(LibraryComponent):
                                                      group=group,
                                                      first=first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_groups_by_path(self, group_path_str=None, regex=False, flags=None,
                            group=None, first=False):
@@ -98,6 +101,7 @@ class KeePassGroups(LibraryComponent):
                                                      group=group,
                                                      first=first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_groups_by_uuid(self, uuid, regex=False, flags=None,
                            group=None, history=False, first=False):
@@ -120,6 +124,7 @@ class KeePassGroups(LibraryComponent):
                                                      history=history,
                                                      first=first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_groups_by_notes(self, notes, regex=False, flags=None,
                             group=None, history=False, first=False):

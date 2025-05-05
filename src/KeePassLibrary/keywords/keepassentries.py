@@ -65,6 +65,7 @@ class KeePassEntries(LibraryComponent):
             return self.database.find_entries_by_title('.*',
                                                        regex=True)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_title(self, title, regex=False, flags=None,
                              group=None, history=False, first=False):
@@ -89,6 +90,7 @@ class KeePassEntries(LibraryComponent):
                                                        history,
                                                        first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_username(self, username, regex=False, flags=None,
                                 group=None, history=False, first=False):
@@ -109,6 +111,7 @@ class KeePassEntries(LibraryComponent):
                                                           history,
                                                           first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_password(self, password, regex=False, flags=None,
                                 group=None, history=False, first=False):
@@ -129,6 +132,7 @@ class KeePassEntries(LibraryComponent):
                                                           history,
                                                           first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_url(self, url, regex=False, flags=None,
                            group=None, history=False, first=False):
@@ -149,6 +153,7 @@ class KeePassEntries(LibraryComponent):
                                                      history,
                                                      first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_notes(self, notes, regex=False, flags=None,
                              group=None, history=False, first=False):
@@ -169,6 +174,7 @@ class KeePassEntries(LibraryComponent):
                                                        history,
                                                        first)
 
+    # TODO: refactor: deprecated in pykeepass
     # FIXME: Return more then 1 match even when first is set to false
     @keyword
     def get_entries_by_path(self, entry_path_str, regex=False, flags=None,
@@ -193,6 +199,7 @@ class KeePassEntries(LibraryComponent):
                                                       history,
                                                       first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_uuid(self, uuid, regex=False, flags=None,
                             group=None, history=False, first=False):
@@ -214,6 +221,7 @@ class KeePassEntries(LibraryComponent):
                                                       history,
                                                       first)
 
+    # TODO: refactor: deprecated in pykeepass
     @keyword
     def get_entries_by_string(self, string, regex=False, flags=None,
                               group=None, history=False, first=False):
