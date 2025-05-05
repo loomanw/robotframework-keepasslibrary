@@ -6,10 +6,9 @@ from robot.utils import is_truthy
 
 class KeePassEntries(LibraryComponent):
 
-    # FIXME: Catch uuid string and convert to class
     @keyword
-    def get_entries(self, history=False, first=False, recursive=True,
-                    path=None, group=None, **kwargs):
+    def get_entries(self, history=False, first=False, recursive=True, path=None, group=None, regex=False,
+                    flags=None, title=None, username=None, password=None, url=None, notes=None, uuid=None, string=None):
         """Return a list of entries in the open KeePass database matching the given arguments.\n
 
         The ``history`` argument can be set to ``True`` to include history entries in the search, default value is False.\n
@@ -28,6 +27,7 @@ class KeePassEntries(LibraryComponent):
         - The ``url`` argument sets the url which the entries should match, default value is None.
         - The ``notes`` argument sets the notes which the entries should match, default value is None.
         - The ``uuid`` argument sets the uuid which the entries should match, default value is None.
+        - The ``string`` (dict) argument sets the custom string fields which the entries should match, default value is None.
 
         Examples:
         | @{entries}= | `Get Entries` | title=.*entry | regex=True |
@@ -41,13 +41,27 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            if 'regex' in kwargs:
-                kwargs['regex'] = is_truthy(kwargs['regex'])
+            # Create kwargs (Prevent NoneType AttributeError in find_entries)
+            kwargs = {}
+            if regex is not None:
+                regex = is_truthy(regex)
+            if uuid is not None:
+                uuid = UUID('urn:uuid:' + uuid)
+                kwargs['uuid'] = uuid
+            if string is not None:
+                kwargs['string'] = string
             return self.database.find_entries(recursive=recursive,
                                               path=path,
                                               group=group,
                                               history=history,
                                               first=first,
+                                              regex=regex,
+                                              flags=flags,
+                                              title=title,
+                                              username=username,
+                                              password=password,
+                                              url=url,
+                                              notes=notes,
                                               **kwargs)
 
     @keyword
@@ -62,8 +76,8 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_title('.*',
-                                                       regex=True)
+            return self.get_entries(title='.*',
+                                    regex=True)
 
     @keyword
     def get_entries_by_title(self, title, regex=False, flags=None,
@@ -82,12 +96,12 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_title(title,
-                                                       regex,
-                                                       flags,
-                                                       group,
-                                                       history,
-                                                       first)
+            return self.get_entries(title=title,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)
 
     @keyword
     def get_entries_by_username(self, username, regex=False, flags=None,
@@ -102,12 +116,12 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_username(username,
-                                                          regex,
-                                                          flags,
-                                                          group,
-                                                          history,
-                                                          first)
+            return self.get_entries(username=username,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)
 
     @keyword
     def get_entries_by_password(self, password, regex=False, flags=None,
@@ -122,12 +136,12 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_password(password,
-                                                          regex,
-                                                          flags,
-                                                          group,
-                                                          history,
-                                                          first)
+            return self.get_entries(password=password,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first )
 
     @keyword
     def get_entries_by_url(self, url, regex=False, flags=None,
@@ -142,12 +156,12 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_url(url,
-                                                     regex,
-                                                     flags,
-                                                     group,
-                                                     history,
-                                                     first)
+            return self.get_entries(url=url,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)
 
     @keyword
     def get_entries_by_notes(self, notes, regex=False, flags=None,
@@ -162,12 +176,12 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_notes(notes,
-                                                       regex,
-                                                       flags,
-                                                       group,
-                                                       history,
-                                                       first)
+            return self.get_entries(notes=notes,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)
 
     # FIXME: Return more then 1 match even when first is set to false
     @keyword
@@ -186,12 +200,12 @@ class KeePassEntries(LibraryComponent):
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             entry_path_list = entry_path_str.split('/')
-            return self.database.find_entries_by_path(entry_path_list,
-                                                      regex,
-                                                      flags,
-                                                      group,
-                                                      history,
-                                                      first)
+            return self.get_entries(path=entry_path_list,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)
 
     @keyword
     def get_entries_by_uuid(self, uuid, regex=False, flags=None,
@@ -206,13 +220,12 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            uuid = UUID('urn:uuid:' + uuid)
-            return self.database.find_entries_by_uuid(uuid,
-                                                      regex,
-                                                      flags,
-                                                      group,
-                                                      history,
-                                                      first)
+            return self.get_entries(uuid=uuid,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)
 
     @keyword
     def get_entries_by_string(self, string, regex=False, flags=None,
@@ -237,9 +250,9 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_entries_by_string(string,
-                                                        regex,
-                                                        flags,
-                                                        group,
-                                                        history,
-                                                        first)
+            return self.get_entries(string=string,
+                                    regex=regex,
+                                    flags=flags,
+                                    group=group,
+                                    history=history,
+                                    first=first)

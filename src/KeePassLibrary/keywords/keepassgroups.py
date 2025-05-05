@@ -6,9 +6,8 @@ from robot.utils import is_truthy
 
 class KeePassGroups(LibraryComponent):
 
-    # FIXME: Catch uuid string and convert to class
     @keyword
-    def get_groups(self, recursive=True, path=None, group=None, **kwargs):
+    def get_groups(self, recursive=True, path=None, group=None, history=False, first=False, regex=False, flags=None, name=None, notes=None, uuid=None):
         """Return a list of groups in the open KeePass database matching the given arguments.
 
         The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is True.\n
@@ -35,11 +34,25 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            if 'regex' in kwargs:
-                kwargs['regex'] = is_truthy(kwargs['regex'])
-            if 'first' in kwargs:
-                kwargs['first'] = is_truthy(kwargs['first'])
-            return self.database.find_groups(recursive, path, group, **kwargs)
+            # Create kwargs (Prevent NoneType AttributeError in find_groups)
+            kwargs = {}
+            if regex is not None:
+                regex = is_truthy(regex)
+            if first is not None:
+                first = is_truthy(first)
+            if uuid is not None:
+                uuid = UUID('urn:uuid:' + uuid)
+                kwargs['uuid'] = uuid
+            return self.database.find_groups(recursive=recursive,
+                                             path=path,
+                                             group=group,
+                                             history=history,
+                                             first=first,
+                                             regex=regex,
+                                             flags=flags,
+                                             name=name,
+                                             notes=notes,
+                                             **kwargs)
 
     @keyword
     def get_groups_all(self):
@@ -53,8 +66,8 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_groups_by_name('.*',
-                                                     regex=True)
+            return self.get_groups(name='.*',
+                                   regex=True)
 
     @keyword
     def get_groups_by_name(self, group_name, regex=False, flags=None,
@@ -71,11 +84,11 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_groups_by_name(group_name=group_name,
-                                                     regex=regex,
-                                                     flags=flags,
-                                                     group=group,
-                                                     first=first)
+            return self.get_groups(name=group_name,
+                                   regex=regex,
+                                   flags=flags,
+                                   group=group,
+                                   first=first)
 
     @keyword
     def get_groups_by_path(self, group_path_str=None, regex=False, flags=None,
@@ -92,11 +105,11 @@ class KeePassGroups(LibraryComponent):
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             group_path_list = group_path_str.split('/')
-            return self.database.find_groups_by_path(group_path_str=group_path_list,
-                                                     regex=regex,
-                                                     flags=flags,
-                                                     group=group,
-                                                     first=first)
+            return self.get_groups(path=group_path_list,
+                                   regex=regex,
+                                   flags=flags,
+                                   group=group,
+                                   first=first)
 
     @keyword
     def get_groups_by_uuid(self, uuid, regex=False, flags=None,
@@ -112,13 +125,12 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            uuid = UUID('urn:uuid:' + uuid)
-            return self.database.find_groups_by_uuid(uuid=uuid,
-                                                     regex=regex,
-                                                     flags=flags,
-                                                     group=group,
-                                                     history=history,
-                                                     first=first)
+            return self.get_groups(uuid=uuid,
+                                   regex=regex,
+                                   flags=flags,
+                                   group=group,
+                                   history=history,
+                                   first=first)
 
     @keyword
     def get_groups_by_notes(self, notes, regex=False, flags=None,
@@ -134,9 +146,9 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.find_groups_by_notes(notes=notes,
-                                                      regex=regex,
-                                                      flags=flags,
-                                                      group=group,
-                                                      history=history,
-                                                      first=first)
+            return self.get_groups(notes=notes,
+                                   regex=regex,
+                                   flags=flags,
+                                   group=group,
+                                   history=history,
+                                   first=first)
