@@ -7,6 +7,8 @@ Most important enhancements
 - Implemented Mypy static type checker
 - New TimeZone enum replacing str
 - Refactoring argument names
+- Documentation Datatypes TimeZone, RegExp, Entry, Group
+- Documentation tagged keywords
 
 Changed keywords
 ----------------

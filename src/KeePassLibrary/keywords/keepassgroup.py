@@ -11,7 +11,7 @@ from typing import Optional, List
 class KeePassGroup(LibraryComponent):
 
     # ---------- Base Element ----------
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_accessed_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return accessed time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
@@ -35,7 +35,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_accessed_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets accessed time of the supplied KeePass ``group`` to the given ``value``.
 
@@ -59,7 +59,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_created_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return created time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
@@ -83,7 +83,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_created_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets created time of the supplied KeePass ``group`` to the given ``value``.
 
@@ -116,7 +116,7 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_expiry_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return expiry time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
@@ -140,7 +140,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_expiry_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets expiry time of the supplied KeePass ``group`` to the given ``value``.
 
@@ -164,7 +164,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_icon(self, group: Group) -> str:
         """Return the icon of the supplied KeePass ``group``.
 
@@ -179,7 +179,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_icon(self, group: Group, value: str) -> None:
         """Set the ``icon`` of the supplied KeePass ``group`` to the given ``value``.
 
@@ -194,7 +194,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_modified_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return modified time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
@@ -218,7 +218,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_modified_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets modified time of the supplied KeePass ``group`` to the given ``value``.
 
@@ -243,7 +243,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     # ---------- Touch ----------
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def touch_group(self, group: Group, modify: Optional[bool] = False) -> None:
         """Touch the supplied KeePass ``group``.
 
@@ -261,7 +261,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_parent(self, group: Group) -> Group:
         """Return the parentgroup of the supplied KeePass ``group``.
 
@@ -280,7 +280,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_uuid(self, group: Group) -> str:
         """Return the uuid of the supplied KeePass ``group``.
 
@@ -304,7 +304,7 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_expires(self, group: Group) -> bool:
         """Return expires of the supplied KeePass ``group``.
 
@@ -319,7 +319,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_expires(self, group: Group, value: bool) -> None:
         """Sets expires value of the supplied KeePass ``group`` to the given ``value``.
 
@@ -334,7 +334,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_expired(self, group: Group) -> bool:
         """Return expired value of the supplied KeePass ``group``.
 
@@ -349,7 +349,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Assertion", "Group"))
     def group_should_be_expired(self, group: Group, msg: Optional[str] = None) -> None:
         """Fails if the specified group is not expired.
 
@@ -367,7 +367,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Assertion", "Group"))
     def group_should_not_be_expired(self, group: Group, msg: Optional[str] = None) -> None:
         """Fails if the specified group is expired.
 
@@ -395,7 +395,7 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_entries(self, group: Group) -> List[Optional[Entry]]:
         """Returns a list of entries from the supplied KeePass ``group``.
 
@@ -413,7 +413,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_name(self, group: Group) -> str:
         """Return the name value of the supplied KeePass ``group``.
 
@@ -428,7 +428,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_name(self, group: Group, value: str) -> None:
         """Set the name value of the supplied KeePass ``group`` to the given ``value``
 
@@ -443,7 +443,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_notes(self, group: Group) -> str:
         """Return the notes value of the supplied KeePass ``group``.
 
@@ -458,7 +458,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Setter", "Group"))
     def set_group_notes(self, group: Group, value: str) -> None:
         """Set the notes value of the supplied KeePass ``group`` to the given ``value``.
 
@@ -473,7 +473,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_subgroups(self, group: Group) -> List[Optional[Group]]:
         """Returns a list of subgroups from the supplied KeePass ``group``.
 
@@ -491,7 +491,7 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_is_root_group(self, group: Group) -> bool:
         """Return is root group value of the supplied KeePass ``group`.`
 
@@ -526,7 +526,7 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
+    @keyword(tags=("Getter", "Group"))
     def get_group_path(self, group: Group) -> str:
         """Return the path value of the supplied KeePass ``group``.
 
