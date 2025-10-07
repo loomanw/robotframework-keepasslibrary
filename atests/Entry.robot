@@ -505,3 +505,48 @@ Attachment Should Not Be Present Fail
     Set Entry Attachment               ${entry}    spam.txt      ${binary_set}
     ${error_msg}=                  Set Variable     The entry should not contain attachment 'spam.txt', but it does.
     Run Keyword And Expect Error   ${error_msg}     Entry Should Not Contain Attachment    ${entry}    spam.txt
+
+Get Entry Password As Secret - Robot Framework 7.4+
+    [Documentation]    Get entry password as Secret type when supported
+    [Tags]    get    secret    password
+    ${entry_title}=    Set Variable    root_entry
+    ${value_expected}=    Set Variable    passw0rd
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    
+    # Test with as_secret=False (default behavior)
+    ${value_plain}=    Get Entry Password    ${entry}
+    Should Be Equal As Strings    ${value_expected}    ${value_plain}
+    
+    # Try to get password as Secret - will work if RF 7.4+ or fail with appropriate error
+    ${rf_version}=    Evaluate    robot.__version__    modules=robot
+    ${version_parts}=    Split String    ${rf_version}    .
+    ${major}=    Convert To Integer    ${version_parts}[0]
+    ${minor_str}=    Fetch From Left    ${version_parts}[1]    b
+    ${minor}=    Convert To Integer    ${minor_str}
+    
+    IF    ${major} > 7 or (${major} == 7 and ${minor} >= 4)
+        # Robot Framework 7.4+ - Secret should work
+        ${value_secret}=    Get Entry Password    ${entry}    as_secret=True
+        # Secret type should contain the same password value
+        ${secret_value}=    Evaluate    str($value_secret)
+        Should Contain    ${secret_value}    Secret
+    ELSE
+        # Robot Framework < 7.4 - Should fail with appropriate error
+        ${error_msg}=    Set Variable    Secret type is not available in Robot Framework ${rf_version}. Secret type requires Robot Framework 7.4 or later.
+        Run Keyword And Expect Error    *Secret type*Robot Framework*7.4*    Get Entry Password    ${entry}    as_secret=True
+    END
+
+Get Entry Password As Secret - Default Behavior
+    [Documentation]    Verify default behavior remains unchanged
+    [Tags]    get    password    backward_compatibility
+    ${entry_title}=    Set Variable    root_entry
+    ${value_expected}=    Set Variable    passw0rd
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    
+    # Default behavior should return plain password
+    ${value}=    Get Entry Password    ${entry}
+    Should Be Equal As Strings    ${value_expected}    ${value}
+    
+    # Explicitly set as_secret=False should work the same way
+    ${value_explicit}=    Get Entry Password    ${entry}    as_secret=False
+    Should Be Equal As Strings    ${value_expected}    ${value_explicit}
