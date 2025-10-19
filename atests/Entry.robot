@@ -151,7 +151,7 @@ Get Notes
     ${value}=    Get Entry Notes    ${entry}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
-Get Pasword
+Get Password
     [Documentation]    Selected entry contains expected password
     [Tags]    get
     ${entry_title}=    Set Variable    root_entry

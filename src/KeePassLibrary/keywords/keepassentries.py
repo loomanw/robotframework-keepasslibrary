@@ -21,7 +21,7 @@ class KeePassEntries(LibraryComponent):
 
         *Additional arguments:*
         - The ``regex`` argument can be set to ``True`` this enables regular expression searching, default value is False.
-        - The ``flags`` argument can be set to modify the regular expression search, default value is None. See the `Regular expression` section for more information about about the ``regex`` and ``flags`` syntax.
+        - The ``flags`` argument can be set to modify the regular expression search, default value is None. See the `Regular expression` section for more information about the ``regex`` and ``flags`` syntax.
         - The ``title`` argument can be given to search matching titles, default value is None.
         - The ``username`` argument sets the username which the entries should match, default value is None.
         - The ``password`` argument sets the password which the entries should match, default value is None.
@@ -224,7 +224,7 @@ class KeePassEntries(LibraryComponent):
         Example:
         | &{string}= | Create Dictionary | UserName=foobar_user | Title=group_entry |
 
-        Valid dictonary keys:
+        Valid dictionary keys:
         | Title |
         | UserName |
         | Password |

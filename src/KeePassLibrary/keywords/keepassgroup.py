@@ -228,7 +228,7 @@ class KeePassGroup(LibraryComponent):
         Example:
         | ${group} =                | `Get Groups By Name` | foobar_group            | first=True |
         | ${value} =	            | Convert Date         | 2014-06-11 10:07:42.123 | datetime   |
-        | `Set Group modifeid Time` | ${entry}             | ${value}                | local      |
+        | `Set Group modified Time` | ${entry}             | ${value}                | local      |
 
         New in KeePassLibrary 0.8
         """
