@@ -105,12 +105,6 @@ def print_version(ctx):
 
 
 @task
-def tidy(ctx):
-    """Runs robottidy for project atest code."""
-    ctx.run("robotidy atests/")
-
-
-@task
 def lint(ctx):
     """Runs flake8 for project Python code."""
     ctx.run("flake8 --config .flake8 tasks.py src/ atests/ utests/")

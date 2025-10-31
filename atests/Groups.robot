@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation       Check Group selection related keywords
 
-Library             KeePassLibrary
 Library             Collections
+Library             KeePassLibrary
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database

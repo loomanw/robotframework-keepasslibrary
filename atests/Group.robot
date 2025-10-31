@@ -1,9 +1,9 @@
 *** Settings ***
 Documentation       Check Group related keywords
 
-Library             KeePassLibrary
 Library             Collections
 Library             DateTime
+Library             KeePassLibrary
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database
@@ -23,7 +23,7 @@ Get Created Time
     [Documentation]    Selected group contains expected created time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime}=    Get Group Created Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2017
     Should Be Equal As Integers    ${mtime.month}          3
@@ -31,7 +31,7 @@ Get Created Time
     Should Be Equal As Integers    ${mtime.hour}           1
     Should Be Equal As Integers    ${mtime.minute}         8
     Should Be Equal As Integers    ${mtime.second}         13
-    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Integers    ${mtime.microsecond}    0
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Expiry Time
@@ -46,7 +46,7 @@ Get Expiry Time
     Should Be Equal As Integers    ${mtime.hour}           1
     Should Be Equal As Integers    ${mtime.minute}         8
     Should Be Equal As Integers    ${mtime.second}         13
-    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Integers    ${mtime.microsecond}    0
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Expires
@@ -103,7 +103,7 @@ Get Last Accessed Time
     [Documentation]    Selected entry contains expected last accessed time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True  
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime}=    Get Group Accessed Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2020
     Should Be Equal As Integers    ${mtime.month}          10
@@ -111,14 +111,14 @@ Get Last Accessed Time
     Should Be Equal As Integers    ${mtime.hour}           14
     Should Be Equal As Integers    ${mtime.minute}         16
     Should Be Equal As Integers    ${mtime.second}         38
-    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Integers    ${mtime.microsecond}    0
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Modified Time
     [Documentation]    Selected entry contains expected modified time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True 
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime}=    Get Group Modified Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2017
     Should Be Equal As Integers    ${mtime.month}          3
@@ -126,7 +126,7 @@ Get Modified Time
     Should Be Equal As Integers    ${mtime.hour}           1
     Should Be Equal As Integers    ${mtime.minute}         8
     Should Be Equal As Integers    ${mtime.second}         43
-    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Integers    ${mtime.microsecond}    0
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Name
@@ -191,41 +191,41 @@ Get Uuid
 
 Group Should Be Expired
     [Documentation]    Selected group should be expired.
-    [Tags]    should be
+    [Tags]    should_be
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
-    Set Group Expires    ${group}     ${TRUE} 
+    ${group}=    Get Groups By Name    ${group_name}    first=True
+    Set Group Expires    ${group}     ${TRUE}
     Group Should Be Expired    ${group}
 
 Group Should Not Be Expired
     [Documentation]    Selected entry should not be expired.
-    [Tags]    should not be
+    [Tags]    should_not_be
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
-    Set Group Expires    ${group}     ${FALSE} 
+    ${group}=    Get Groups By Name    ${group_name}    first=True
+    Set Group Expires    ${group}     ${FALSE}
     Group Should Not Be Expired    ${group}
 
 Set Accessed Time
     [Documentation]    Selected group accessed time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime1}=    Get Group Accessed Time    ${group}    UTC
     ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Accessed Time    ${group}    ${value}    local
     ${mtime2}=    Get Group Accessed Time    ${group}
-    Should Not Be Equal    ${mtime1}    ${mtime2}    
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Created Time
     [Documentation]    Selected group created time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime1}=    Get Group Created Time    ${group}    UTC
     ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
-    Set Group Created Time    ${group}    ${datetime}    local    
+    Set Group Created Time    ${group}    ${datetime}    local
     ${mtime2}=    Get Group Created Time    ${group}
-    Should Not Be Equal    ${mtime1}    ${mtime2} 
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Expires
     [Documentation]    Selected group expires can be set
@@ -241,12 +241,12 @@ Set Expiry Time
     [Documentation]    Selected entry expiry time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime1}=    Get Group Expiry Time    ${group}    UTC
     ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Expiry Time    ${group}    ${datetime}    local
     ${mtime2}=    Get Group Expiry Time    ${group}
-    Should Not Be Equal    ${mtime1}    ${mtime2} 
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Icon
     [Documentation]    Selected group notes can be set
@@ -282,7 +282,7 @@ Set Modified Time
     [Documentation]    Selected entry modified time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True   
+    ${group}=    Get Groups By Name    ${group_name}    first=True
     ${mtime1}=    Get Group Modified Time    ${group}    UTC
     ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Modified Time    ${group}    ${datetime}    local
@@ -301,9 +301,9 @@ Touch Modify False
     ${atime2}=    Get Group Accessed Time    ${group}
     ${mtime2}=    Get Group Modified Time    ${group}
     ${ctime2}=    Get Group Created Time    ${group}
-    Should Not Be Equal    ${atime1}    ${atime2}         
-    Should Be Equal    ${mtime1}    ${mtime2}         
-    Should Be Equal    ${ctime1}    ${ctime2}         
+    Should Not Be Equal    ${atime1}    ${atime2}
+    Should Be Equal    ${mtime1}    ${mtime2}
+    Should Be Equal    ${ctime1}    ${ctime2}
 
 Touch Modify True
     [Documentation]    Selected group is touched and modified
@@ -317,6 +317,6 @@ Touch Modify True
     ${atime2}=    Get Group Accessed Time    ${group}
     ${mtime2}=    Get Group Modified Time    ${group}
     ${ctime2}=    Get Group Created Time    ${group}
-    Should Not Be Equal    ${atime1}    ${atime2}         
-    Should Not Be Equal    ${mtime1}    ${mtime2}         
-    Should Be Equal    ${ctime1}    ${ctime2} 
+    Should Not Be Equal    ${atime1}    ${atime2}
+    Should Not Be Equal    ${mtime1}    ${mtime2}
+    Should Be Equal    ${ctime1}    ${ctime2}

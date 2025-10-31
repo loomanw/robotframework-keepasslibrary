@@ -1,10 +1,10 @@
 *** Settings ***
 Documentation       Check Entry related keywords
 
-Library             KeePassLibrary
 Library             Collections
 Library             DateTime
 Library             String
+Library             KeePassLibrary
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database
@@ -22,25 +22,25 @@ ${KEEPASS_PASSWORD}     password
 *** Test Cases ***
 Entry Should Be Expired
     [Documentation]    Selected entry should be expired.
-    [Tags]    should be
+    [Tags]    should_be
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
-    Set Entry Expires    ${entry}     ${TRUE} 
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    Set Entry Expires    ${entry}     ${TRUE}
     Entry Should Be Expired    ${entry}
 
 Entry Should Not Be Expired
     [Documentation]    Selected entry should not be expired.
-    [Tags]    should not be
+    [Tags]    should_not_be
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
-    Set Entry Expires    ${entry}     ${FALSE} 
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
+    Set Entry Expires    ${entry}     ${FALSE}
     Entry Should Not Be Expired    ${entry}
-    
+
 Get Created Time
     [Documentation]    Selected entry contains expected created time properties.
     [Tags]    get
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime}=    Get Entry Created Time    ${entry}
     Should Be Equal As Integers    ${mtime.year}            2017
     Should Be Equal As Integers    ${mtime.month}           3
@@ -48,7 +48,7 @@ Get Created Time
     Should Be Equal As Integers    ${mtime.hour}            1
     Should Be Equal As Integers    ${mtime.minute}          8
     Should Be Equal As Integers    ${mtime.second}          46
-    Should Be Equal As Integers    ${mtime.microsecond}     0 
+    Should Be Equal As Integers    ${mtime.microsecond}     0
     Should Be Equal As Strings     ${mtime.tzinfo}          UTC
 
 Get Custom Properties
@@ -92,7 +92,7 @@ Get Expiry Time
     [Documentation]    Selected entry contains expected expiry time properties.
     [Tags]    get
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime}=    Get Entry Expiry Time    ${entry}
     Should Be Equal As Integers    ${mtime.year}           2017
     Should Be Equal As Integers    ${mtime.month}          3
@@ -100,14 +100,14 @@ Get Expiry Time
     Should Be Equal As Integers    ${mtime.hour}           1
     Should Be Equal As Integers    ${mtime.minute}         8
     Should Be Equal As Integers    ${mtime.second}         46
-    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Integers    ${mtime.microsecond}    0
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Last Access Time
     [Documentation]    Selected entry contains expected last access time properties.
     [Tags]    get
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime}=    Get Entry Accessed Time    ${entry}
     Should Be Equal As Integers    ${mtime.year}           2020
     Should Be Equal As Integers    ${mtime.month}          10
@@ -115,14 +115,14 @@ Get Last Access Time
     Should Be Equal As Integers    ${mtime.hour}           13
     Should Be Equal As Integers    ${mtime.minute}         2
     Should Be Equal As Integers    ${mtime.second}         6
-    Should Be Equal As Integers    ${mtime.microsecond}    0 
+    Should Be Equal As Integers    ${mtime.microsecond}    0
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Modified Time
     [Documentation]    Selected entry contains expected modified time properties.
     [Tags]    get
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime}=    Get Entry Modified Time    ${entry}
     Should Be Equal As Integers    ${mtime.year}            2020
     Should Be Equal As Integers    ${mtime.month}           10
@@ -130,7 +130,7 @@ Get Modified Time
     Should Be Equal As Integers    ${mtime.hour}            12
     Should Be Equal As Integers    ${mtime.minute}          15
     Should Be Equal As Integers    ${mtime.second}          54
-    Should Be Equal As Integers    ${mtime.microsecond}     0 
+    Should Be Equal As Integers    ${mtime.microsecond}     0
     Should Be Equal As Strings     ${mtime.tzinfo}          UTC
 
 Get Icon
@@ -209,12 +209,12 @@ Set Accessed Time
     [Documentation]    Selected entry accessed time property can be set with a datetime object.
     [Tags]    set
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime1}=    Get Entry Accessed Time    ${entry}    UTC
     ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Entry Accessed Time    ${entry}    ${value}    local
     ${mtime2}=    Get Entry Accessed Time    ${entry}
-    Should Not Be Equal    ${mtime1}    ${mtime2}    
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Custom Property Existing
     [Documentation]    Selected entry custom porperty (existing) can be set with a string
@@ -242,12 +242,12 @@ Set Created Time
     [Documentation]    Selected entry created time property can be set with a datetime object.
     [Tags]    set
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime1}=    Get Entry Created Time    ${entry}    UTC
     ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Entry Created Time    ${entry}    ${value}    local
     ${mtime2}=    Get Entry Created Time    ${entry}
-    Should Not Be Equal    ${mtime1}    ${mtime2} 
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Expires
     [Documentation]    Selected entry expires can be set with a boolean
@@ -263,12 +263,12 @@ Set Expiry Time
     [Documentation]    Selected entry expiry time property can be set with a datetime object.
     [Tags]    set
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime1}=    Get Entry Expiry Time    ${entry}    UTC
     ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Entry Expiry Time    ${entry}    ${value}    local
     ${mtime2}=    Get Entry Expiry Time    ${entry}
-    Should Not Be Equal    ${mtime1}    ${mtime2} 
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Icon
     [Documentation]    Selected entry icon can be set with a integer
@@ -284,12 +284,12 @@ Set Modified Time
     [Documentation]    Selected entry modified time property can be set with a datetime object.
     [Tags]    set
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=    Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${mtime1}=    Get Entry Modified Time    ${entry}    UTC
     ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Entry Modified Time    ${entry}    ${value}    local
     ${mtime2}=    Get Entry Modified Time    ${entry}
-    Should Not Be Equal    ${mtime1}    ${mtime2}    
+    Should Not Be Equal    ${mtime1}    ${mtime2}
 
 Set Notes
     [Documentation]    Selected entry notes can be set with a string
@@ -366,7 +366,7 @@ Touch Modify False
     [Documentation]    Selected entry is touched and not modified
     [Tags]    touch
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=     Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=     Get Entries By Title    ${entry_title}    first=True
     ${atime1}=    Get Entry Accessed Time    ${entry}
     ${mtime1}=    Get Entry Modified Time    ${entry}
     ${ctime1}=    Get Entry Created Time    ${entry}
@@ -374,15 +374,15 @@ Touch Modify False
     ${atime2}=    Get Entry Accessed Time    ${entry}
     ${mtime2}=    Get Entry Modified Time    ${entry}
     ${ctime2}=    Get Entry Created Time    ${entry}
-    Should Not Be Equal    ${atime1}    ${atime2}         
-    Should Be Equal    ${mtime1}    ${mtime2}         
-    Should Be Equal    ${ctime1}    ${ctime2}         
+    Should Not Be Equal    ${atime1}    ${atime2}
+    Should Be Equal    ${mtime1}    ${mtime2}
+    Should Be Equal    ${ctime1}    ${ctime2}
 
 Touch Modify True
     [Documentation]    Selected entry is touched and modified
     [Tags]    touch
     ${entry_title}=    Set Variable    root_entry
-    ${entry}=     Get Entries By Title    ${entry_title}    first=True   
+    ${entry}=     Get Entries By Title    ${entry_title}    first=True
     ${atime1}=    Get Entry Accessed Time    ${entry}
     ${mtime1}=    Get Entry Modified Time    ${entry}
     ${ctime1}=    Get Entry Created Time    ${entry}
@@ -390,8 +390,8 @@ Touch Modify True
     ${atime2}=    Get Entry Accessed Time    ${entry}
     ${mtime2}=    Get Entry Modified Time    ${entry}
     ${ctime2}=    Get Entry Created Time    ${entry}
-    Should Not Be Equal    ${atime1}    ${atime2}         
-    Should Not Be Equal    ${mtime1}    ${mtime2}         
+    Should Not Be Equal    ${atime1}    ${atime2}
+    Should Not Be Equal    ${mtime1}    ${mtime2}
     Should Be Equal    ${ctime1}    ${ctime2}
 
 List Attachments
@@ -399,8 +399,8 @@ List Attachments
     [Tags]    attachment
     ${entry_title}=    Set Variable    root_entry
     ${entry}=    Get Entries By Title    ${entry_title}    first=True
-    ${attachment_spam}    Encode String To Bytes    spam spam    UTF-8
-    ${attachment_eggs}    Encode String To Bytes    egg egg    UTF-8
+    ${attachment_spam}=    Encode String To Bytes    spam spam    UTF-8
+    ${attachment_eggs}=    Encode String To Bytes    egg egg    UTF-8
     Set Entry Attachment    ${entry}    spam.txt    ${attachment_spam}
     Set Entry Attachment    ${entry}    eggs.txt    ${attachment_eggs}
     ${attachments}=    Get Entry Attachments    ${entry}
@@ -414,11 +414,11 @@ Add New Attachment
     ${entry_title}=    Set Variable    root_entry
     ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${string_set}=       Set Variable    spam spam
-    ${attachment_set}    Encode String To Bytes    ${string_set}    UTF-8
+    ${attachment_set}=    Encode String To Bytes    ${string_set}    UTF-8
     Set Entry Attachment    ${entry}    spam.txt    ${attachment_set}
-    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    ${attachment_get}=    Get Entry Attachment    ${entry}    spam.txt
     Should Be Equal    ${attachment_get}    ${attachment_set}
-    ${string_get}    Decode Bytes To String    ${attachment_get}    UTF-8
+    ${string_get}=    Decode Bytes To String    ${attachment_get}    UTF-8
     Should Be Equal As Strings    ${string_get}    ${string_set}
 
 Get Existing Attachment
@@ -427,11 +427,11 @@ Get Existing Attachment
     ${entry_title}=    Set Variable    root_entry
     ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${string_set}=     Set Variable    spam spam
-    ${attachment_set}    Encode String To Bytes    ${string_set}      UTF-8
+    ${attachment_set}=    Encode String To Bytes    ${string_set}      UTF-8
     Set Entry Attachment    ${entry}    spam.txt    ${attachment_set}
-    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    ${attachment_get}=    Get Entry Attachment    ${entry}    spam.txt
     Should Be Equal    ${attachment_get}    ${attachment_set}
-    ${string_get}    Decode Bytes To String    ${attachment_get}    UTF-8
+    ${string_get}=    Decode Bytes To String    ${attachment_get}    UTF-8
     Should Be Equal As Strings    ${string_get}    ${string_set}
 
 Replace Existing Attachment
@@ -441,15 +441,15 @@ Replace Existing Attachment
     ${entry}=    Get Entries By Title    ${entry_title}    first=True
     ${string_set}=     Set Variable    spam spam
     ${string_set2}=    Set Variable    spam spam spam
-    ${attachment_set}    Encode String To Bytes    ${string_set}      UTF-8
-    ${attachment_set2}    Encode String To Bytes    ${string_set2}    UTF-8
+    ${attachment_set}=    Encode String To Bytes    ${string_set}      UTF-8
+    ${attachment_set2}=    Encode String To Bytes    ${string_set2}    UTF-8
     Set Entry Attachment    ${entry}    spam.txt    ${attachment_set}
-    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    ${attachment_get}=    Get Entry Attachment    ${entry}    spam.txt
     Should Be Equal    ${attachment_get}    ${attachment_set}
     Set Entry Attachment    ${entry}    spam.txt    ${attachment_set2}
-    ${attachment_get}    Get Entry Attachment    ${entry}    spam.txt
+    ${attachment_get}=    Get Entry Attachment    ${entry}    spam.txt
     Should Be Equal    ${attachment_get}    ${attachment_set2}
-    ${string_get}    Decode Bytes To String    ${attachment_get}    UTF-8
+    ${string_get}=    Decode Bytes To String    ${attachment_get}    UTF-8
     Should Be Equal As Strings    ${string_get}    ${string_set2}
 
 Remove Existing Attachment Succes
@@ -476,32 +476,32 @@ Remove Existing Attachment Fail
 
 Attachment Should Be Present Succes
     [Documentation]    Selected entry should contain attachment succeeds
-    [Tags]    should be    attachment
-    ${entry} =                         Get Entries By Title    root_entry    first=True
+    [Tags]    should_be    attachment
+    ${entry}=                          Get Entries By Title    root_entry    first=True
     ${string_set}=                     Set Variable    Attachment contents
-    ${binary_set} =                    Encode String To Bytes    ${string_set}    UTF-8
+    ${binary_set}=                     Encode String To Bytes    ${string_set}    UTF-8
     Set Entry Attachment               ${entry}    spam.txt      ${binary_set}
     Entry Should Contain Attachment    ${entry}    spam.txt
 
 Attachment Should Be Present Fail
     [Documentation]    Selected entry should contain attachment fails
-    [Tags]    should be    attachment
-    ${entry} =                     Get Entries By Title    root_entry    first=True
+    [Tags]    should_be    attachment
+    ${entry}=                      Get Entries By Title    root_entry    first=True
     ${error_msg}=                  Set Variable     The entry should contain attachment 'spam.txt', but it does not.
     Run Keyword And Expect Error   ${error_msg}     Entry Should Contain Attachment    ${entry}    spam.txt
 
 Attachment Should Not Be Present Succes
     [Documentation]    Selected entry should not contain attachment succeeds
-    [Tags]    should not be    attachment
-    ${entry} =                         Get Entries By Title    root_entry    first=True
+    [Tags]    should_not_be    attachment
+    ${entry}=                          Get Entries By Title    root_entry    first=True
     Entry Should Not Contain Attachment    ${entry}    spam.txt
 
 Attachment Should Not Be Present Fail
     [Documentation]    Selected entry should contain attachment fails
-    [Tags]    should not be    attachment
-    ${entry} =                     Get Entries By Title    root_entry    first=True
+    [Tags]    should_not_be    attachment
+    ${entry}=                      Get Entries By Title    root_entry    first=True
     ${string_set}=                 Set Variable    Attachment contents
-    ${binary_set} =                Encode String To Bytes    ${string_set}    UTF-8
+    ${binary_set}=                 Encode String To Bytes    ${string_set}    UTF-8
     Set Entry Attachment               ${entry}    spam.txt      ${binary_set}
     ${error_msg}=                  Set Variable     The entry should not contain attachment 'spam.txt', but it does.
     Run Keyword And Expect Error   ${error_msg}     Entry Should Not Contain Attachment    ${entry}    spam.txt
