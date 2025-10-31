@@ -13,15 +13,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.8","3.9","3.10","3.11","3.12","3.13"]
-        robotframework-version: ["7.2"]
+        python-version: ["3.8","3.9","3.10","3.11","3.12","3.13","3.14"]
+        robotframework-version: ["7.3.2"]
         include:
         - os: ubuntu-latest
           python-version: "3.12"
           robotframework-version: "6.1.1"
         - os: ubuntu-latest
           python-version: "3.10"                
-          robotframework-version: "5.0"               
+          robotframework-version: "5.0.1"
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
     steps:
