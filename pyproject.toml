@@ -10,7 +10,7 @@ authors = [
 ]
 description = "Robot Framework library for working with KeePass Database"
 readme = "README.md"
-requires-python = ">=3.8, <3.14"
+requires-python = ">=3.8, <3.15"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: MIT License",
@@ -23,6 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Security :: Cryptography",
     "Topic :: Software Development :: Quality Assurance",
