@@ -4,7 +4,7 @@ pytest >= 8.3.3
 invoke >= 2.2.0
 
 # Requirement needed for robotframework
-robotframework-tidy >= 4.14.0
+robotframework-robocop >= 8.2.4,<9.0.0
 rellu >= 0.7
 
 # Requirements needed when generating releases. 

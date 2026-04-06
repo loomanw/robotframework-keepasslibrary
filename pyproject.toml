@@ -51,23 +51,6 @@ where = ["src"]
 include = ["KeePassLibrary*"]  # alternatively: `exclude = ["additional*"]`
 namespaces = false
 
-[tool.robotidy]
-overwrite = true
-diff = true
-spacecount = 4
-continuation-indent = 4
-startline = 10
-endline = 20
-transform = [
-   "DiscardEmptySections:allow_only_comments=True",
-   "SplitTooLongLine",
-   "AlignTestCasesSection:enabled=True",
-   "AlignTemplatedTestCases:enabled=True",
-   "AlignKeywordsSection:enabled=True"
-]
-configure = [
-    "SplitTooLongLine:split_on_every_arg=False"
-]
 [tool.pytest.ini_options]
 pythonpath = [
   "src"
@@ -75,4 +58,37 @@ pythonpath = [
 filterwarnings = [
     "ignore::SyntaxWarning",
     "ignore::DeprecationWarning"
+]
+
+[tool.robocop.lint]
+ignore = [
+    "DEPR05",   # Requires RF >=7
+    "DEPR06",   # Requires RF >=7
+]
+configure = [
+    "too-many-calls-in-test-case.max_calls=14",
+    "file-too-long.max_lines=600",
+]
+reports = ["all", "sarif"]
+
+[tool.robocop.format]
+select = [
+    "DiscardEmptySections",
+    "SplitTooLongLine",
+    "AlignTestCasesSection",
+    "AlignTemplatedTestCases",
+    "AlignKeywordsSection",
+]
+diff = true
+overwrite = true
+space_count = 4
+continuation_indent = 4
+start_line = 10
+end_line = 20
+configure = [
+    "SplitTooLongLine.split_on_every_arg=False",
+    "DiscardEmptySections.allow_only_comments=True",
+    "AlignTestCasesSection.enabled=True",
+    "AlignTemplatedTestCases.enabled=True",
+    "AlignKeywordsSection.enabled=True",
 ]

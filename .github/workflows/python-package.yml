@@ -10,56 +10,87 @@ on:
     branches: [ "main", "develop" ]
 
 jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ "3.14" ]
+        robotframework-version: [ "7.4.1" ]
+    runs-on: ${{ matrix.os }}
+    name: Build ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+      - name: Install Robot Framework ${{ matrix.robotframework-version }}
+        run: |
+          python -m pip install robotframework~=${{ matrix.robotframework-version }}
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Utest with pytest
+        run: |
+          pytest ./utests
+      - name: Build Package & Install
+        run: |
+          python -m build --sdist --wheel
+          check-wheel-contents dist/*.whl
+          python -m twine check dist/*
+      - name: Install Robotframework-KeePassLibrary
+        run: |
+          python -m pip install --no-index -f ./dist Robotframework-KeePassLibrary
+      - name: Run robocop
+        run: |
+          python -m robocop check --reports sarif .
+      #    - name: Upload SARIF file
+      #      uses: github/codeql-action/upload-sarif@v4
+      #      with:
+      #        sarif_file: .sarif.json
+      #        category: robocop
+
   test_robot_versions:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-        python-version: ["3.11","3.12","3.13","3.14"]
-        robotframework-version: ["7.3.2"]
+        os: [ubuntu-latest]
+        python-version: ["3.8","3.9","3.10","3.11","3.12","3.13","3.14"]
+        robotframework-version: ["7.4.1"]
         include:
         - os: ubuntu-latest
           python-version: "3.12"
           robotframework-version: "6.1.1"
         - os: ubuntu-latest
-          python-version: "3.11"                
+          python-version: "3.10"
           robotframework-version: "5.0.1"
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
+    name: A test ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install -r requirements-dev.txt
-        python -m pip install robotframework>=${{ matrix.robotframework-version }} --force-reinstall
-    - name: Lint with flake8
+        python -m pip install -r requirements.txt
+        python -m pip install build
+    - name: Install Robot Framework ${{ matrix.robotframework-version }}
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Utest with pytest
-      run: |
-        pytest ./utests
+        python -m pip install robotframework~=${{ matrix.robotframework-version }}
     - name: Build Package & Install
       run: |
         python -m build --sdist --wheel
-        check-wheel-contents dist/*.whl
-        python -m twine check dist/*
-    - name: Install Robotframework-KeePassLibrary
-      run: |
-        python -m pip install --no-index -f ./dist Robotframework-KeePassLibrary
-    - name: Build Package & Install
-      run: |
-        python -m build --sdist --wheel
-        check-wheel-contents dist/*.whl
-        python -m twine check dist/*
     - name: Install Robotframework-KeePassLibrary
       run: |
         python -m pip install --no-index -f ./dist Robotframework-KeePassLibrary

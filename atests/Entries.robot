@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation       Check Entries selecion keywords
 
-Library             KeePassLibrary
 Library             Collections
+Library             KeePassLibrary
 
 Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PASSWORD}    ${KEEPASS_KEYFILE}
 Test Teardown       Close Keepass Database
@@ -41,7 +41,6 @@ Selected By All Are Found
     ...    subentry
     ...    subentry2
     ...    Тест
-    @{values}=    Create List
     @{entries}=    Get Entries All
     FOR    ${entry}    IN    @{entries}
         ${title}=    Get Entry Title    ${entry}
@@ -51,7 +50,6 @@ Selected By All Are Found
 Selected By Notes Are Found
     [Documentation]    Retrieved entries by notes should match title list
     @{values_expected}=    Create List    root_entry    group_entry
-    @{values}=    Create List
     @{entries}=    Get Entries By Notes    notes
     FOR    ${entry}    IN    @{entries}
         ${title}=    Get Entry Title    ${entry}
@@ -73,7 +71,6 @@ Selected By Path Are Found
     [Documentation]    Retrieved entries by path should match uuid list
     ...    Note, only 1 entry can be selected by path
     ${value_expected}=    Set Variable    1e73786c-7495-8c4c-9b3d-ff273aad5b54    # subentry
-    @{values}=            Create List
     ${path}=              Set Variable    foobar_group/subgroup/subentry
     ${entry}=             Get Entries By Path    ${path}
     ${uuid}=    Get Entry Uuid    ${entry}

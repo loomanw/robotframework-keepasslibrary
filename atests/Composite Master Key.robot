@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation       Check valid composed key combinations
 
-Library             KeePassLibrary
 Library             String
+Library             KeePassLibrary
 
 Test Template       Loading Database With Valid Credentials Should Succeed
 
