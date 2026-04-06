@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Build ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -73,7 +73,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: A test ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
