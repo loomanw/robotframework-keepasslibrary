@@ -11,7 +11,7 @@ class KeePassGroups(LibraryComponent):
     def get_groups(self, recursive=True, path=None, group=None, **kwargs):
         """Return a list of groups in the open KeePass database matching the given arguments.
 
-        The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is False.\n
+        The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is True.\n
         The ``path`` argument sets the path which the groups should match, default value is None.\n
         The ``group`` argument has to match an existing Group is supplied only entries which are a direct child will be searched, default value is None. See ``Get Groups`` for information about selecting a group \n
         See the `Entries and Groups` section for more information about Entries and Groups.\n
@@ -20,7 +20,7 @@ class KeePassGroups(LibraryComponent):
         - The ``history`` argument can be set to ``True`` to include history groups in the search, default value is False.
         - The ``first`` argument can be set ``True`` this has the effect that only the first match will be returned, default value is False.
         - The ``regex`` argument can be set to ``True`` this enables regular expression searching, default value is False.
-        - The ``flags`` argument can be set to modify the regular expression search, default value is None. See the `Regular expression` section for more information about about the ``regex`` and ``flags`` syntax.
+        - The ``flags`` argument can be set to modify the regular expression search, default value is None. See the `Regular expression` section for more information about the ``regex`` and ``flags`` syntax.
         - The ``name`` argument can be given to search matching names, default value is None.
         - The ``notes`` argument sets the notes which the groups should match, default value is None.
         - The ``uuid`` argument sets the uuid which the groups should match, default value is None.

@@ -37,7 +37,7 @@ class KeePassLibrary(DynamicCore):
 
     = Entries and Groups =
 
-    A KeePass database (KDBX) is a tree of Groups, each Goup can contain multiple Groups and Entries
+    A KeePass database (KDBX) is a tree of Groups, each Group can contain multiple Groups and Entries
 
     == Entry ==
 
@@ -81,12 +81,12 @@ class KeePassLibrary(DynamicCore):
     == Flags ==
 
     When ``regex`` is set to True a combination of ``flags`` can be set:
-    | =Flag= | =Short Desciption= | =Long description= |
-    | i      | Ignore case        | Perform case-insensitive matching. |
-    | m      | Multiline          | Make begin/end {^, $} consider each line. |
-    | s      | Dotall             | Makes the '.' special character match any character at all, including a newline; without this flag, '.' will match anything except a newline. |
-    | l      | Locale             | Make {\w, \W, \b, \B} follow locale. |
-    | x      | Verbose            | Allow comment in regex. |
+    | =Flag= | =Short Description= | =Long description= |
+    | i      | Ignore case         | Perform case-insensitive matching. |
+    | m      | Multiline           | Make begin/end {^, $} consider each line. |
+    | s      | Dotall              | Makes the '.' special character match any character at all, including a newline; without this flag, '.' will match anything except a newline. |
+    | l      | Locale              | Make {\w, \W, \b, \B} follow locale. |
+    | x      | Verbose             | Allow comment in regex. |
 
     = Date and Time =
 
@@ -150,7 +150,7 @@ class KeePassLibrary(DynamicCore):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = __version__
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._database = None
         libraries = [
             KeePassDatabase(self),
@@ -178,4 +178,4 @@ class KeePassLibrary(DynamicCore):
         return tags
 
     def get_keyword_documentation(self, name: str) -> str:
-        return DynamicCore.get_keyword_documentation(self, name)
+        return str(DynamicCore.get_keyword_documentation(self, name))
