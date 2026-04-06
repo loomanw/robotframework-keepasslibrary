@@ -141,7 +141,7 @@ class KeePassEntries(LibraryComponent):
                                     flags=flags,
                                     group=group,
                                     history=history,
-                                    first=first )
+                                    first=first)
 
     @keyword
     def get_entries_by_url(self, url, regex=False, flags=None,
