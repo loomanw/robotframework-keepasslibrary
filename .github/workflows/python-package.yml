@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ "3.14" ]
-        robotframework-version: [ "7.4.1" ]
+        robotframework-version: [ "7.4.2" ]
     runs-on: ${{ matrix.os }}
     name: Build ${{ matrix.os }} - Python ${{ matrix.python-version }} - Robot Framework ${{ matrix.robotframework-version }}
     steps:
@@ -64,7 +64,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.8","3.9","3.10","3.11","3.12","3.13","3.14"]
-        robotframework-version: ["7.4.1"]
+        robotframework-version: ["7.4.2"]
         include:
         - os: ubuntu-latest
           python-version: "3.12"
