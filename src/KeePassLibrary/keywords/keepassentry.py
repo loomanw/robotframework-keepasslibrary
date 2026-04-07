@@ -1,7 +1,14 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
-from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid
+from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid, RobotFrameworkVersionError
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
+import robot
+try:
+    from robot.api.types import Secret
+    ROBOT_FRAMEWORK_HAS_SECRET = True
+except ImportError:
+    ROBOT_FRAMEWORK_HAS_SECRET = False
+    Secret = None
 
 
 class KeePassEntry(LibraryComponent):
@@ -72,19 +79,74 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Password ----------
     @keyword
-    def get_entry_password(self, entry: Entry):
+    def get_entry_password(self, entry: Entry, as_secret=False):
         """Return the password value of the supplied KeePass ``entry``.
+
+        The ``as_secret`` argument can be set to ``True`` to return the password as a Robot Framework 
+        Secret type (available in Robot Framework 7.4 and later). When ``as_secret`` is ``True`` 
+        but Robot Framework version is less than 7.4, this keyword will fail.
+
+        Parameters:
+        - ``entry``: A valid KeePass entry
+        - ``as_secret``: If ``True``, returns password as Secret type (requires RF 7.4+). Default: ``False``
 
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Password`   | ${entry}                |
 
+        Example with Secret type (Robot Framework 7.4+):
+        | ${entry} = | `Get Entries By Title` | root_entry | first=True      |
+        | ${secret} = | `Get Entry Password`  | ${entry}   | as_secret=True |
+
         New in KeePassLibrary 0.3
+        Updated in KeePassLibrary 0.11 to support Secret type
         """
         if isinstance(entry, Entry):
-            return entry.password
+            password = entry.password
+            
+            if as_secret:
+                # Check if Robot Framework supports Secret type
+                if not self._is_secret_supported():
+                    rf_version = self._get_robot_framework_version()
+                    raise RobotFrameworkVersionError(
+                        f"Secret type is not available in Robot Framework {rf_version}. "
+                        "Secret type requires Robot Framework 7.4 or later."
+                    )
+                return Secret(password)
+            else:
+                return password
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
+
+    def _is_secret_supported(self):
+        """Check if the current Robot Framework version supports Secret type."""
+        if not ROBOT_FRAMEWORK_HAS_SECRET:
+            return False
+        
+        # Additional version check if needed
+        rf_version = self._get_robot_framework_version()
+        if rf_version == "unknown":
+            return False
+            
+        try:
+            # Parse version string to compare with 7.4
+            version_parts = rf_version.split('.')
+            major = int(version_parts[0])
+            minor = int(version_parts[1]) if len(version_parts) > 1 else 0
+            
+            # Check if version is 7.4 or higher
+            return (major > 7) or (major == 7 and minor >= 4)
+        except (ValueError, IndexError):
+            # If we can't parse the version, fall back to import check
+            return ROBOT_FRAMEWORK_HAS_SECRET
+
+    def _get_robot_framework_version(self):
+        """Get the current Robot Framework version."""
+        try:
+            import robot
+            return robot.__version__
+        except AttributeError:
+            return "unknown"
 
     @keyword
     def set_entry_password(self, entry: Entry, value):

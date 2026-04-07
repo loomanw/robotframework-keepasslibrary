@@ -67,6 +67,9 @@ jobs:
         robotframework-version: ["7.4.2"]
         include:
         - os: ubuntu-latest
+          python-version: "3.11"                
+          robotframework-version: "7.4b1"                            
+        - os: ubuntu-latest
           python-version: "3.12"
           robotframework-version: "6.1.1"
         - os: ubuntu-latest
