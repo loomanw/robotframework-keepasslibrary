@@ -1,6 +1,7 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, Group
 from KeePassLibrary.errors import GroupInvalid
+from KeePassLibrary.errors import DatabaseNotOpened
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
 
 
@@ -526,3 +527,25 @@ class KeePassGroup(LibraryComponent):
             return "/".join(group.path)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
+
+    @keyword
+    def add_group(self, destination_group: Group, group_name : str, icon : str | None = None, notes : str | None = None):
+        """Inserts a new group with name ``group_name`` into an existing ``destination_group``.
+        
+        | =Parameter=           | =Description=                               |
+        | ``destination_group`` | specifies the parent group of the new group |
+        | ``group_name``        | specifies the name of the new group         |
+        | ``icon``              | specifies the icon to be set                |
+        | ``notes``             | specifies the notes for the new group       |
+
+        The newly created group is returned as the return value.
+        
+        Examples:
+        | ${root}   | Get Root Group |         |           |
+        | ${new_gr} | Add Group      | ${root} | New Group |
+        """
+        if self.database is None:
+            raise DatabaseNotOpened('No KeePass Database Opened.')
+        else:
+            return self.database.add_group(destination_group, group_name, icon, notes)
+    
