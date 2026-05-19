@@ -13,9 +13,9 @@ class ContextAware:
 
     @property
     def database(self) -> Union[PyKeePass, None]:
-        db: PyKeePass = self.ctx._database
+        db: PyKeePass = self.ctx.database
         return db
 
     @database.setter
     def database(self, value: Union[PyKeePass, None]) -> None:
-        self.ctx._database = value
+        self.ctx.database = value

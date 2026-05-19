@@ -1,6 +1,8 @@
 from robotlibcore import DynamicCore
-from typing import Any
+from pykeepass import PyKeePass
+from typing import Any, Union
 from typing_extensions import Self
+from robot.api.deco import library
 
 from KeePassLibrary.keywords import (
     KeePassDatabase,
@@ -10,10 +12,21 @@ from KeePassLibrary.keywords import (
     KeePassGroups
 )
 
+# Importing this directly from .utils break the stub type checks
+from .utils.data_types import (
+    RegExp, keepass_entry, keepass_group
+)
+
 from .version import __version__ as VERSION
 
 __version__ = VERSION
 
+from KeePassLibrary.base import Entry, Group
+@library(
+    converters={RegExp: RegExp.from_string,
+                Entry : keepass_entry,
+                Group : keepass_group}
+)
 
 class KeePassLibrary(DynamicCore):
     """KeePassLibrary is a library for Robot Framework.
@@ -43,7 +56,7 @@ class KeePassLibrary(DynamicCore):
 
     == Entry ==
 
-    Entries can be found using the `Get Entries` like keywords to return a single Entry or list of Entries.
+    Entries can be found using the `Get Entries` like keywords to return a list of Entries.
 
     | = Attribute = |
     | title         |
@@ -60,7 +73,8 @@ class KeePassLibrary(DynamicCore):
 
     == Group ==
 
-    Groups can be found using the `Get Groups` like keywords to return a single Group or list of Groups.
+    Groups can be found using the `Get Groups` like keywords to return a list of Groups.
+
     | = Attribute = |
     | name          |
     | notes         |
@@ -153,7 +167,7 @@ class KeePassLibrary(DynamicCore):
     ROBOT_LIBRARY_VERSION = __version__
 
     def __init__(self) -> None:
-        self._database = None
+        self._database: Union[PyKeePass, None] = None
         libraries = [
             KeePassDatabase(self),
             KeePassEntry(self),
@@ -181,3 +195,11 @@ class KeePassLibrary(DynamicCore):
 
     def get_keyword_documentation(self, name: str) -> str:
         return str(DynamicCore.get_keyword_documentation(self, name))
+
+    @property
+    def database(self) -> Union[PyKeePass, None]:
+        return self._database
+
+    @database.setter
+    def database(self, value: Union[PyKeePass, None]) -> None:
+            self._database = value
