@@ -1,14 +1,15 @@
 """Library components."""
-from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent
+from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent, Group
 from pykeepass.pykeepass import create_database
 from KeePassLibrary.errors import DatabaseNotOpened
+from typing import Optional
 
 
 class KeePassDatabase(LibraryComponent):
 
     @keyword
-    def open_keepass_database(self, filename, password=None, keyfile=None,
-                              transformed_key=None):
+    def open_keepass_database(self, filename: str, password: Optional[str] = None, keyfile: Optional[str] = None,
+                              transformed_key: Optional[bytes] = None) -> None:
         """Opens the specified KeePass database ``filename`` using the credentials provided.
 
         The ``filename`` argument specifies the location of the KeePass database
@@ -55,16 +56,17 @@ class KeePassDatabase(LibraryComponent):
         self.database.read(filename, password, keyfile, transformed_key)
 
     @keyword
-    def close_keepass_database(self):
+    def close_keepass_database(self) -> None:
         """Closes the currently open KeePass database.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            # TODO functio van maken
             self.database = None
 
     @keyword
-    def save_keepass_database(self, filename=None, transformed_key=None):
+    def save_keepass_database(self, filename: Optional[str] = None, transformed_key: Optional[bytes] = None) -> None:
         """Save the content of the currently open KeePass database.
 
         | =Parameter=         | =Description=                              |
@@ -77,7 +79,7 @@ class KeePassDatabase(LibraryComponent):
             self.database.save(filename, transformed_key)
 
     @keyword
-    def save_xml(self, path):
+    def save_xml(self, path: str) -> None:
         """Save the content of the database to a specified file.
            NOTE: The resulting file is unencrypted!!!
 
@@ -90,7 +92,7 @@ class KeePassDatabase(LibraryComponent):
             self.database.dump_xml(path)
 
     @keyword
-    def get_version(self):
+    def get_version(self) -> str:
         """Returns the version of the KeePass database loaded with `Open Keepass Database`
         | =Return=   | =Description= |
         | ``(3, 1)`` | KDBX v3       |
@@ -99,49 +101,50 @@ class KeePassDatabase(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.version
+            return str(self.database.version)
 
     @keyword
-    def get_encryption_algorithm(self):
+    def get_encryption_algorithm(self) -> str:
         """Returns the encryption algorithm used.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.encryption_algorithm
+            return str(self.database.encryption_algorithm)
 
     @keyword
-    def get_kdf_algorithm(self):
+    def get_kdf_algorithm(self) -> str:
         """Returns the key transformation algorithm used.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.kdf_algorithm
+            return str(self.database.kdf_algorithm)
 
     @keyword
-    def get_transformed_key(self):
+    def get_transformed_key(self) -> bytes:
         """Returns the transformed key.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.transformed_key
+            return bytes(self.database.transformed_key)
 
     @keyword
-    def get_tree(self):
+    def get_tree(self) -> str:
         """Returns the full xml tree.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.tree
+            return str(self.database.tree)
 
     @keyword
-    def get_root_group(self):
+    def get_root_group(self) -> Group:
         """Returns the root group.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.root_group
+            root: Group = self.database.root_group
+            return root

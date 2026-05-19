@@ -311,7 +311,7 @@ Set Password
     ${value}=    Get Entry Password    ${entry}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
-Set Tags With List
+Set Tags
     [Documentation]    Selected entry tags can be set with a list
     [Tags]    set
     ${entry_title}=    Set Variable    root_entry

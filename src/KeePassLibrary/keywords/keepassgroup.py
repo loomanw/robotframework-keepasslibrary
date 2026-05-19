@@ -1,15 +1,19 @@
 """Library components."""
-from KeePassLibrary.base import keyword, LibraryComponent, Group
+from pykeepass import Entry
+
+from KeePassLibrary.base import keyword, LibraryComponent, Group, datetime
 from KeePassLibrary.errors import GroupInvalid
 from KeePassLibrary.errors import DatabaseNotOpened
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
+from KeePassLibrary.utils.data_types import TimeZone
+from typing import Optional, List
 
 
 class KeePassGroup(LibraryComponent):
 
     # ---------- Base Element ----------
     @keyword
-    def get_group_accessed_time(self, group: Group, timezone='UTC'):
+    def get_group_accessed_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return accessed time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``group``.
@@ -18,11 +22,11 @@ class KeePassGroup(LibraryComponent):
 
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} = | `Get Groups By Name`      | foobar_group | first=True   |
-        | ${value} = | `Get Group Accessed Time` | ${group}     | timezone=UTC |
+        | ${value} = | `Get Group Accessed Time` | ${group}     | timezone=utc |
 
         New in KeePassLibrary 0.8
         """
@@ -33,7 +37,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_accessed_time(self, group: Group, value, timezone='UTC'):
+    def set_group_accessed_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets accessed time of the supplied KeePass ``group`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -41,7 +45,7 @@ class KeePassGroup(LibraryComponent):
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
         | ``value``    | A valid DateTime object                  |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} =                | `Get Groups By Name` | foobar_group            | first=True |
@@ -57,7 +61,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_created_time(self, group: Group, timezone='UTC'):
+    def get_group_created_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return created time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``group``.
@@ -66,11 +70,11 @@ class KeePassGroup(LibraryComponent):
 
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} = | `Get Groups By Name`     | foobar_group | first=True   |
-        | ${value} = | `Get Group Created Time` | ${group}     | timezone=UTC |
+        | ${value} = | `Get Group Created Time` | ${group}     | timezone=utc |
 
         New in KeePassLibrary 0.8
         """
@@ -81,7 +85,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_created_time(self, group: Group, value, timezone='UTC'):
+    def set_group_created_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets created time of the supplied KeePass ``group`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -89,7 +93,7 @@ class KeePassGroup(LibraryComponent):
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
         | ``value``    | A valid DateTime object                  |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} =               | `Get Groups By Name` | foobar_group            | first=True |
@@ -114,7 +118,7 @@ class KeePassGroup(LibraryComponent):
     #         raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_expiry_time(self, group: Group, timezone='UTC'):
+    def get_group_expiry_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return expiry time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``group``.
@@ -123,11 +127,11 @@ class KeePassGroup(LibraryComponent):
 
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} = | `Get Groups By Name`    | foobar_group | first=True   |
-        | ${value} = | `Get Group Expiry Time` | ${group}     | timezone=UTC |
+        | ${value} = | `Get Group Expiry Time` | ${group}     | timezone=utc |
 
         New in KeePassLibrary 0.8
         """
@@ -138,7 +142,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_expiry_time(self, group: Group, value, timezone='UTC'):
+    def set_group_expiry_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets expiry time of the supplied KeePass ``group`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -146,7 +150,7 @@ class KeePassGroup(LibraryComponent):
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
         | ``value``    | A valid DateTime object                  |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} =              | `Get Groups By Name` | foobar_group            | first=True |
@@ -162,7 +166,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_icon(self, group: Group):
+    def get_group_icon(self, group: Group) -> str:
         """Return the icon of the supplied KeePass ``group``.
 
            Example:
@@ -172,12 +176,12 @@ class KeePassGroup(LibraryComponent):
            New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.icon
+            return str(group.icon)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_icon(self, group: Group, value):
+    def set_group_icon(self, group: Group, value: str) -> None:
         """Set the ``icon`` of the supplied KeePass ``group`` to the given ``value``.
 
            Example:
@@ -192,7 +196,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_modified_time(self, group: Group, timezone='UTC'):
+    def get_group_modified_time(self, group: Group, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return modified time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``group``.
@@ -201,11 +205,11 @@ class KeePassGroup(LibraryComponent):
 
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} = | `Get Groups By Name`      | foobar_group | first=True   |
-        | ${value} = | `Get Group Modified Time` | ${group}     | timezone=UTC |
+        | ${value} = | `Get Group Modified Time` | ${group}     | timezone=utc |
 
         New in KeePassLibrary 0.8
         """
@@ -216,7 +220,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_modified_time(self, group: Group, value, timezone='UTC'):
+    def set_group_modified_time(self, group: Group, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets modified time of the supplied KeePass ``group`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -224,7 +228,7 @@ class KeePassGroup(LibraryComponent):
         | =Parameter=  | =Description=                            |
         | ``group``    | A valid KeePass group                    |
         | ``value``    | A valid DateTime object                  |
-        | ``timezone`` | A valid timezone string 'UTC' or 'local' |
+        | ``timezone`` | A valid timezone string 'utc' or 'local' |
 
         Example:
         | ${group} =                | `Get Groups By Name` | foobar_group            | first=True |
@@ -241,7 +245,7 @@ class KeePassGroup(LibraryComponent):
 
     # ---------- Touch ----------
     @keyword
-    def touch_group(self, group: Group, modify=False):
+    def touch_group(self, group: Group, modify: Optional[bool] = False) -> None:
         """Touch the supplied KeePass ``group``.
 
         | =Parameter= | =Description=            |
@@ -254,12 +258,12 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.8
         """
         if isinstance(group, Group):
-            return group.touch(modify)
+            group.touch(bool(modify))
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_parent(self, group: Group):
+    def get_group_parent(self, group: Group) -> Group:
         """Return the parentgroup of the supplied KeePass ``group``.
 
         Example:
@@ -269,12 +273,16 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.parentgroup
+            parent = group.parentgroup
+            if isinstance(parent, Group):
+                return parent
+            else:
+                raise GroupInvalid('Invalid KeePass Group.')
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_uuid(self, group: Group):
+    def get_group_uuid(self, group: Group) -> str:
         """Return the uuid of the supplied KeePass ``group``.
 
         Example:
@@ -298,7 +306,7 @@ class KeePassGroup(LibraryComponent):
     #         raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_expires(self, group: Group):
+    def get_group_expires(self, group: Group) -> bool:
         """Return expires of the supplied KeePass ``group``.
 
         Example:
@@ -308,12 +316,12 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.expires
+            return bool(group.expires)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_expires(self, group: Group, value: bool):
+    def set_group_expires(self, group: Group, value: bool) -> None:
         """Sets expires value of the supplied KeePass ``group`` to the given ``value``.
 
         Example:
@@ -328,7 +336,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_expired(self, group: Group):
+    def get_group_expired(self, group: Group) -> bool:
         """Return expired value of the supplied KeePass ``group``.
 
         Example:
@@ -338,12 +346,12 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.expired
+            return bool(group.expired)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def group_should_be_expired(self, group: Group, msg=None):
+    def group_should_be_expired(self, group: Group, msg: Optional[str] = None) -> None:
         """Fails if the specified group is not expired.
 
         Example:
@@ -361,7 +369,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def group_should_not_be_expired(self, group: Group, msg=None):
+    def group_should_not_be_expired(self, group: Group, msg: Optional[str] = None) -> None:
         """Fails if the specified group is expired.
 
         Example:
@@ -388,8 +396,9 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
+    # TODO: no-any-return
     @keyword
-    def get_group_entries(self, group: Group):
+    def get_group_entries(self, group: Group) -> List[Optional[Entry]]:
         """Returns a list of entries from the supplied KeePass ``group``.
 
         Example:
@@ -399,12 +408,15 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.entries
+            entries: List[Optional[Entry]] = []
+            for entry in group.entries:
+                entries.append(entry)
+            return entries
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_name(self, group: Group):
+    def get_group_name(self, group: Group) -> str:
         """Return the name value of the supplied KeePass ``group``.
 
         Example:
@@ -414,12 +426,12 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.name
+            return str(group.name)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_name(self, group: Group, value):
+    def set_group_name(self, group: Group, value: str) -> None:
         """Set the name value of the supplied KeePass ``group`` to the given ``value``
 
         Example:
@@ -434,7 +446,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_notes(self, group: Group):
+    def get_group_notes(self, group: Group) -> str:
         """Return the notes value of the supplied KeePass ``group``.
 
         Example:
@@ -444,12 +456,12 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.notes
+            return str(group.notes)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def set_group_notes(self, group: Group, value):
+    def set_group_notes(self, group: Group, value: str) -> None:
         """Set the notes value of the supplied KeePass ``group`` to the given ``value``.
 
         Example:
@@ -464,7 +476,7 @@ class KeePassGroup(LibraryComponent):
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_subgroups(self, group: Group):
+    def get_group_subgroups(self, group: Group) -> List[Optional[Group]]:
         """Returns a list of subgroups from the supplied KeePass ``group``.
 
         Example:
@@ -474,12 +486,15 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.subgroups
+            subgroups: List[Optional[Group]] = []
+            for subgroup in group.subgroups:
+                subgroups.append(subgroup)
+            return subgroups
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_is_root_group(self, group: Group):
+    def get_group_is_root_group(self, group: Group) -> bool:
         """Return is root group value of the supplied KeePass ``group`.`
 
         Example:
@@ -489,7 +504,7 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return group.is_root_group
+            return bool(group.is_root_group)
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
@@ -514,7 +529,7 @@ class KeePassGroup(LibraryComponent):
     #         raise GroupInvalid('Invalid KeePass Group.')
 
     @keyword
-    def get_group_path(self, group: Group):
+    def get_group_path(self, group: Group) -> str:
         """Return the path value of the supplied KeePass ``group``.
 
         Example:
@@ -524,7 +539,7 @@ class KeePassGroup(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(group, Group):
-            return "/".join(group.path)
+            return str("/".join(group.path))
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 

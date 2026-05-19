@@ -22,7 +22,7 @@ Selected By Arguments Are Found
     [Documentation]    Retrieved groups by arguments should match name list
     @{values_expected}=    Create List    subgroup    subgroup2    foobar_group2
     @{values}=    Create List
-    @{groups}=    Get Groups    name=.*group    notes=^.{0}$    regex=True
+    @{groups}=    Get Groups    recursive=True    name=.*group    notes=^.{0}$    regex=True
     FOR    ${group}    IN    @{groups}
         ${name}=    Get Group Name    ${group}
         Append To List    ${values}    ${name}
@@ -52,9 +52,11 @@ Selected By Name Are Found
 Selected By Path Are Found
     [Documentation]    Retrieved groups by path should match name list
     @{values_expected}=    Create List    subgroup
-    ${group}=    Get Groups By Path    foobar_group/subgroup
-    ${name}=    Get Group Name    ${group}
-    List Should Contain Value    ${values_expected}    ${name}
+    ${groups}=    Get Groups By Path    foobar_group/subgroup
+    FOR    ${group}    IN    @{groups}
+        ${name}=    Get Group Name    ${group}
+        List Should Contain Value    ${values_expected}    ${name}
+    END
 
 Selected By Uuid Are Found
     [Documentation]    Retrieved groups by UUID should match name list
@@ -73,3 +75,15 @@ Selected By Notes Are Found
         ${name}=    Get Group Name    ${group}
         List Should Contain Value    ${values_expected}    ${name}
     END
+
+Select By All Are Found
+    [Documentation]    Retrieved groups by notes should match name list
+    @{values_expected}=    Create List    Root    subgroup    subgroup2    foobar_group    foobar_group2    Работа
+    @{groups}=    Get Groups All
+    FOR    ${group}    IN    @{groups}
+        ${name}=    Get Group Name    ${group}
+        List Should Contain Value    ${values_expected}    ${name}
+    END
+    ${len_expected}=    Get Length    ${values_expected}
+    ${len_groups}=    Get Length    ${groups}
+    Should Be Equal As Integers    ${len_expected}    ${len_groups}

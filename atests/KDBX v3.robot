@@ -13,20 +13,21 @@ Test Tags           database    kdbx_v3
 ${KP_DB_BASE}=      ${CURDIR}${/}Data${/}
 
 
-*** Test Cases ***      DATABASE        PASSWORD    TRANSFORMED_KEY     KEY_FILE        ENCRYPTION_ALGORITHM    KDF_ALGORITHM       VERSION    # robocop: off=LEN08
-KDBX v3                 test3.kdbx      password    ${NONE}             test3.key       aes256                  aeskdf              (3, 1)     # robocop: off=LEN08
+*** Test Cases ***      DATABASE        PASSWORD    TRANSFORMED_KEY     KEY_FILE        ENCRYPTION_ALGORITHM    KDF_ALGORITHM       VERSION    ROOT_GROUP_NAME    # robocop: off=LEN08
+KDBX v3                 test3.kdbx      password    ${NONE}             test3.key       aes256                  aeskdf              (3, 1)     Root               # robocop: off=LEN08
 
 
 *** Keywords ***
 Opening Database With Valid Credentials Should Succeed
     [Documentation]    Opens the given database with the supplied authentications
-    [Arguments]    ${DATABASE}    # robocop: off=LEN07
+    [Arguments]    ${DATABASE}  # robocop: off=LEN07
     ...            ${PASSWORD}
     ...            ${TRANSFORMED_KEY}
     ...            ${KEY_FILE}
     ...            ${ENCRYPTION_ALGORITHM}
     ...            ${KDF_ALGORITHM}
     ...            ${VERSION}
+    ...            ${ROOT_GROUP_NAME}
     # Convert string to bytes
     ${BYTES_KEY}=    Convert To Bytes
     ...    M\xb7\x08\xf6\xa7\xd1v\xb1{&\x06\x8f\xae\xe9\r\xeb\x9a\x1b\x02b\xce\xf2\x8aR\xaea)7\x1fs\xe9\xc0
@@ -37,6 +38,7 @@ Opening Database With Valid Credentials Should Succeed
     Encryption Algorithm Should Be Equal    ${ENCRYPTION_ALGORITHM}
     KDF Algorithm Should Be Equal    ${KDF_ALGORITHM}
     Version Should Be Equal    ${VERSION}
+    Rout Group Should Be Equal    ${ROOT_GROUP_NAME}
     Close Keepass Database
 
 Encryption Algorithm Should Be Equal
@@ -58,3 +60,10 @@ Version Should Be Equal
     [Arguments]    ${VERSION}
     ${res}=    Get Version
     Should Be Equal As Strings    ${VERSION}    ${res}
+
+Rout Group Should Be Equal
+    [Documentation]    Verifies if the open database matches the given version
+    [Arguments]    ${ROOT_GROUP_NAME}
+    ${res}=    Get Root Group
+    ${res_name}=    Get Group Name    ${res}
+    Should Be Equal As Strings    ${ROOT_GROUP_NAME}    ${res_name}

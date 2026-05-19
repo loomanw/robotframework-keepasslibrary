@@ -1,16 +1,27 @@
 """Library components."""
-from KeePassLibrary.base import keyword, LibraryComponent, UUID
+# from mypy.stubgen import EMPTY
+
+from KeePassLibrary.base import keyword, LibraryComponent, UUID, Group
 from KeePassLibrary.errors import DatabaseNotOpened
-from robot.utils import is_truthy
+from typing import Optional, List, Dict
 
 
 class KeePassGroups(LibraryComponent):
 
     @keyword
-    def get_groups(self, recursive=True, path=None, group=None, history=False, first=False, regex=False, flags=None, name=None, notes=None, uuid=None):
+    def get_groups(self, recursive: Optional[bool] = False,
+                   path: Optional[List[str]] = None,
+                   group: Optional[Group] = None,
+                   uuid: Optional[str] = None,
+                   name: Optional[str] = None,
+                   notes: Optional[str] = None,
+                   history: Optional[bool] = False,
+                   first: Optional[bool] = False,
+                   regex: Optional[bool] = False,
+                   flags: Optional[str] = None) -> List[Group]:
         """Return a list of groups in the open KeePass database matching the given arguments.
 
-        The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is True.\n
+        The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is False.\n
         The ``path`` argument sets the path which the groups should match, default value is None.\n
         The ``group`` argument has to match an existing Group is supplied only entries which are a direct child will be searched, default value is None. See ``Get Groups`` for information about selecting a group \n
         See the `Entries and Groups` section for more information about Entries and Groups.\n
@@ -34,28 +45,31 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            # Create kwargs (Prevent NoneType AttributeError in find_groups)
-            kwargs = {}
-            if regex is not None:
-                regex = is_truthy(regex)
-            if first is not None:
-                first = is_truthy(first)
+            return_groups: List[Group] = []
+            kwargs: Dict[str, UUID] = {}
             if uuid is not None:
-                uuid = UUID('urn:uuid:' + uuid)
-                kwargs['uuid'] = uuid
-            return self.database.find_groups(recursive=recursive,
-                                             path=path,
-                                             group=group,
-                                             history=history,
-                                             first=first,
-                                             regex=regex,
-                                             flags=flags,
-                                             name=name,
-                                             notes=notes,
-                                             **kwargs)
+                kwargs.update({'uuid': UUID('urn:uuid:' + uuid)})
+            found_groups = self.database.find_groups(recursive=bool(recursive),
+                                                     path=path,
+                                                     group=group,
+                                                     history=history,
+                                                     first=first,
+                                                     regex=regex,
+                                                     flags=flags,
+                                                     name=name,
+                                                     notes=notes,
+                                                     **kwargs)
+            if isinstance(found_groups, list):
+                for item in found_groups:
+                    if isinstance(item, Group):
+                        return_groups.append(item)
+            else:
+                if isinstance(found_groups, Group):
+                    return_groups.append(found_groups)
+            return return_groups
 
     @keyword
-    def get_groups_all(self):
+    def get_groups_all(self) -> List[Optional[Group]]:
         """Return a list of all groups in the open KeePass database.
 
         See the `Entries and Groups` section for more information about Entries and Groups.\n
@@ -66,12 +80,16 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_groups(name='.*',
-                                   regex=True)
+            all_groups: List[Optional[Group]] = []
+            for group in self.get_groups(recursive=True,
+                                         name='.*',
+                                         regex=True):
+                all_groups.append(group)
+            return all_groups
 
     @keyword
-    def get_groups_by_name(self, group_name, regex=False, flags=None,
-                           group=None, first=False):
+    def get_groups_by_name(self, name: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+                           group: Optional[Group] = None, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given string.
 
@@ -84,15 +102,18 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_groups(name=group_name,
-                                   regex=regex,
-                                   flags=flags,
-                                   group=group,
-                                   first=first)
+            return_groups: List[Group] = []
+            return_groups = self.get_groups(recursive=True,
+                                            name=name,
+                                            regex=regex,
+                                            flags=flags,
+                                            group=group,
+                                            first=first)
+            return return_groups
 
     @keyword
-    def get_groups_by_path(self, group_path_str=None, regex=False, flags=None,
-                           group=None, first=False):
+    def get_groups_by_path(self, path: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+                           group: Optional[Group] = None, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given path.
 
@@ -104,16 +125,19 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            group_path_list = group_path_str.split('/')
-            return self.get_groups(path=group_path_list,
-                                   regex=regex,
-                                   flags=flags,
-                                   group=group,
-                                   first=first)
+            path_list = path.split('/')
+            return_groups: List[Group] = []
+            return_groups = self.get_groups(recursive=True,
+                                            path=path_list,
+                                            regex=regex,
+                                            flags=flags,
+                                            group=group,
+                                            first=first)
+            return return_groups
 
     @keyword
-    def get_groups_by_uuid(self, uuid, regex=False, flags=None,
-                           group=None, history=False, first=False):
+    def get_groups_by_uuid(self, uuid: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+                           group: Optional[Group] = None, history: Optional[bool] = False, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given uuid.
 
@@ -125,16 +149,19 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_groups(uuid=uuid,
-                                   regex=regex,
-                                   flags=flags,
-                                   group=group,
-                                   history=history,
-                                   first=first)
+            return_groups: List[Group] = []
+            return_groups = self.get_groups(recursive=True,
+                                            uuid=uuid,
+                                            regex=regex,
+                                            flags=flags,
+                                            group=group,
+                                            history=history,
+                                            first=first)
+            return return_groups
 
     @keyword
-    def get_groups_by_notes(self, notes, regex=False, flags=None,
-                            group=None, history=False, first=False):
+    def get_groups_by_notes(self, notes: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+                            group: Optional[Group] = None, history: Optional[bool] = False, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given notes.
 
@@ -146,9 +173,12 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_groups(notes=notes,
-                                   regex=regex,
-                                   flags=flags,
-                                   group=group,
-                                   history=history,
-                                   first=first)
+            return_groups: List[Group] = []
+            return_groups = self.get_groups(recursive=True,
+                                            notes=notes,
+                                            regex=regex,
+                                            flags=flags,
+                                            group=group,
+                                            history=history,
+                                            first=first)
+            return return_groups

@@ -1,14 +1,30 @@
 """Library components."""
-from KeePassLibrary.base import keyword, LibraryComponent, UUID
+from KeePassLibrary.base import keyword, LibraryComponent, UUID, Entry, Group
 from KeePassLibrary.errors import DatabaseNotOpened
 from robot.utils import is_truthy
+from typing import Optional, List, Dict, Union
 
 
 class KeePassEntries(LibraryComponent):
 
+    # todo: path typing
+
     @keyword
-    def get_entries(self, history=False, first=False, recursive=True, path=None, group=None, regex=False,
-                    flags=None, title=None, username=None, password=None, url=None, notes=None, uuid=None, string=None):
+    def get_entries(self,  # type: ignore[no-untyped-def]
+                    history: Optional[bool] = False,
+                    first: Optional[bool] = False,
+                    recursive: Optional[bool] = True,
+                    path = None,
+                    group: Optional[Group] = None,
+                    regex: Optional[bool] = False,
+                    flags: Optional[str] = None,
+                    title: Optional[str] = None,
+                    username: Optional[str] = None,
+                    password: Optional[str] = None,
+                    url: Optional[str] = None,
+                    notes: Optional[str] = None,
+                    uuid: Optional[str] = None,
+                    string=None) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given arguments.\n
 
         The ``history`` argument can be set to ``True`` to include history entries in the search, default value is False.\n
@@ -30,10 +46,11 @@ class KeePassEntries(LibraryComponent):
         - The ``string`` (dict) argument sets the custom string fields which the entries should match, default value is None.
 
         Examples:
-        | @{entries}= | `Get Entries` | title=.*entry | regex=True |
+        | ${entries}= | `Get Entries` | title=.*entry | regex=True |
         | ${entry}=   | `Get Entries` | title=.*entry | regex=True | first=True |
-        | @{entries}= | `Get Entries` | title=.*entry | username=.*user     | regex=True |
-        | @{entries}= | `Get Entries` | title=.*entry | notes=.*entry notes | regex=True |
+        | ${entries}= | `Get Entries` | title=.*entry | username=.*user     | regex=True |
+        | ${entries}= | `Get Entries` | title=.*entry | notes=.*entry notes | regex=True |
+        | ${entries}= | `Get Entries` | path=foobar_group/group_entry |
 
         | ${group}=   | Get Groups By Name      | subgroup | first=True |
         | ${entries}= | Get Entries By Username | foobar   | group=${group} | first=True |
@@ -46,26 +63,28 @@ class KeePassEntries(LibraryComponent):
             if regex is not None:
                 regex = is_truthy(regex)
             if uuid is not None:
-                uuid = UUID('urn:uuid:' + uuid)
-                kwargs['uuid'] = uuid
+                c_uuid = UUID('urn:uuid:' + uuid)
+                kwargs['uuid'] = c_uuid
             if string is not None:
                 kwargs['string'] = string
-            return self.database.find_entries(recursive=recursive,
-                                              path=path,
-                                              group=group,
-                                              history=history,
-                                              first=first,
-                                              regex=regex,
-                                              flags=flags,
-                                              title=title,
-                                              username=username,
-                                              password=password,
-                                              url=url,
-                                              notes=notes,
-                                              **kwargs)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.database.find_entries(recursive=recursive,
+                                                        path=path,
+                                                        group=group,
+                                                        history=history,
+                                                        first=first,
+                                                        regex=regex,
+                                                        flags=flags,
+                                                        title=title,
+                                                        username=username,
+                                                        password=password,
+                                                        url=url,
+                                                        notes=notes,
+                                                        **kwargs)
+            return return_entries
 
     @keyword
-    def get_entries_all(self):
+    def get_entries_all(self) -> List[Optional[Entry]]:
         """Return a list of all entries in the open KeePass database.\n
 
         See the `Entries and Groups` section for more information about Entries and Groups.\n
@@ -76,12 +95,21 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(title='.*',
-                                    regex=True)
+            all_entries: List[Optional[Entry]] = []
+            for group in self.get_entries(recursive=True,
+                                          title='.*',
+                                          regex=True):
+                all_entries.append(group)
+            return all_entries
 
     @keyword
-    def get_entries_by_title(self, title, regex=False, flags=None,
-                             group=None, history=False, first=False):
+    def get_entries_by_title(self,
+                             title: str,
+                             regex: Optional[bool] = False,
+                             flags: Optional[str] = None,
+                             group: Optional[Group] = None,
+                             history: Optional[bool] = False,
+                             first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``title``.\n
 
         See `Get Entries` for more details about optional arguments.
@@ -96,16 +124,23 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(title=title,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(title=title,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     @keyword
-    def get_entries_by_username(self, username, regex=False, flags=None,
-                                group=None, history=False, first=False):
+    def get_entries_by_username(self,
+                                username: str,
+                                regex: Optional[bool] = False,
+                                flags: Optional[str] = None,
+                                group: Optional[Group] = None,
+                                history: Optional[bool] = False,
+                                first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``username``.\n
 
         See `Get Entries` for more details about optional arguments.
@@ -116,16 +151,23 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(username=username,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(username=username,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     @keyword
-    def get_entries_by_password(self, password, regex=False, flags=None,
-                                group=None, history=False, first=False):
+    def get_entries_by_password(self,
+                                password: str,
+                                regex: Optional[bool] = False,
+                                flags: Optional[str] = None,
+                                group: Optional[Group] = None,
+                                history: Optional[bool] = False,
+                                first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``password``.\n
 
         See `Get Entries` for more details about optional arguments.
@@ -136,16 +178,23 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(password=password,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(password=password,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     @keyword
-    def get_entries_by_url(self, url, regex=False, flags=None,
-                           group=None, history=False, first=False):
+    def get_entries_by_url(self,
+                           url: str,
+                           regex: Optional[bool] = False,
+                           flags: Optional[str] = None,
+                           group: Optional[Group] = None,
+                           history: Optional[bool] = False,
+                           first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``url``.\n
 
         See `Get Entries` for more details about optional arguments.
@@ -156,37 +205,52 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(url=url,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(url=url,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     @keyword
-    def get_entries_by_notes(self, notes, regex=False, flags=None,
-                             group=None, history=False, first=False):
+    def get_entries_by_notes(self,
+                             notes: str,
+                             regex: Optional[bool] = False,
+                             flags: Optional[str] = None,
+                             group: Optional[Group] = None,
+                             history: Optional[bool] = False,
+                             first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``notes``.\n
 
         See `Get Entries` for more details about optional arguments.
 
         Example:
-        | @{entries} = | `Get Entries By Notes` | root entry notes |
+        | ${entries} = | `Get Entries By Notes` | root entry notes |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(notes=notes,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(notes=notes,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     # FIXME: Return more then 1 match even when first is set to false
+
     @keyword
-    def get_entries_by_path(self, entry_path_str, regex=False, flags=None,
-                            group=None, history=False, first=False):
+    def get_entries_by_path(self,
+                            path: str,
+                            regex: Optional[bool] = False,
+                            flags: Optional[str] = None,
+                            group: Optional[Group] = None,
+                            history: Optional[bool] = False,
+                            first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``path``.\n
 
         See `Get Entries` for more details about optional arguments.
@@ -194,22 +258,29 @@ class KeePassEntries(LibraryComponent):
         Note, only 1 entry can be selected by path
 
         Example:
-        | ${entry} = | Get Entries By Path | foobar_group/group_entry |
+        | ${entries} = | Get Entries By Path | foobar_group/group_entry |
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            entry_path_list = entry_path_str.split('/')
-            return self.get_entries(path=entry_path_list,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            l_path = str(path).split('/')
+            return_entries = self.get_entries(path=l_path,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     @keyword
-    def get_entries_by_uuid(self, uuid, regex=False, flags=None,
-                            group=None, history=False, first=False):
+    def get_entries_by_uuid(self,
+                            uuid: str,
+                            regex: Optional[bool] = False,
+                            flags: Optional[str] = None,
+                            group: Optional[Group] = None,
+                            history: Optional[bool] = False,
+                            first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``uuid``.\n
 
         See `Get Entries` for more details about optional arguments.
@@ -220,22 +291,30 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(uuid=uuid,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(uuid=uuid,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
 
     @keyword
-    def get_entries_by_string(self, string, regex=False, flags=None,
-                              group=None, history=False, first=False):
+    def get_entries_by_string(self,
+                              string: Dict[str, str],
+                              regex: Optional[bool] = False,
+                              flags: Optional[str] = None,
+                              group: Optional[Group] = None,
+                              history: Optional[bool] = False,
+                              first: Optional[bool] = False) -> List[Optional[Entry]]:
         """Return a list of entries in the open KeePass database matching the given ``string``.\n
 
         See `Get Entries` for more details about optional arguments.
 
         Example:
-        | &{string}= | Create Dictionary | UserName=foobar_user | Title=group_entry |
+        | &{string} =  | Create Dictionary     | UserName=foobar_user | Title=group_entry |
+        | ${entries} = | Get Entries By String | ${string}                                |
 
         Valid dictionary keys:
         | Title |
@@ -250,9 +329,11 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.get_entries(string=string,
-                                    regex=regex,
-                                    flags=flags,
-                                    group=group,
-                                    history=history,
-                                    first=first)
+            return_entries: List[Optional[Entry]] = []
+            return_entries = self.get_entries(string=string,
+                                              regex=regex,
+                                              flags=flags,
+                                              group=group,
+                                              history=history,
+                                              first=first)
+            return return_entries
