@@ -55,7 +55,7 @@ class KeePassLibrary(DynamicCore):
 
     == Entry ==
 
-    Entries can be found using the `Get Entries` like keywords to return a single Entry or list of Entries.
+    Entries can be found using the `Get Entries` like keywords to return a list of Entries.
 
     | = Attribute = |
     | title         |
@@ -72,7 +72,8 @@ class KeePassLibrary(DynamicCore):
 
     == Group ==
 
-    Groups can be found using the `Get Groups` like keywords to return a single Group or list of Groups.
+    Groups can be found using the `Get Groups` like keywords to return a list of Groups.
+
     | = Attribute = |
     | name          |
     | notes         |

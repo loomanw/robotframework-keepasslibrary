@@ -35,9 +35,37 @@ class RegExp(str):
         return cls(string)
 
 def keepass_entry(entry: Entry) -> Entry:
-    """demo doc entry"""
+    """Each `Entry` contains all the information stored for a website or application
+
+    | = Attribute = |
+    | title         |
+    | username      |
+    | password      |
+    | url           |
+    | tags          |
+    | icon          |
+    | parent_group  |
+    | uuid          |
+    | expires       |
+    | expired       |
+    | path          |
+    """
     return entry
 
 def keepass_group(group: Group) -> Group:
-    """demo doc group"""
+    """Each `Group` may contain 1 or more Groups or Entries
+
+    | = Attribute = |
+    | name          |
+    | notes         |
+    | entries       |
+    | subgroups     |
+    | is_root_group |
+    | icon          |
+    | parent_group  |
+    | uuid          |
+    | expires       |
+    | expired       |
+    | path          |
+    """
     return group
