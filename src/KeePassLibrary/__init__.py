@@ -1,4 +1,6 @@
 from robotlibcore import DynamicCore
+from typing import Any
+from typing_extensions import Self
 
 from KeePassLibrary.keywords import (
     KeePassDatabase,
@@ -161,13 +163,13 @@ class KeePassLibrary(DynamicCore):
         ]
         DynamicCore.__init__(self, libraries)
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, typ, value, tb):
+    def __exit__(self, typ: Any, value: Any, tb: Any) -> None:
         del self._database
 
-    def run_keyword(self, name: str, args: tuple, kwargs: dict):
+    def run_keyword(self, name: str, args: tuple, kwargs: dict) -> Any:  # type: ignore[override]
         try:
             return DynamicCore.run_keyword(self, name, args, kwargs)
         except Exception:

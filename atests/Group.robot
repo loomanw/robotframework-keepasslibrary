@@ -23,7 +23,8 @@ Get Created Time
     [Documentation]    Selected group contains expected created time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime}=    Get Group Created Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2017
     Should Be Equal As Integers    ${mtime.month}          3
@@ -38,7 +39,8 @@ Get Expiry Time
     [Documentation]    Selected group contains expected expiry time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime}=    Get Group Expiry Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2017
     Should Be Equal As Integers    ${mtime.month}          3
@@ -54,7 +56,8 @@ Get Expires
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    ${FALSE}
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Expires    ${group}
     Should Be Equal    ${value_expected}    ${value}
 
@@ -63,7 +66,8 @@ Get Expired
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    False
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Expired    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
@@ -73,7 +77,8 @@ Get Entries
     ${group_name}=    Set Variable    foobar_group
     @{values_expected}=    Create List    group_entry    foobar_entry
     @{values}=    Create List
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     @{entries}=    Get Group Entries    ${group}
     FOR    ${entry}    IN    @{entries}
         ${title}=    Get Entry Title    ${entry}
@@ -86,7 +91,8 @@ Get Icon
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    1
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Icon    ${group}
     Should Be Equal As Integers    ${value_expected}    ${value}
 
@@ -95,7 +101,8 @@ Get Is Root Group
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    False
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Is Root Group    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
@@ -103,7 +110,8 @@ Get Last Accessed Time
     [Documentation]    Selected entry contains expected last accessed time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime}=    Get Group Accessed Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2020
     Should Be Equal As Integers    ${mtime.month}          10
@@ -118,7 +126,8 @@ Get Modified Time
     [Documentation]    Selected entry contains expected modified time properties.
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime}=    Get Group Modified Time    ${group}
     Should Be Equal As Integers    ${mtime.year}           2017
     Should Be Equal As Integers    ${mtime.month}          3
@@ -130,11 +139,12 @@ Get Modified Time
     Should Be Equal As Strings     ${mtime.tzinfo}         UTC
 
 Get Name
-    [Documentation]    Selected group contains expected rname
+    [Documentation]    Selected group contains expected name
     [Tags]    get
     ${group_uuid}=    Set Variable    95155a32-5317-a10f-d4e4-d0c2030264b6
     ${value_expected}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Uuid    ${group_uuid}    first=True
+    ${groups}=    Get Groups By Uuid    ${group_uuid}    first=True
+    ${group}=    Get From List    ${groups}    0
     ${value}=    Get Group Name    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
@@ -143,7 +153,8 @@ Get Notes
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    group notes
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Notes    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
@@ -152,7 +163,8 @@ Get Parent Group
     [Tags]    get
     ${group_name}=    Set Variable    subgroup
     ${value_expected}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${parent}=    Get Group Parent    ${group}
     ${value}=    Get Group Name    ${parent}
     Should Be Equal As Strings    ${value_expected}    ${value}
@@ -162,7 +174,8 @@ Get Path
     [Tags]    get
     ${group_name}=    Set Variable    subgroup
     ${value_expected}=    Set Variable    foobar_group/subgroup
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Path    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
@@ -172,7 +185,8 @@ Get Subgroups
     ${group_name}=    Set Variable    foobar_group
     @{values_expected}=    Create List    subgroup
     @{values}=    Create List
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     @{subgroups}=    Get Group Subgroups    ${group}
     FOR    ${subgroup}    IN    @{subgroups}
         ${name}=    Get Group Name    ${subgroup}
@@ -185,7 +199,8 @@ Get Uuid
     [Tags]    get
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    95155a32-5317-a10f-d4e4-d0c2030264b6
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${value}=    Get Group Uuid    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
 
@@ -193,7 +208,8 @@ Group Should Be Expired
     [Documentation]    Selected group should be expired.
     [Tags]    should_be
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     Set Group Expires    ${group}     ${TRUE}
     Group Should Be Expired    ${group}
 
@@ -201,7 +217,8 @@ Group Should Not Be Expired
     [Documentation]    Selected entry should not be expired.
     [Tags]    should_not_be
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     Set Group Expires    ${group}     ${FALSE}
     Group Should Not Be Expired    ${group}
 
@@ -209,7 +226,8 @@ Set Accessed Time
     [Documentation]    Selected group accessed time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime1}=    Get Group Accessed Time    ${group}    UTC
     ${value}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Accessed Time    ${group}    ${value}    local
@@ -220,7 +238,8 @@ Set Created Time
     [Documentation]    Selected group created time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime1}=    Get Group Created Time    ${group}    UTC
     ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Created Time    ${group}    ${datetime}    local
@@ -232,7 +251,8 @@ Set Expires
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    ${TRUE}
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     Set Group Expires    ${group}    ${value_expected}
     ${value}=    Get Group Expires    ${group}
     Should Be Equal    ${value_expected}    ${value}
@@ -241,7 +261,8 @@ Set Expiry Time
     [Documentation]    Selected entry expiry time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime1}=    Get Group Expiry Time    ${group}    UTC
     ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Expiry Time    ${group}    ${datetime}    local
@@ -253,7 +274,8 @@ Set Icon
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    20
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     Set Group Icon    ${group}    ${value_expected}
     ${value}=    Get Group Icon    ${group}
     Should Be Equal As Integers    ${value_expected}    ${value}
@@ -263,7 +285,8 @@ Set Name
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    foobar_group_new
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     Set Group Name    ${group}    ${value_expected}
     ${value}=    Get Group Name    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
@@ -273,7 +296,8 @@ Set Notes
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
     ${value_expected}=    Set Variable    new_notes
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     Set Group Notes    ${group}    ${value_expected}
     ${value}=    Get Group Notes    ${group}
     Should Be Equal As Strings    ${value_expected}    ${value}
@@ -282,7 +306,8 @@ Set Modified Time
     [Documentation]    Selected entry modified time property can be set with a datetime object.
     [Tags]    set
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${mtime1}=    Get Group Modified Time    ${group}    UTC
     ${datetime}=    Convert Date    2014-06-11 10:07:42.123    datetime
     Set Group Modified Time    ${group}    ${datetime}    local
@@ -293,7 +318,8 @@ Touch Modify False
     [Documentation]    Selected group is touched and not modified
     [Tags]    touch
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${atime1}=    Get Group Accessed Time   ${group}
     ${mtime1}=    Get Group Modified Time    ${group}
     ${ctime1}=    Get Group Created Time    ${group}
@@ -309,7 +335,8 @@ Touch Modify True
     [Documentation]    Selected group is touched and modified
     [Tags]    touch
     ${group_name}=    Set Variable    foobar_group
-    ${group}=    Get Groups By Name    ${group_name}    first=True
+    ${groups}=    Get Groups By Name    ${group_name}    first=True
+    ${group}=     Get From List    ${groups}    0
     ${atime1}=    Get Group Accessed Time   ${group}
     ${mtime1}=    Get Group Modified Time    ${group}
     ${ctime1}=    Get Group Created Time    ${group}

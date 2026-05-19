@@ -92,3 +92,13 @@ configure = [
     "AlignTemplatedTestCases.enabled=True",
     "AlignKeywordsSection.enabled=True",
 ]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+follow_untyped_imports = true
+exclude = [
+    "^tasks\\.py$",  # TOML's double-quoted strings require escaping backslashes
+]

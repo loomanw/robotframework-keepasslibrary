@@ -5,6 +5,7 @@ from invoke import task
 from rellu import Version
 from rellu.tasks import clean  # noqa
 from robot.libdoc import libdoc
+from typing import Optional
 
 assert Path.cwd() == Path(__file__).parent
 
@@ -15,7 +16,7 @@ VERSION_PATH_TOML = Path("pyproject.toml")
 
 
 @task
-def kwdocs(ctx, version=None):
+def kwdocs(ctx, version: Optional[str] = None) -> None:
     """Generates the library keyword documentation.
     Args:
         version:  Appends version to the end of the filename.
@@ -31,7 +32,7 @@ def kwdocs(ctx, version=None):
 
 
 @task
-def set_version_init(ctx, version):
+def set_version_init(ctx, version: str) -> None:
     """Set project version in `src/KeePassLibrary/__init__.py` file.
 
     Args:
@@ -54,7 +55,7 @@ def set_version_init(ctx, version):
 
 
 @task
-def set_version_toml(ctx, version):
+def set_version_toml(ctx, version: str) -> None:
     """Set project version in `pyproject.toml` file.
 
     Args:
@@ -77,7 +78,7 @@ def set_version_toml(ctx, version):
 
 
 @task
-def setversion(ctx, version):
+def setversion(ctx, version: str) -> None:
     """Set project version in `pyproject.toml` and `src/KeePassLibrary/__init__.py` file.
 
     Args:
@@ -99,19 +100,19 @@ def setversion(ctx, version):
 
 
 @task
-def print_version(ctx):
+def print_version(ctx) -> None:
     """Print the current project version."""
     print(Version(path=VERSION_PATH_TOML))
 
 
 @task
-def lint(ctx):
+def lint(ctx) -> None:
     """Runs flake8 for project Python code."""
     ctx.run("flake8 --config .flake8 tasks.py src/ atests/ utests/")
 
 
 @task
-def utest(ctx):
+def utest(ctx) -> None:
     ctx.run("pytest ./utests/")
 
 

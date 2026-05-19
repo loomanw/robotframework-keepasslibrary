@@ -1,7 +1,9 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
-from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid
+from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid, DatabaseNotOpened
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
+from KeePassLibrary.utils.data_types import TimeZone
+from typing import List, Union, Dict, Optional
 
 
 class KeePassEntry(LibraryComponent):
@@ -10,7 +12,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Title ----------
     @keyword
-    def get_entry_title(self, entry: Entry):
+    def get_entry_title(self, entry: Entry) -> str:
         """Return the title value of the supplied KeePass ``entry``.
 
         Example:
@@ -20,12 +22,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.title
+            return str(entry.title)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_title(self, entry: Entry, value):
+    def set_entry_title(self, entry: Entry, value: str) -> None:
         """Set the title value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -41,7 +43,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Username ----------
     @keyword
-    def get_entry_username(self, entry: Entry):
+    def get_entry_username(self, entry: Entry) -> str:
         """Return the username value of the supplied KeePass ``entry``.
 
         Example:
@@ -51,12 +53,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.username
+            return str(entry.username)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_username(self, entry: Entry, value):
+    def set_entry_username(self, entry: Entry, value: str) -> None:
         """Set the username value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -72,7 +74,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Password ----------
     @keyword
-    def get_entry_password(self, entry: Entry):
+    def get_entry_password(self, entry: Entry) -> str:
         """Return the password value of the supplied KeePass ``entry``.
 
         Example:
@@ -82,12 +84,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.password
+            return str(entry.password)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_password(self, entry: Entry, value):
+    def set_entry_password(self, entry: Entry, value: str) -> None:
         """Set the Password value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -103,7 +105,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- URL ----------
     @keyword
-    def get_entry_url(self, entry: Entry):
+    def get_entry_url(self, entry: Entry) -> str:
         """Return the URL value of the supplied KeePass ``entry``.
 
         Example:
@@ -113,12 +115,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.url
+            return str(entry.url)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_url(self, entry: Entry, value):
+    def set_entry_url(self, entry: Entry, value: str) -> None:
         """Set the URL value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -134,7 +136,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Notes ----------
     @keyword
-    def get_entry_notes(self, entry: Entry):
+    def get_entry_notes(self, entry: Entry) -> str:
         """Return the notes value of the supplied KeePass ``entry``.
 
         Example:
@@ -144,12 +146,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.notes
+            return str(entry.notes)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_notes(self, entry: Entry, value):
+    def set_entry_notes(self, entry: Entry, value: str) -> None:
         """Set the notes value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -165,7 +167,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Icon ----------
     @keyword
-    def get_entry_icon(self, entry: Entry):
+    def get_entry_icon(self, entry: Entry) -> str:
         """Return the icon value of the supplied KeePass ``entry``.
 
         Example:
@@ -175,12 +177,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.icon
+            return str(entry.icon)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_icon(self, entry: Entry, value):
+    def set_entry_icon(self, entry: Entry, value: str) -> None:
         """Set the icon value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -196,7 +198,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Tags (not implemented) ----------
     @keyword
-    def get_entry_tags(self, entry: Entry):
+    def get_entry_tags(self, entry: Entry) -> List[Optional[str]]:
         """Return a list with tags of the supplied KeePass ``entry``.
 
         Example:
@@ -206,18 +208,22 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.tags
+            tags: List[Optional[str]] = []
+            for tag in entry.tags:
+                tags.append(tag)
+            return tags
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_tags(self, entry: Entry, value):
+    def set_entry_tags(self, entry: Entry, value: Union[str, List[str]]) -> None:
         """Set the tags value of the supplied KeePass ``entry`` to the given ``value``.
 
-        Example:
+        Example1:
         | @{tags}=       | Create List | tag1     | tag2 |
-        | Set Entry Tags | ${entry}   | ${tags}   | |
-        | Set Entry Tags | ${entry}   | tag1;tag2 | |
+        | Set Entry Tags | ${entry}   | ${tags}   |      |
+        Example2:
+        | Set Entry Tags | ${entry}   | tag1;tag2 |
 
         New in KeePassLibrary 0.3
         """
@@ -329,7 +335,7 @@ class KeePassEntry(LibraryComponent):
     # ---------- Custom Property ----------
 
     @keyword
-    def set_entry_custom_property(self, entry: Entry, key, value):
+    def set_entry_custom_property(self, entry: Entry, key: str, value: str) -> None:
         """Sets property ``key`` of the supplied ``entry`` to ``value``.
 
         Example:
@@ -344,7 +350,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def get_entry_custom_property(self, entry: Entry, key):
+    def get_entry_custom_property(self, entry: Entry, key: str) -> str:
         """Return the value from a custom property matching the given ``key`` of the supplied ``entry``.
 
         Example:
@@ -354,12 +360,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.get_custom_property(key)
+            return str(entry.get_custom_property(key))
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def remove_entry_custom_property(self, entry: Entry, key):
+    def remove_entry_custom_property(self, entry: Entry, key: str) -> None:
         """Removes a custom property matching the given key of the supplied KeePass ``entry``.
 
         Example:
@@ -374,7 +380,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def get_entry_custom_properties(self, entry: Entry):
+    def get_entry_custom_properties(self, entry: Entry) -> Dict[str, str]:
         """Return a dictionary with all custom properties of the supplied KeePass ``entry``.
 
         Example:
@@ -384,7 +390,11 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.custom_properties
+            properties: Dict[str, str] = {}
+            custom_properties = entry.custom_properties
+            for key in custom_properties:
+                properties.update({str(key): str(custom_properties[key])})
+            return properties
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
@@ -408,7 +418,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- UUID ----------
     @keyword
-    def get_entry_uuid(self, entry: Entry):
+    def get_entry_uuid(self, entry: Entry) -> str:
         """Return the UUID value of the supplied KeePass ``entry``.
 
         Example:
@@ -433,7 +443,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Expired ----------
     @keyword
-    def get_entry_expired(self, entry: Entry):
+    def get_entry_expired(self, entry: Entry) -> bool:
         """Return expired value of the supplied KeePass ``entry``.
 
         Example:
@@ -443,12 +453,12 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.expired
+            return bool(entry.expired)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def entry_should_be_expired(self, entry: Entry, msg=None):
+    def entry_should_be_expired(self, entry: Entry, msg: Optional[str] = None) -> None:
         """Fails if the specified entry is not expired.
 
         Example:
@@ -466,7 +476,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def entry_should_not_be_expired(self, entry: Entry, msg=None):
+    def entry_should_not_be_expired(self, entry: Entry, msg: Optional[str] = None) -> None:
         """Fails if the specified entry is expired.
 
         Example:
@@ -485,7 +495,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Expires ----------
     @keyword
-    def set_entry_expires(self, entry: Entry, value: bool):
+    def set_entry_expires(self, entry: Entry, value: bool) -> None:
         """Sets expires value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
@@ -500,7 +510,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def get_entry_expires(self, entry: Entry):
+    def get_entry_expires(self, entry: Entry) -> bool:
         """Return expires value of the supplied KeePass ``entry``
 
         Example:
@@ -510,13 +520,13 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.3
         """
         if isinstance(entry, Entry):
-            return entry.expires
+            return bool(entry.expires)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Expired Time ----------
     @keyword
-    def get_entry_expiry_time(self, entry: Entry, timezone='UTC'):
+    def get_entry_expiry_time(self, entry: Entry, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return expiry time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``entry``.
@@ -534,13 +544,13 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.8
         """
         if isinstance(entry, Entry):
-            value = convert_datetime_timezone(entry.expiry_time, timezone)
+            value = convert_datetime_timezone(entry.expiry_time, timezone)  # type: ignore
             return value
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_expiry_time(self, entry: Entry, value, timezone='UTC'):
+    def set_entry_expiry_time(self, entry: Entry, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets expiry time of the supplied KeePass ``entry`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -565,7 +575,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Created Time ----------
     @keyword
-    def get_entry_created_time(self, entry: Entry, timezone='UTC'):
+    def get_entry_created_time(self, entry: Entry, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return created time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``entry``.
@@ -583,13 +593,13 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.8
         """
         if isinstance(entry, Entry):
-            value = convert_datetime_timezone(entry.ctime, timezone)
+            value = convert_datetime_timezone(entry.ctime, timezone)  # type: ignore
             return value
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_created_time(self, entry: Entry, value, timezone='UTC'):
+    def set_entry_created_time(self, entry: Entry, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets created time of the supplied KeePass ``entry`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -613,7 +623,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Last Access Time ----------
     @keyword
-    def get_entry_accessed_time(self, entry: Entry, timezone='UTC'):
+    def get_entry_accessed_time(self, entry: Entry, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return accessed time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``entry``.
@@ -631,13 +641,13 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.8
         """
         if isinstance(entry, Entry):
-            value = convert_datetime_timezone(entry.atime, timezone)
+            value = convert_datetime_timezone(entry.atime, timezone)  # type: ignore
             return value
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_accessed_time(self, entry: Entry, value, timezone='UTC'):
+    def set_entry_accessed_time(self, entry: Entry, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets accessed time of the supplied KeePass ``entry`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -662,7 +672,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Modified Time ----------
     @keyword
-    def get_entry_modified_time(self, entry: Entry, timezone='UTC'):
+    def get_entry_modified_time(self, entry: Entry, timezone: TimeZone = TimeZone.utc) -> datetime:
         """Return modified time as python
         [https://docs.python.org/library/datetime.html#datetime.datetime|datetime]
         object of the supplied KeePass ``entry``.
@@ -680,13 +690,13 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.8
         """
         if isinstance(entry, Entry):
-            value = convert_datetime_timezone(entry.mtime, timezone)
+            value = convert_datetime_timezone(entry.mtime, timezone)  # type: ignore
             return value
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_modified_time(self, entry: Entry, value: datetime, timezone='UTC'):
+    def set_entry_modified_time(self, entry: Entry, value: datetime, timezone: TimeZone = TimeZone.utc) -> None:
         """Sets modified time of the supplied KeePass ``entry`` to the given ``value``.
 
         See the `Date and Time` section for more information about Date en Time.\n
@@ -711,7 +721,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Touch ----------
     @keyword
-    def touch_entry(self, entry: Entry, modify=False):
+    def touch_entry(self, entry: Entry, modify: bool = False) -> None:
         """Touch the supplied KeePass ``entry``.
 
         | =Parameter= | =Description=         |
@@ -725,13 +735,13 @@ class KeePassEntry(LibraryComponent):
         New in KeePassLibrary 0.8
         """
         if isinstance(entry, Entry):
-            return entry.touch(modify)
+            entry.touch(modify)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Attachments (not implemented) ----------
     @keyword
-    def get_entry_attachments(self, entry: Entry):
+    def get_entry_attachments(self, entry: Entry) -> List[str]:
         """Returns a list with filenames attached to the supplied KeePass ``entry``.
 
         | =Parameter= | =Description=         |
@@ -753,7 +763,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def get_entry_attachment(self, entry: Entry, filename):
+    def get_entry_attachment(self, entry: Entry, filename: str) -> bytes:
         """Returns the attachment matching the supplied ``filename`` attached to the supplied KeePass ``entry`` as binary.
 
         | =Parameter=  | =Description=                          |
@@ -775,13 +785,13 @@ class KeePassEntry(LibraryComponent):
         if isinstance(entry, Entry):
             for attachment in entry.attachments:
                 if attachment.filename == filename:
-                    return attachment.binary
+                    return bytes(attachment.binary)
             raise AttachmentInvalid('No attachment with requested filename.')
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def set_entry_attachment(self, entry: Entry, filename, data):
+    def set_entry_attachment(self, entry: Entry, filename: str, data: bytes) -> None:
         """Adds the attachment ``filename`` and binary ``data`` to the supplied KeePass ``entry``.
         Existing ``entry`` attachment with equal ``filename`` will be replaced.
 
@@ -802,6 +812,8 @@ class KeePassEntry(LibraryComponent):
 
         New in KeePassLibrary 0.10
         """
+        if self.database is None:
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         if isinstance(entry, Entry):
             for attachment in entry.attachments:
                 if attachment.filename == filename:
@@ -812,7 +824,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def remove_entry_attachment(self, entry: Entry, filename):
+    def remove_entry_attachment(self, entry: Entry, filename: str) -> None:
         """Removes attachment matching the supplied ``filename`` from to the supplied KeePass ``entry``
 
         | =Parameter=  | =Description=                          |
@@ -833,6 +845,8 @@ class KeePassEntry(LibraryComponent):
 
         New in KeePassLibrary 0.10
         """
+        if self.database is None:
+            raise DatabaseNotOpened('No KeePass Database Opened.')
         if isinstance(entry, Entry):
             for attachment in entry.attachments:
                 if attachment.filename == filename:
@@ -843,7 +857,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def entry_should_contain_attachment(self, entry: Entry, filename, msg=None):
+    def entry_should_contain_attachment(self, entry: Entry, filename: str, msg: Optional[str] = None) -> None:
         """Fails if the given ``filename`` is not present as ``entry`` attachment.
 
         | =Parameter=  | =Description=        |
@@ -870,7 +884,7 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     @keyword
-    def entry_should_not_contain_attachment(self, entry: Entry, filename, msg=None):
+    def entry_should_not_contain_attachment(self, entry: Entry, filename: str, msg: Optional[str] = None) -> None:
         """Fails if the given ``filename`` is present as ``entry`` attachment.
 
         | =Parameter=  | =Description=        |
