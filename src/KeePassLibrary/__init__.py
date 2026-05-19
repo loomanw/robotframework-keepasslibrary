@@ -1,6 +1,7 @@
 from robotlibcore import DynamicCore
 from typing import Any
 from typing_extensions import Self
+from robot.api.deco import library
 
 from KeePassLibrary.keywords import (
     KeePassDatabase,
@@ -10,10 +11,21 @@ from KeePassLibrary.keywords import (
     KeePassGroups
 )
 
+# Importing this directly from .utils break the stub type checks
+from .utils.data_types import (
+    RegExp, keepass_entry, keepass_group
+)
+
 from .version import __version__ as VERSION
 
 __version__ = VERSION
 
+from KeePassLibrary.base import Entry, Group
+@library(
+    converters={RegExp: RegExp.from_string,
+                Entry : keepass_entry,
+                Group : keepass_group}
+)
 
 class KeePassLibrary(DynamicCore):
     """KeePassLibrary is a library for Robot Framework.

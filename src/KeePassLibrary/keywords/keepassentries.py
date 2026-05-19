@@ -3,7 +3,9 @@ from KeePassLibrary.base import keyword, LibraryComponent, UUID, Entry, Group
 from KeePassLibrary.errors import DatabaseNotOpened
 from robot.utils import is_truthy
 from typing import Optional, List, Dict, Union
-
+from KeePassLibrary.utils.data_types import (
+    RegExp
+)
 
 class KeePassEntries(LibraryComponent):
 
@@ -137,7 +139,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_username(self,
                                 username: str,
                                 regex: Optional[bool] = False,
-                                flags: Optional[str] = None,
+                                flags: Union[str, RegExp, None] = None,
                                 group: Optional[Group] = None,
                                 history: Optional[bool] = False,
                                 first: Optional[bool] = False) -> List[Optional[Entry]]:
