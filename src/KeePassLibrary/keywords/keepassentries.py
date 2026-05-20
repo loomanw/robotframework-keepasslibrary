@@ -11,7 +11,7 @@ class KeePassEntries(LibraryComponent):
 
     # todo: path typing
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries(self,  # type: ignore[no-untyped-def]
                     history: Optional[bool] = False,
                     first: Optional[bool] = False,
@@ -89,7 +89,7 @@ class KeePassEntries(LibraryComponent):
                                                         **kwargs)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_all(self) -> List[Optional[Entry]]:
         """Return a list of all entries in the open KeePass database.\n
 
@@ -108,7 +108,7 @@ class KeePassEntries(LibraryComponent):
                 all_entries.append(group)
             return all_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_title(self,
                              title: str,
                              regex: Optional[bool] = False,
@@ -138,7 +138,7 @@ class KeePassEntries(LibraryComponent):
                                               first=first)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_username(self,
                                 username: str,
                                 regex: Optional[bool] = False,
@@ -164,7 +164,7 @@ class KeePassEntries(LibraryComponent):
                                               first=first)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_password(self,
                                 password: str,
                                 regex: Optional[bool] = False,
@@ -190,7 +190,7 @@ class KeePassEntries(LibraryComponent):
                                               first=first)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_url(self,
                            url: str,
                            regex: Optional[bool] = False,
@@ -216,7 +216,7 @@ class KeePassEntries(LibraryComponent):
                                               first=first)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_notes(self,
                              notes: str,
                              regex: Optional[bool] = False,
@@ -244,7 +244,7 @@ class KeePassEntries(LibraryComponent):
 
     # FIXME: Return more then 1 match even when first is set to false
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_path(self,
                             path: str,
                             regex: Optional[bool] = False,
@@ -272,7 +272,7 @@ class KeePassEntries(LibraryComponent):
                                               first=first)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_uuid(self,
                             uuid: str,
                             regex: Optional[bool] = False,
@@ -298,7 +298,7 @@ class KeePassEntries(LibraryComponent):
                                               first=first)
             return return_entries
 
-    @keyword
+    @keyword(tags=("Getter", "Entries"))
     def get_entries_by_string(self,
                               string: Dict[str, str],
                               regex: Optional[bool] = False,

@@ -6,7 +6,7 @@ from typing import Optional
 
 class KeePassDatabase(LibraryComponent):
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Setter"))
     def open_keepass_database(self, filename: str, password: Optional[str] = None, keyfile: Optional[str] = None,
                               transformed_key: Optional[bytes] = None) -> None:
         """Opens the specified KeePass database ``filename`` using the credentials provided.
@@ -35,7 +35,7 @@ class KeePassDatabase(LibraryComponent):
                            keyfile,
                            transformed_key)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Setter"))
     def close_keepass_database(self) -> None:
         """Closes the currently open KeePass database.
         """
@@ -44,7 +44,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             self.database = None
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Setter"))
     def save_keepass_database(self, filename: Optional[str] = None, transformed_key: Optional[bytes] = None) -> None:
         """Save the content of the currently open KeePass database.
 
@@ -57,7 +57,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             self.database.save(filename, transformed_key)
 
-    @keyword
+    @keyword(tags=("DatabaseContent", "Getter"))
     def save_xml(self, path: str) -> None:
         """Save the content of the database to a specified file.
            NOTE: The resulting file is unencrypted!!!
@@ -70,7 +70,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             self.database.dump_xml(path)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_version(self) -> str:
         """Returns the version of the KeePass database loaded with `Open Keepass Database`
         | =Return=   | =Description= |
@@ -82,7 +82,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.version)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_encryption_algorithm(self) -> str:
         """Returns the encryption algorithm used.
         """
@@ -91,7 +91,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.encryption_algorithm)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_kdf_algorithm(self) -> str:
         """Returns the key transformation algorithm used.
         """
@@ -100,7 +100,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.kdf_algorithm)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_transformed_key(self) -> bytes:
         """Returns the transformed key.
         """
@@ -109,7 +109,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return bytes(self.database.transformed_key)
 
-    @keyword
+    @keyword(tags=("DatabaseContent", "Getter"))
     def get_tree(self) -> str:
         """Returns the full XML tree.
         """
@@ -118,7 +118,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.tree)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter", "Group"))
     def get_root_group(self) -> Group:
         """Returns the root group.
         """
