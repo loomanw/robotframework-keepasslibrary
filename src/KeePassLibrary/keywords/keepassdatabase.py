@@ -42,7 +42,6 @@ class KeePassDatabase(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            # TODO functio van maken
             self.database = None
 
     @keyword
@@ -112,7 +111,7 @@ class KeePassDatabase(LibraryComponent):
 
     @keyword
     def get_tree(self) -> str:
-        """Returns the full xml tree.
+        """Returns the full XML tree.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')

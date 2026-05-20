@@ -395,7 +395,6 @@ class KeePassGroup(LibraryComponent):
     #     else:
     #         raise GroupInvalid('Invalid KeePass Group.')
 
-    # TODO: no-any-return
     @keyword
     def get_group_entries(self, group: Group) -> List[Optional[Entry]]:
         """Returns a list of entries from the supplied KeePass ``group``.
