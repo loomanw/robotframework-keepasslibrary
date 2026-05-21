@@ -7,9 +7,8 @@ from KeePassLibrary.utils.data_types import (
     RegExp
 )
 
-class KeePassEntries(LibraryComponent):
 
-    # todo: path typing
+class KeePassEntries(LibraryComponent):
 
     @keyword(tags=("Getter", "Entries"))
     def get_entries(self,  # type: ignore[no-untyped-def]
@@ -69,7 +68,7 @@ class KeePassEntries(LibraryComponent):
                 c_uuid = UUID('urn:uuid:' + uuid)
                 kwargs['uuid'] = c_uuid
             if string is not None:
-                d_string : Dict[str, str] = string
+                d_string: Dict[str, str] = string
                 kwargs['string'] = d_string  # type: ignore[assignment]
             if path is not None:
                 l_path = str(path).split('/')
@@ -130,6 +129,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(title=title,
                                               regex=regex,
                                               flags=flags,
@@ -156,6 +156,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(username=username,
                                               regex=regex,
                                               flags=flags,
@@ -182,6 +183,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(password=password,
                                               regex=regex,
                                               flags=flags,
@@ -208,6 +210,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(url=url,
                                               regex=regex,
                                               flags=flags,
@@ -234,6 +237,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(notes=notes,
                                               regex=regex,
                                               flags=flags,
@@ -264,6 +268,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(path=path,
                                               regex=regex,
                                               flags=flags,
@@ -290,6 +295,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(uuid=uuid,
                                               regex=regex,
                                               flags=flags,
@@ -327,6 +333,7 @@ class KeePassEntries(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_entries: List[Optional[Entry]] = []
             return_entries = self.get_entries(string=string,
                                               regex=regex,
                                               flags=flags,

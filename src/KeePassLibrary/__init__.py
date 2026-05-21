@@ -22,12 +22,13 @@ from .version import __version__ as VERSION
 __version__ = VERSION
 
 from KeePassLibrary.base import Entry, Group
+
+
 @library(
     converters={RegExp: RegExp.from_string,
-                Entry : keepass_entry,
-                Group : keepass_group}
+                Entry: keepass_entry,
+                Group: keepass_group}
 )
-
 class KeePassLibrary(DynamicCore):
     """KeePassLibrary is a library for Robot Framework.
 
@@ -202,4 +203,4 @@ class KeePassLibrary(DynamicCore):
 
     @database.setter
     def database(self, value: Union[PyKeePass, None]) -> None:
-            self._database = value
+        self._database = value
