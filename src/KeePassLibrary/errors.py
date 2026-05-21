@@ -36,3 +36,7 @@ class DateTimeInvalid(KeepassLibraryException):
 
 class TimeZoneInvalid(KeepassLibraryException):
     pass
+
+
+class RobotframeworkVersionInvalid(KeepassLibraryException):
+    pass

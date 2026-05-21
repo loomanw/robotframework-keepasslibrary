@@ -4,6 +4,7 @@ KeePassLibrary 0.12.0
 
 Most important enhancements
 ===========================
+- Support for Robot Framework 7.4 Secret variable type
 - Implemented Mypy static type checker
 - New TimeZone enum replacing str
 - Refactoring argument names
@@ -13,9 +14,11 @@ Most important enhancements
 Changed keywords
 ----------------
 
-==================================  =================================================  =======
-       keyword                             Change
-==================================  =================================================  =======
+==================================  ====================================================
+Keyword                             Change
+==================================  ====================================================
+Set Entry Password                  Support for Robot Framework 7.4 Secret variable type
+Get Entry Password                  Support for Robot Framework 7.4 Secret variable type
 Get Groups By Name                  Argument name change: group_name -> name
 Get Groups By Path                  Argument name change: group_path_str -> path
 Get Entry Accessed Time             TimeZone enum replacing str
@@ -34,3 +37,4 @@ Get Group Expiry Time               TimeZone enum replacing str
 Set Group Expiry Time               TimeZone enum replacing str
 Get Group Modified Time             TimeZone enum replacing str
 Set Group Modified Time             TimeZone enum replacing str
+==================================  =================================================
