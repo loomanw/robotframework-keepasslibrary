@@ -17,6 +17,7 @@ Changed keywords
 ==================================  ====================================================
 Keyword                             Change
 ==================================  ====================================================
+Open Keepass Database               Support for Robot Framework 7.4 Secret variable type
 Set Entry Password                  Support for Robot Framework 7.4 Secret variable type
 Get Entry Password                  Support for Robot Framework 7.4 Secret variable type
 Get Groups By Name                  Argument name change: group_name -> name

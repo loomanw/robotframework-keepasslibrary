@@ -10,6 +10,7 @@ Test Setup          Open Keepass Database    ${KEEPASS_DATABASE}    ${KEEPASS_PA
 Test Teardown       Close Keepass Database
 
 Test Tags           entry   secret  requires_7.4
+Resource            ${CURDIR}${/}Resources${/}Robot_utils.resource
 Variables           secret_variables.py
 
 
@@ -68,21 +69,3 @@ Get Password As Secret
     ${value}=    Get Entry Password    ${entry}    secret=${True}
     Should Be Equal As Strings    ${value_expected}    ${value}
     Should Be Equal As Strings    ${value_expected.value}    ${value.value}
-
-
-*** Keywords ***
-Get Robot Version
-    [Documentation]    Returns the current Robot Framework version
-    ${version}=              Evaluate                robot.__version__
-    RETURN                  ${version}
-
-Get Robot Framework Has Secret
-    [Documentation]    Returns the current Robot Framework Secret support
-    ${version}=    Get Robot Version
-    IF  '${version}' < '7.4'
-        Log To Console  < 7.4 secret is NOT support
-        RETURN  ${False}
-    ELSE
-        Log To Console  >= 7.4 secret is supported
-        RETURN  ${True}
-    END

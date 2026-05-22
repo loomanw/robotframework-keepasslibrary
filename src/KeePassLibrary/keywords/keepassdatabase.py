@@ -1,13 +1,16 @@
 """Library components."""
 from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent, Group
 from KeePassLibrary.errors import DatabaseNotOpened
-from typing import Optional
+from KeePassLibrary.utils.types import Secret
+from typing import Optional, Union
 
 
 class KeePassDatabase(LibraryComponent):
 
-    @keyword(tags=("DatabaseControl", "Setter"))
-    def open_keepass_database(self, filename: str, password: Optional[str] = None, keyfile: Optional[str] = None,
+    # fixme: add secret
+
+    @keyword(tags=("DatabaseControl", "Setter", "Secret"))
+    def open_keepass_database(self, filename: str, password: Optional[Union[str, Secret]] = None, keyfile: Optional[str] = None,
                               transformed_key: Optional[bytes] = None) -> None:
         """Opens the specified KeePass database ``filename`` using the credentials provided.
 
@@ -22,16 +25,23 @@ class KeePassDatabase(LibraryComponent):
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
         | `Open Keepass Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |
+
+        - Updated in KeePassLibrary 0.12, Support for Robot Framework 7.4 `Secret` variable type
         """
+        s_password: Optional[str] = None
+        if isinstance(password, Secret):
+            s_password = password.value
+        elif isinstance(password, str):
+            s_password = str(password)
 
         self.database = PyKeePass(filename,
-                                  password=password,
+                                  password=s_password,
                                   keyfile=keyfile,
                                   transformed_key=transformed_key)
 
         # capture failed to load
         self.database.read(filename,
-                           password,
+                           s_password,
                            keyfile,
                            transformed_key)
 
