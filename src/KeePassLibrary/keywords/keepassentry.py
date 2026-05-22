@@ -334,7 +334,7 @@ class KeePassEntry(LibraryComponent):
 
     # ---------- Custom Property ----------
 
-    # Todo: Key class van maken om reserverd keys bekend te maken
+    # Todo: Prevent usage of reserved keys
     @keyword(tags=("Setter", "Entry"))
     def set_entry_custom_property(self, entry: Entry, key: str, value: str) -> None:
         """Sets property ``key`` of the supplied ``entry`` to ``value``.
@@ -350,7 +350,7 @@ class KeePassEntry(LibraryComponent):
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
-    # Todo: Key class van maken om reserverd keys bekend te maken
+    # Todo: Prevent usage of reserved keys
     @keyword(tags=("Getter", "Entry"))
     def get_entry_custom_property(self, entry: Entry, key: str) -> str:
         """Return the value from a custom property matching the given ``key`` of the supplied ``entry``.

@@ -7,6 +7,7 @@ class TimeZone(Enum):
     utc = "UTC"
     local = "local"
 
+
 class RegExp(str):
     @classmethod
     def from_string(cls, string: str) -> "RegExp":
@@ -34,6 +35,7 @@ class RegExp(str):
         #     raise ValueError("Invalid JavaScript RegExp string")
         return cls(string)
 
+
 def keepass_entry(entry: Entry) -> Entry:
     """Each `Entry` contains all the information stored for a website or application
 
@@ -51,6 +53,7 @@ def keepass_entry(entry: Entry) -> Entry:
     | path          |
     """
     return entry
+
 
 def keepass_group(group: Group) -> Group:
     """Each `Group` may contain 1 or more Groups or Entries

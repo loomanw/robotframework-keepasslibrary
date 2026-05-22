@@ -53,7 +53,7 @@ class KeePassGroups(LibraryComponent):
             if path is not None:
                 l_path = str(path).split('/')
             found_groups = self.database.find_groups(recursive=bool(recursive),
-                                                     path=path,
+                                                     path=l_path,
                                                      group=group,
                                                      history=history,
                                                      first=first,
@@ -105,6 +105,7 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_groups: List[Group] = []
             return_groups = self.get_groups(recursive=True,
                                             name=name,
                                             regex=regex,
@@ -127,6 +128,7 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_groups: List[Group] = []
             return_groups = self.get_groups(recursive=True,
                                             path=path,
                                             regex=regex,
@@ -149,6 +151,7 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_groups: List[Group] = []
             return_groups = self.get_groups(recursive=True,
                                             uuid=uuid,
                                             regex=regex,
@@ -172,6 +175,7 @@ class KeePassGroups(LibraryComponent):
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
+            return_groups: List[Group] = []
             return_groups = self.get_groups(recursive=True,
                                             notes=notes,
                                             regex=regex,
