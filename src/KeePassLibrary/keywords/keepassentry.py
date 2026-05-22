@@ -1,8 +1,9 @@
 """Library components."""
 from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
-from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid, DatabaseNotOpened
+from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid, DatabaseNotOpened, RobotframeworkVersionInvalid
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
 from KeePassLibrary.utils.data_types import TimeZone
+from KeePassLibrary.utils.types import Secret, ROBOT_FRAMEWORK_SUPPORTS_SECRET
 from typing import List, Union, Dict, Optional
 
 
@@ -73,33 +74,50 @@ class KeePassEntry(LibraryComponent):
             raise EntryInvalid('Invalid KeePass Entry.')
 
     # ---------- Password ----------
-    @keyword(tags=("Getter", "Entry"))
-    def get_entry_password(self, entry: Entry) -> str:
+    @keyword(tags=("Getter", "Entry", "Secret"))
+    def get_entry_password(self, entry: Entry, secret: bool = False) -> Union[str, Secret]:
         """Return the password value of the supplied KeePass ``entry``.
 
         Example:
         | ${entry} = | `Get Entries By Title` | root_entry | first=True |
         | ${value} = | `Get Entry Password`   | ${entry}                |
 
-        New in KeePassLibrary 0.3
+        This keyword supports Robot Framework 7.4 Secret variable type,
+        which is the recommended way if you are using Robot Framework 7.4 or newer.
+
+        - New in KeePassLibrary 0.3
+        - Updated in KeePassLibrary 0.12, Support for Robot Framework 7.4 `Secret` variable type
         """
         if isinstance(entry, Entry):
-            return str(entry.password)
+            if secret:
+                if ROBOT_FRAMEWORK_SUPPORTS_SECRET:
+                    return Secret(entry.password)
+                else:
+                    raise RobotframeworkVersionInvalid('Secret type requires Robot Framework 7.4 or later.')
+            else:
+                return str(entry.password)
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
-    @keyword(tags=("Setter", "Entry"))
-    def set_entry_password(self, entry: Entry, value: str) -> None:
+    @keyword(tags=("Setter", "Entry", "Secret"))
+    def set_entry_password(self, entry: Entry, value: Union[str, Secret]) -> None:
         """Set the Password value of the supplied KeePass ``entry`` to the given ``value``.
 
         Example:
         | ${entry} =           | `Get Entries By Title` | root_entry | first=True |
         | `Set Entry Password` | N3w Passw0rd                                     |
 
-        New in KeePassLibrary 0.3
+        This keyword supports Robot Framework 7.4 Secret variable type,
+        which is the recommended way if you are using Robot Framework 7.4 or newer.
+
+        - New in KeePassLibrary 0.3
+        - Updated in KeePassLibrary 0.12, Support for Robot Framework 7.4 `Secret` variable type
         """
         if isinstance(entry, Entry):
-            entry.password = value
+            if isinstance(value, Secret):
+                entry.password = value.value
+            else:
+                entry.password = value
         else:
             raise EntryInvalid('Invalid KeePass Entry.')
 
