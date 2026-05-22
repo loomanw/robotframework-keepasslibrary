@@ -302,7 +302,7 @@ Set Notes
     Should Be Equal As Strings    ${value_expected}    ${value}
 
 Set Password
-    [Documentation]    Selected entry passowrd can be set with a string
+    [Documentation]    Selected entry password can be set with a string
     [Tags]    set
     ${entry_title}=    Set Variable    root_entry
     ${value_expected}=    Set Variable    P@$$w0rd

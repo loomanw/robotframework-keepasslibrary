@@ -2,13 +2,16 @@
 from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent, Group
 from pykeepass.pykeepass import create_database
 from KeePassLibrary.errors import DatabaseNotOpened
-from typing import Optional
+from KeePassLibrary.utils.types import Secret
+from typing import Optional, Union
 
 
 class KeePassDatabase(LibraryComponent):
 
-    @keyword
-    def open_keepass_database(self, filename: str, password: Optional[str] = None, keyfile: Optional[str] = None,
+    # fixme: add secret
+
+    @keyword(tags=("DatabaseControl", "Setter", "Secret"))
+    def open_keepass_database(self, filename: str, password: Optional[Union[str, Secret]] = None, keyfile: Optional[str] = None,
                               transformed_key: Optional[bytes] = None) -> None:
         """Opens the specified KeePass database ``filename`` using the credentials provided.
 
@@ -23,16 +26,23 @@ class KeePassDatabase(LibraryComponent):
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
         | `Open Keepass Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |
+
+        - Updated in KeePassLibrary 0.12, Support for Robot Framework 7.4 `Secret` variable type
         """
+        s_password: Optional[str] = None
+        if isinstance(password, Secret):
+            s_password = password.value
+        elif isinstance(password, str):
+            s_password = str(password)
 
         self.database = PyKeePass(filename,
-                                  password=password,
+                                  password=s_password,
                                   keyfile=keyfile,
                                   transformed_key=transformed_key)
 
         # capture failed to load
         self.database.read(filename,
-                           password,
+                           s_password,
                            keyfile,
                            transformed_key)
         
@@ -55,17 +65,16 @@ class KeePassDatabase(LibraryComponent):
         self.database = create_database(filename, password, keyfile, transformed_key)
         self.database.read(filename, password, keyfile, transformed_key)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Setter"))
     def close_keepass_database(self) -> None:
         """Closes the currently open KeePass database.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            # TODO functio van maken
             self.database = None
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Setter"))
     def save_keepass_database(self, filename: Optional[str] = None, transformed_key: Optional[bytes] = None) -> None:
         """Save the content of the currently open KeePass database.
 
@@ -78,7 +87,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             self.database.save(filename, transformed_key)
 
-    @keyword
+    @keyword(tags=("DatabaseContent", "Getter"))
     def save_xml(self, path: str) -> None:
         """Save the content of the database to a specified file.
            NOTE: The resulting file is unencrypted!!!
@@ -91,7 +100,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             self.database.dump_xml(path)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_version(self) -> str:
         """Returns the version of the KeePass database loaded with `Open Keepass Database`
         | =Return=   | =Description= |
@@ -103,7 +112,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.version)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_encryption_algorithm(self) -> str:
         """Returns the encryption algorithm used.
         """
@@ -112,7 +121,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.encryption_algorithm)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_kdf_algorithm(self) -> str:
         """Returns the key transformation algorithm used.
         """
@@ -121,7 +130,7 @@ class KeePassDatabase(LibraryComponent):
         else:
             return str(self.database.kdf_algorithm)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter"))
     def get_transformed_key(self) -> bytes:
         """Returns the transformed key.
         """
@@ -130,16 +139,16 @@ class KeePassDatabase(LibraryComponent):
         else:
             return bytes(self.database.transformed_key)
 
-    @keyword
+    @keyword(tags=("DatabaseContent", "Getter"))
     def get_tree(self) -> str:
-        """Returns the full xml tree.
+        """Returns the full XML tree.
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
             return str(self.database.tree)
 
-    @keyword
+    @keyword(tags=("DatabaseControl", "Getter", "Group"))
     def get_root_group(self) -> Group:
         """Returns the root group.
         """
