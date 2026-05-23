@@ -14,7 +14,7 @@ from KeePassLibrary.keywords import (
 
 # Importing this directly from .utils break the stub type checks
 from .utils.data_types import (
-    RegExp, keepass_entry, keepass_group
+    RegExpFlags, keepass_entry, keepass_group
 )
 
 from .version import __version__ as VERSION
@@ -25,7 +25,7 @@ from KeePassLibrary.base import Entry, Group
 
 
 @library(
-    converters={RegExp: RegExp.from_string,
+    converters={RegExpFlags: RegExpFlags.from_string,
                 Entry: keepass_entry,
                 Group: keepass_group}
 )
