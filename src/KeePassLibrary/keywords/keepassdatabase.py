@@ -7,8 +7,6 @@ from typing import Optional, Union
 
 class KeePassDatabase(LibraryComponent):
 
-    # fixme: add secret
-
     @keyword(tags=("DatabaseControl", "Setter", "Secret"))
     def open_keepass_database(self, filename: str, password: Optional[Union[str, Secret]] = None, keyfile: Optional[str] = None,
                               transformed_key: Optional[bytes] = None) -> None:
