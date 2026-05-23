@@ -1,5 +1,7 @@
+import re
 from enum import Enum
 from KeePassLibrary.base import Entry, Group
+from KeePassLibrary.errors import RegExpFlagsInvalid
 
 
 class TimeZone(Enum):
@@ -8,15 +10,10 @@ class TimeZone(Enum):
     local = "local"
 
 
-class RegExp(str):
+class RegExpFlags(str):
     @classmethod
-    def from_string(cls, string: str) -> "RegExp":
-        """Create a (JavaScript) RegExp object from a string.
-
-        The matcher must start with a slash and end with a slash and can be followed by flags.
-
-        Example: ``/hello world/gi``
-        Which is equivalent to ``new RegExp("hello world", "gi")`` in JavaScript.
+    def from_string(cls, string: str) -> "RegExpFlags":
+        """Set
 
         Following flags are supported:
         | =Flag= | =Description= |
@@ -30,9 +27,9 @@ class RegExp(str):
         See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp|RegExp Object]
         and [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions|RegExp Guide] for more information.
         """
-        # match = re.fullmatch(r"\/(?<matcher>.*)\/(?<flags>[gimsuy]+)?", string)
-        # if not match:
-        #     raise ValueError("Invalid JavaScript RegExp string")
+        match = re.fullmatch(r'^[gimsuy]+', string)
+        if not match:
+            raise RegExpFlagsInvalid('Invalid RegExp flags.')
         return cls(string)
 
 

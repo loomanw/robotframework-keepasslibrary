@@ -4,6 +4,9 @@
 from KeePassLibrary.base import keyword, LibraryComponent, UUID, Group
 from KeePassLibrary.errors import DatabaseNotOpened
 from typing import Optional, List, Dict
+from KeePassLibrary.utils.data_types import (
+    RegExpFlags
+)
 
 
 class KeePassGroups(LibraryComponent):
@@ -18,7 +21,7 @@ class KeePassGroups(LibraryComponent):
                    history: Optional[bool] = False,
                    first: Optional[bool] = False,
                    regex: Optional[bool] = False,
-                   flags: Optional[str] = None) -> List[Group]:
+                   flags: Optional[RegExpFlags] = None) -> List[Group]:
         """Return a list of groups in the open KeePass database matching the given arguments.
 
         The ``recursive`` argument can be set ``True`` this enables recursive searching, default value is False.\n
@@ -91,7 +94,7 @@ class KeePassGroups(LibraryComponent):
             return all_groups
 
     @keyword(tags=("Getter", "Groups"))
-    def get_groups_by_name(self, name: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+    def get_groups_by_name(self, name: str, regex: Optional[bool] = False, flags: Optional[RegExpFlags] = None,
                            group: Optional[Group] = None, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given string.
@@ -115,7 +118,7 @@ class KeePassGroups(LibraryComponent):
             return return_groups
 
     @keyword(tags=("Getter", "Groups"))
-    def get_groups_by_path(self, path: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+    def get_groups_by_path(self, path: str, regex: Optional[bool] = False, flags: Optional[RegExpFlags] = None,
                            group: Optional[Group] = None, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given path.
@@ -138,7 +141,7 @@ class KeePassGroups(LibraryComponent):
             return return_groups
 
     @keyword(tags=("Getter", "Groups"))
-    def get_groups_by_uuid(self, uuid: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+    def get_groups_by_uuid(self, uuid: str, regex: Optional[bool] = False, flags: Optional[RegExpFlags] = None,
                            group: Optional[Group] = None, history: Optional[bool] = False, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given uuid.
@@ -162,7 +165,7 @@ class KeePassGroups(LibraryComponent):
             return return_groups
 
     @keyword(tags=("Getter", "Groups"))
-    def get_groups_by_notes(self, notes: str, regex: Optional[bool] = False, flags: Optional[str] = None,
+    def get_groups_by_notes(self, notes: str, regex: Optional[bool] = False, flags: Optional[RegExpFlags] = None,
                             group: Optional[Group] = None, history: Optional[bool] = False, first: Optional[bool] = False) -> List[Group]:
         """Return a list of groups in the open KeePass database
         matching the given notes.

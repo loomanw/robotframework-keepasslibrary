@@ -40,3 +40,7 @@ class TimeZoneInvalid(KeepassLibraryException):
 
 class RobotframeworkVersionInvalid(KeepassLibraryException):
     pass
+
+
+class RegExpFlagsInvalid(KeepassLibraryException):
+    pass
