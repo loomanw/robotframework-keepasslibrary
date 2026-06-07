@@ -69,3 +69,15 @@ Get Password As Secret
     ${value}=    Get Entry Password    ${entry}    secret=${True}
     Should Be Equal As Strings    ${value_expected}    ${value}
     Should Be Equal As Strings    ${value_expected.value}    ${value.value}
+
+Entry Can Be Created With Secret Password
+    [Documentation]    Validate existense of newly created group
+    [Tags]    create    set
+    ${support_secret}=    Get Robot Framework Has Secret
+    Skip If   not ${support_secret}
+    ${value_expected}=    Set Variable    ${NEW_PASSWORD_AS_SECRET}
+    ${root_group}=   Get Root Group
+    ${new_entry}=    Add Entry   ${root_group}    title    username    ${value_expected}
+    ${value}=    Get Entry Password    ${new_entry}    secret=${True}
+    Should Be Equal As Strings    ${value_expected}    ${value}
+    Should Be Equal As Strings    ${value_expected.value}    ${value.value}

@@ -505,3 +505,10 @@ Attachment Should Not Be Present Fail
     Set Entry Attachment               ${entry}    spam.txt      ${binary_set}
     ${error_msg}=                  Set Variable     The entry should not contain attachment 'spam.txt', but it does.
     Run Keyword And Expect Error   ${error_msg}     Entry Should Not Contain Attachment    ${entry}    spam.txt
+
+Entry Can Be Created
+    [Documentation]    Validate existense of newly created group
+    ${root_group}=   Get Root Group
+    ${new_entry}=    Add Entry   ${root_group}    title    username    password
+    ${name}=    Get Entry Title   ${new_entry}
+    Should Be Equal As Strings    ${name}    title
