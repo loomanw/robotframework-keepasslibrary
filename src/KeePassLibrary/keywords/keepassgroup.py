@@ -542,10 +542,14 @@ class KeePassGroup(LibraryComponent):
         else:
             raise GroupInvalid('Invalid KeePass Group.')
 
-    @keyword
-    def add_group(self, destination_group: Group, group_name : str, icon : str | None = None, notes : str | None = None):
+    @keyword(tags=("Getter", "Add", "Setter", "Group"))
+    def add_group(self,
+                  destination_group: Group,
+                  group_name: str,
+                  icon: Optional[str] = None,
+                  notes: Optional[str] = None,) -> Group:
         """Inserts a new group with name ``group_name`` into an existing ``destination_group``.
-        
+
         | =Parameter=           | =Description=                               |
         | ``destination_group`` | specifies the parent group of the new group |
         | ``group_name``        | specifies the name of the new group         |
@@ -553,13 +557,15 @@ class KeePassGroup(LibraryComponent):
         | ``notes``             | specifies the notes for the new group       |
 
         The newly created group is returned as the return value.
-        
+
         Examples:
         | ${root}   | Get Root Group |         |           |
         | ${new_gr} | Add Group      | ${root} | New Group |
+
+        New in KeePassLibrary 0.12
         """
         if self.database is None:
             raise DatabaseNotOpened('No KeePass Database Opened.')
         else:
-            return self.database.add_group(destination_group, group_name, icon, notes)
-    
+            result: Group = self.database.add_group(destination_group, group_name, icon, notes)
+            return result
