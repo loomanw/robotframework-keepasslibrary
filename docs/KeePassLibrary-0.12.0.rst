@@ -17,6 +17,7 @@ Changed keywords
 ==================================  ====================================================
 Keyword                             Change
 ==================================  ====================================================
+Create Keepass Database             New keyword
 Open Keepass Database               Support for Robot Framework 7.4 Secret variable type
 Set Entry Password                  Support for Robot Framework 7.4 Secret variable type
 Get Entry Password                  Support for Robot Framework 7.4 Secret variable type
