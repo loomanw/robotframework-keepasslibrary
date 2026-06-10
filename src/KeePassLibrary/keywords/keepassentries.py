@@ -2,9 +2,9 @@
 from KeePassLibrary.base import keyword, LibraryComponent, UUID, Entry, Group
 from KeePassLibrary.errors import DatabaseNotOpened
 from robot.utils import is_truthy
-from typing import Optional, List, Dict, Union
+from typing import Optional, List, Dict
 from KeePassLibrary.utils.data_types import (
-    RegExp
+    RegExpFlags
 )
 
 
@@ -18,7 +18,7 @@ class KeePassEntries(LibraryComponent):
                     path: Optional[str] = None,
                     group: Optional[Group] = None,
                     regex: Optional[bool] = False,
-                    flags: Optional[str] = None,
+                    flags: Optional[RegExpFlags] = None,
                     title: Optional[str] = None,
                     username: Optional[str] = None,
                     password: Optional[str] = None,
@@ -111,7 +111,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_title(self,
                              title: str,
                              regex: Optional[bool] = False,
-                             flags: Optional[str] = None,
+                             flags: Optional[RegExpFlags] = None,
                              group: Optional[Group] = None,
                              history: Optional[bool] = False,
                              first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -142,7 +142,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_username(self,
                                 username: str,
                                 regex: Optional[bool] = False,
-                                flags: Union[str, RegExp, None] = None,
+                                flags: Optional[RegExpFlags] = None,
                                 group: Optional[Group] = None,
                                 history: Optional[bool] = False,
                                 first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -169,7 +169,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_password(self,
                                 password: str,
                                 regex: Optional[bool] = False,
-                                flags: Optional[str] = None,
+                                flags: Optional[RegExpFlags] = None,
                                 group: Optional[Group] = None,
                                 history: Optional[bool] = False,
                                 first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -196,7 +196,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_url(self,
                            url: str,
                            regex: Optional[bool] = False,
-                           flags: Optional[str] = None,
+                           flags: Optional[RegExpFlags] = None,
                            group: Optional[Group] = None,
                            history: Optional[bool] = False,
                            first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -223,7 +223,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_notes(self,
                              notes: str,
                              regex: Optional[bool] = False,
-                             flags: Optional[str] = None,
+                             flags: Optional[RegExpFlags] = None,
                              group: Optional[Group] = None,
                              history: Optional[bool] = False,
                              first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -252,7 +252,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_path(self,
                             path: str,
                             regex: Optional[bool] = False,
-                            flags: Optional[str] = None,
+                            flags: Optional[RegExpFlags] = None,
                             group: Optional[Group] = None,
                             history: Optional[bool] = False,
                             first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -281,7 +281,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_uuid(self,
                             uuid: str,
                             regex: Optional[bool] = False,
-                            flags: Optional[str] = None,
+                            flags: Optional[RegExpFlags] = None,
                             group: Optional[Group] = None,
                             history: Optional[bool] = False,
                             first: Optional[bool] = False) -> List[Optional[Entry]]:
@@ -308,7 +308,7 @@ class KeePassEntries(LibraryComponent):
     def get_entries_by_string(self,
                               string: Dict[str, str],
                               regex: Optional[bool] = False,
-                              flags: Optional[str] = None,
+                              flags: Optional[RegExpFlags] = None,
                               group: Optional[Group] = None,
                               history: Optional[bool] = False,
                               first: Optional[bool] = False) -> List[Optional[Entry]]:
