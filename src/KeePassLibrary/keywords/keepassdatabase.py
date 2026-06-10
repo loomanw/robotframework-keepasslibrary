@@ -1,5 +1,6 @@
 """Library components."""
 from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent, Group
+from pykeepass.pykeepass import create_database
 from KeePassLibrary.errors import DatabaseNotOpened
 from KeePassLibrary.utils.types import Secret
 from typing import Optional, Union
@@ -46,6 +47,25 @@ class KeePassDatabase(LibraryComponent):
                            s_password,
                            keyfile,
                            transformed_key)
+        
+    @keyword
+    def create_keepass_database(self, filename, password=None, keyfile=None, transformed_key=None):
+        """Creates a KeePass database ``filename`` using the credentials provided.
+
+        The ``filename`` argument specifies the location of the KeePass database
+
+        | =Parameter=         | =Description=                              |
+        | ``filename``        | specifies the path of the KeePass database |
+        | ``keyfile``         | specifies the path of the keyfile          |
+        | ``transformed_key`` | specifies the transformed key              |
+
+        Examples:
+        | `Create Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
+        | `Create Keepass Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |
+        | `Create Keepass Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |
+        """
+        self.database = create_database(filename, password, keyfile, transformed_key)
+        self.database.read(filename, password, keyfile, transformed_key)
 
     @keyword(tags=("DatabaseControl", "Setter"))
     def close_keepass_database(self) -> None:

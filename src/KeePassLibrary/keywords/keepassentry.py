@@ -1,6 +1,6 @@
 """Library components."""
-from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime
-from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid, DatabaseNotOpened, RobotframeworkVersionInvalid
+from KeePassLibrary.base import keyword, LibraryComponent, Entry, datetime, Group
+from KeePassLibrary.errors import EntryInvalid, AttachmentInvalid, DatabaseNotOpened, GroupInvalid, RobotframeworkVersionInvalid
 from KeePassLibrary.utils import prepare_set_timezone, convert_datetime_timezone
 from KeePassLibrary.utils.data_types import TimeZone
 from KeePassLibrary.utils.types import Secret, ROBOT_FRAMEWORK_SUPPORTS_SECRET
@@ -10,6 +10,47 @@ from typing import List, Union, Dict, Optional
 class KeePassEntry(LibraryComponent):
 
     # ---------- Base Element ----------
+    @keyword
+    def add_entry(self, destination_group: Group, title: str, 
+                  username: str, password: str, url:str | None = None,
+                  notes: str | None = None, tags: list | None = None, 
+                  icon: str | None = None, force_creation: bool = False):
+        """Inserts a new entry with name ``title`` into an existing ``destination_group``.
+        
+        | =Parameter=           | =Description=                                          |
+        | ``destination_group`` | specifies the parent group of the new entry            |
+        | ``title``             | specifies the title of the new entry                   |
+        | ``username``          | specifies the text to be used as username              |
+        | ``password``          | specifies the text to be used as password              |
+        | ``url``               | specifies the text to be used as url                   |
+        | ``notes``             | specifies the text to be used as notes                 |
+        | ``tags``              | specifies a list to be used as tags                    |
+        | ``icon``              | specifies the icon to be set                           |
+        | ``force_creation``    | determines whether a duplicate entry should be created |
+
+        The newly created entry is returned as the return value.
+        
+        Examples:
+        | ${root}   | Get Root Group |                             |
+        | ${entry}  | Add Entry      | ${root}                     | 
+        | ...       |                | title=Mobiltelefon          |
+        | ...       |                | username=+49 170 123 25 256 |
+        | ...       |                | password=123456             |
+        | ...       |                | icon=68                     |
+        """
+        if self.database is None:
+            raise DatabaseNotOpened('No KeePass Database Opened.')
+        if not isinstance(destination_group, Group):
+            raise GroupInvalid('Invalid KeePass Group.')
+        return self.database.add_entry(destination_group=destination_group, 
+                                       title=title,
+                                       username=username,
+                                       password=password,
+                                       url=url,
+                                       notes=notes,
+                                       tags=tags,
+                                       icon=icon,
+                                       force_creation=force_creation)
 
     # ---------- Title ----------
     @keyword(tags=("Getter", "Entry"))
