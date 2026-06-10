@@ -7,22 +7,26 @@ from typing import Optional, Union
 
 class KeePassDatabase(LibraryComponent):
 
-    @keyword(tags=("DatabaseControl", "Setter", "Secret"))
+    @keyword(tags=("DatabaseControl", "Getter", "Secret"))
     def open_keepass_database(self, filename: str, password: Optional[Union[str, Secret]] = None, keyfile: Optional[str] = None,
                               transformed_key: Optional[bytes] = None) -> None:
         """Opens the specified KeePass database ``filename`` using the credentials provided.
 
         The ``filename`` argument specifies the location of the KeePass database
 
-        | =Parameter=         | =Description=                              |
-        | ``filename``        | specifies the path of the KeePass database |
-        | ``keyfile``         | specifies the path of the keyfile          |
-        | ``transformed_key`` | specifies the transformed key              |
+        | =Parameter=         | =Description=                                  |
+        | ``filename``        | specifies the path of the KeePass database     |
+        | ``password``        | specifies the password of the KeePass database |
+        | ``keyfile``         | specifies the path of the keyfile              |
+        | ``transformed_key`` | specifies the transformed key                  |
 
         Examples:
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
         | `Open Keepass Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |
         | `Open Keepass Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |
+
+        This keyword supports Robot Framework 7.4 Secret variable type,
+        which is the recommended way if you are using Robot Framework 7.4 or newer.
 
         - Updated in KeePassLibrary 0.12, Support for Robot Framework 7.4 `Secret` variable type
         """
