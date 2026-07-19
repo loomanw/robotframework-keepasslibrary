@@ -52,7 +52,8 @@ Get KeePass Database Entry
 
 ---
 ### Versions:
- - `0.11.0` Updated dependencies, Updated supported Python versions to include Python 3.14, refactoring for deprecated pykeepass functions
+ - `0.12.0` New keywords, Robot Framework 7.4 secret variable support
+ - `0.11.0` Updated supported Python versions to include Python 3.14, Updated dependencies, refactoring for deprecated pykeepass functions
  - `0.10.0` New keywords for accessing entry attachments, updated dependencies
  - `0.9.0` Updated dependencies, updated supported Python versions to include Python 3.13, dropped Robot Framework 4.1.3 support
  - `0.8.0` New keywords for accessing entry and group time attributes
