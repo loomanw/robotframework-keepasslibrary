@@ -347,3 +347,11 @@ Touch Modify True
     Should Not Be Equal    ${atime1}    ${atime2}
     Should Not Be Equal    ${mtime1}    ${mtime2}
     Should Be Equal    ${ctime1}    ${ctime2}
+
+Group Can Be Created
+    [Documentation]    Validate existense of newly created group
+    ${new_group_name}=    Set Variable   New group
+    ${root_group}=   Get Root Group
+    ${new_group}=    Add Group   ${root_group}   ${new_group_name}
+    ${name}=    Get Group Name   ${new_group}
+    Should Be Equal As Strings    ${name}    ${new_group_name}

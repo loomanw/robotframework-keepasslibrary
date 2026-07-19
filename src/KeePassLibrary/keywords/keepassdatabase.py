@@ -1,5 +1,6 @@
 """Library components."""
 from KeePassLibrary.base import PyKeePass, keyword, LibraryComponent, Group
+from pykeepass.pykeepass import create_database
 from KeePassLibrary.errors import DatabaseNotOpened
 from KeePassLibrary.utils.types import Secret
 from typing import Optional, Union
@@ -46,6 +47,43 @@ class KeePassDatabase(LibraryComponent):
                            s_password,
                            keyfile,
                            transformed_key)
+
+    @keyword(tags=("DatabaseControl", "Getter", "Create", "Secret"))
+    def create_keepass_database(self, filename: str, password: Optional[Union[str, Secret]] = None, keyfile: Optional[str] = None,
+                                transformed_key: Optional[bytes] = None) -> None:
+        """Creates a KeePass database ``filename`` using the credentials provided.
+
+        The ``filename`` argument specifies the location of the KeePass database
+
+        | =Parameter=         | =Description=                                  |
+        | ``filename``        | specifies the path of the KeePass database     |
+        | ``password``        | specifies the password of the KeePass database |
+        | ``keyfile``         | specifies the path of the keyfile              |
+        | ``transformed_key`` | specifies the transformed key                  |
+
+        Examples:
+        | `Create Keepass Database` | pathtokeepassdatabase | password=mypassword   |                       |
+        | `Create Keepass Database` | pathtokeepassdatabase | keyfile=pathtokeyfile |                       |
+        | `Create Keepass Database` | pathtokeepassdatabase | password=mypassword   | keyfile=pathtokeyfile |
+
+        This keyword supports Robot Framework 7.4 Secret variable type,
+        which is the recommended way if you are using Robot Framework 7.4 or newer.
+
+        - New in KeePassLibrary 0.12
+        """
+        s_password: Optional[str] = None
+        if isinstance(password, Secret):
+            s_password = password.value
+        elif isinstance(password, str):
+            s_password = str(password)
+        self.database = create_database(filename,
+                                        password=s_password,
+                                        keyfile=keyfile,
+                                        transformed_key=transformed_key)
+        self.database.read(filename,
+                           password=s_password,
+                           keyfile=keyfile,
+                           transformed_key=transformed_key)
 
     @keyword(tags=("DatabaseControl", "Setter"))
     def close_keepass_database(self) -> None:
